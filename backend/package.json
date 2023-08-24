@@ -1,0 +1,15 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Desarrollo de API para Ingeniería de Software",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Grupo 8",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
