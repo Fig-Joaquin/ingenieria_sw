@@ -7,4 +7,4 @@ IECI
 
 ####
 1. Se debe instalar los modulos de node.
-   -Abriendo el terminal y ejecutando el comando de npm install
+-Abriendo el terminal y ejecutando el comando de npm install
