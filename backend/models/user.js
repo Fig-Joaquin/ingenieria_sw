@@ -1,7 +1,17 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  nombre: {
+  rut: {
+    type: String,
+    required: true,
+    trim: true,
+  }
+  ,name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastname: {
     type: String,
     required: true,
     trim: true,
@@ -12,25 +22,25 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  contraseña: {
+  password: {
     type: String,
     required: true,
   },
-  rol: {
+  role: {
     type: String,
     enum: ['cliente', 'administrador'],
     default: 'cliente',
   },
   // Información personal del usuario
-  direccion: {
+  adress: {
     type: String,
     
   },
-  telefono: {
+  phonenumber: {
     type: String,
   },
   // Historial de transacciones del usuario
-  transacciones: [
+  transactions: [
     {
       fecha: {
         type: Date,
