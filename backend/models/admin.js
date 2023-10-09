@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import generarId from '../helpers/generarId.js';
 
 const adminSchema = mongoose.Schema({
 
@@ -28,6 +29,7 @@ const adminSchema = mongoose.Schema({
     },
     token: {
         type: String, // Tipo de dato
+        default: generarId(), // Llamar la función para generar un id único
     },
     confirmed: {
         type: Boolean, // Tipo de dato
@@ -35,5 +37,5 @@ const adminSchema = mongoose.Schema({
     },
 });
 
-const Admin = mongoose.model('Admin', adminSchema);
+const Admin = mongoose.model('Admin', adminSchema,'administrador'); // Crea el admin en la DB
 export default Admin;
