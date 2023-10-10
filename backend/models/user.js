@@ -26,11 +26,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {
-    type: String,
-    enum: ['cliente', 'administrador'],
-    default: 'cliente',
-  },
   // Información personal del usuario
   adress: {
     type: String,
@@ -42,7 +37,7 @@ const userSchema = new mongoose.Schema({
   // Historial de transacciones del usuario
   transactions: [
     {
-      fecha: {
+      Date: {
         type: Date,
         default: Date.now,
       },

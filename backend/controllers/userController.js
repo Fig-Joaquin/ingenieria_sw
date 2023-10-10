@@ -1,4 +1,4 @@
-import User from './models/user';
+import User from '../models/user.js';
 
 const register = async (req, res) => {   
     const {rut} = req.body;
@@ -15,112 +15,33 @@ const register = async (req, res) => {
     }
 };
 
-export const loginUser = async (req, res) => {
-    try {
-      const { rut, password } = req.body;
-  
-      // Verificar si el usuario existe
-      const user = await User.findOne({ rut });
-  
-      if (!user) {
-        return res.status(401).json({ message: 'Credenciales inválidas' });
-      }
-  
-      // Verificar la contraseña
-     // const validPassword = await bcrypt.compare(contraseña, user.contraseña);
-  
-     // if (!validPassword) {
-     //   return res.status(401).json({ message: 'Credenciales inválidas' });
-     // }
-  
-      // Generar un token de autenticación
-      const token = jwt.sign({ userId: user._id }, 'tu_clave_secreta');
-  
-      res.status(200).json({ token });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al iniciar sesión' });
-    }
-  };
-  
-  export const updateUser = async (req, res) => {
-    try {
-      const { rut } = req.params; // El Rut del usuario que se va a actualizar
-      const newData = req.body; // Los nuevos datos del usuario
-      
-      // Verificar si el usuario existe
-      const user = await User.findOne({ rut });
-  
-      if (!user) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-      }
-  
-      // Actualizar la información personal del usuario
-      user.name = newData.name || user.name;
-      user.lastname = newData.lastname || user.lastname;
-      user.email = newData.email || user.email;
-      user.adress = newData.adress || user.adress;
-      user.phonenumber = newData.phonenumber || user.phonenumber;
-  
-      // Guardar los cambios en la base de datos
-      await user.save();
-  
-      res.status(200).json({ message: 'Información de usuario actualizada con éxito' });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al actualizar la información del usuario' });
-    }
-  };
-  
 
-  // getUserProfile(req, res): Obtiene el perfil de un usuario.
-export const getUserProfile = async (req, res) => {
-    try {
-      const { rut } = req.params; // Identificador único (Rut) del usuario
-  
-      // Buscar al usuario por su Rut
-      const user = await User.findOne({ rut });
-  
-      if (!user) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-      }
-  
-      // Excluir la contraseña del perfil antes de enviarlo
-      const userProfile = { ...user.toObject() };
-      delete userProfile.password;
-  
-      res.status(200).json(userProfile);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al obtener el perfil del usuario' });
-    }
-  };
-  
-  // getUserTransactions(req, res): Obtiene el historial de transacciones de un usuario.
-  export const getUserTransactions = async (req, res) => {
-    try {
-      const { rut } = req.params; // Identificador único (Rut) del usuario
-  
-      // Buscar al usuario por su Rut
-      const user = await User.findOne({ rut });
-  
-      if (!user) {
-        return res.status(404).json({ message: 'Usuario no encontrado' });
-      }
-  
-      // Obtener el historial de transacciones del usuario
-      const userTransactions = user.transactions;
-  
-      res.status(200).json(userTransactions);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Error al obtener el historial de transacciones del usuario' });
-    }
-  };
+const login = async (req, res) => {
+    const {rut, password} = req.body;
 
-  import nodemailer from 'nodemailer';
-import bcrypt from 'bcrypt';
-import User from '../models/user'; // Asegúrate de importar el modelo de usuario
+    const user = await User.findOne({rut});
+    if(!user) return res.status(400).json({msg: "El usuario no existe"});
+
+    if(user.password !== password) return res.status(401).json({msg: "Contraseña incorrecta"});
+
+    res.json({msg: "Inicio de sesión exitoso"});
+};
+
+
+const getUser = async (req, res) => {
+    const {rut} = req.query;
+
+    const user = await User.findOne({rut});
+    if(!user) return res.status(404).json({msg: "Usuario no encontrado"});
+
+    res.json({user});
+};
+
+export {register, login, getUser};
+
+
+
+
 
 
 
