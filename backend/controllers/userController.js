@@ -38,24 +38,44 @@ const getUser = async (req, res) => {
 };
 
 
-const getUserTransactions = async (req, res) => {
-    const { rut } = req.query;
-  
-    try {
-      const user = await User.findOne({ rut });
-      if (!user) {
-        return res.status(404).json({ msg: 'Usuario no encontrado' });
-      }
-  
-      const transactions = await Transaction.find({ user: user._id });
-      res.json({ transactions });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ msg: 'Error al obtener el historial de transacciones' });
+
+
+const updateUser = async (req, res) => {
+  const { rut } = req.body; // Suponemos que la ruta incluye el rut del usuario a actualizar
+  const userDataToUpdate = req.body; // Los datos que deseas actualizar
+
+  try {
+    // Busca el usuario por su rut
+    const user = await User.findOne({ rut });
+
+    if (!user) {
+      return res.status(404).json({ msg: "Usuario no encontrado" });
     }
-  };
+
+    // Actualiza los campos que desees
+    // Aquí asumimos que los campos a actualizar están en userDataToUpdate
+    // Por ejemplo, si deseas actualizar el nombre y el apellido:
+    user.name = userDataToUpdate.name || user.name;
+    user.lastName = userDataToUpdate.lastName || user.lastName;
+    user.email = userDataToUpdate.email || user.email;
+    user.password = userDataToUpdate.password || user.password;
+    user.address = userDataToUpdate.address || user.address;
+    user.phoneNumber = userDataToUpdate.phoneNumber ||  user.phoneNumber;
+
+    // Guarda los cambios
+    await user.save();
+
+    res.json({ msg: "Usuario actualizado exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Error interno del servidor" });
+  }
+};
+
+
+
   
-  export { getUserTransactions, register, login, getUser };
+  export { register, login, getUser , updateUser };
 
 
 

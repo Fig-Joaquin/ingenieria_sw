@@ -1,10 +1,20 @@
 import mongoose from 'mongoose';
+import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
-  name: {
+  rut: {
     type: String,
     required: true,
     trim: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    
   },
   email: {
     type: String,
@@ -26,6 +36,11 @@ const userSchema = new mongoose.Schema({
   // Historial de transacciones del usuario
 }, {timestamps: true});
 
+
+
+
 const User = mongoose.model('usuario', userSchema,'cliente');
 
-export default User;
+export default User; 
+
+
