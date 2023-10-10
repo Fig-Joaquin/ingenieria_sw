@@ -1,17 +1,7 @@
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
-  rut: {
-    type: String,
-    required: true,
-    trim: true,
-  },
   name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  lastname: {
     type: String,
     required: true,
     trim: true,
@@ -26,32 +16,16 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  role: {
-    type: String,
-    enum: ['cliente', 'administrador'],
-    default: 'cliente',
-  },
   // Información personal del usuario
-  adress: {
+  address: {
     type: String,
-    
   },
-  phonenumber: {
+  phoneNumber: {
     type: String,
   },
   // Historial de transacciones del usuario
-  transactions: [
-    {
-      fecha: {
-        type: Date,
-        default: Date.now,
-      },
-      tipo: String, // Puedes definir los tipos de transacción necesarios
-      monto: Number,
-    },
-  ],
-});
+}, {timestamps: true});
 
-const User = mongoose.model('Usuario', userSchema,'cliente');
+const User = mongoose.model('usuario', userSchema,'cliente');
 
 export default User;
