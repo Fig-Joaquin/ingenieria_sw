@@ -8,3 +8,4 @@ IECI
 - Para esto se debe ejecutar en la terminal cd backend y luego npm install.
 - Luego instalar las dependecias de .env con npm i dotenv.
 ###
+- npm i bcrypt 
