@@ -1,20 +1,18 @@
-const express = require('express');
+import express from 'express'
 const router = express.Router();
-
+import {crearFormulario,obtenerFormularioPorRut,eliminarFormulario,marcarComoPagado} from "../../controllers/formsControllers/PermisoCirculacionController.js";
 // PERMISO DE CIRCULACIÓN:
 
-const formController = require('../controllers/formsControllers/PermisoCirculacionController.js');
-
 // Crear un nuevo formulario de Permiso de Circulación
-router.post('/permisocirculacion', formController.crearFormulario);
+router.post('/crear', crearFormulario);
 
 // Obtener un formulario por su RUT
-router.get('/permisocirculacion/:rut', formController.obtenerFormularioPorRut);
+router.get('/obtener/:rut', obtenerFormularioPorRut);
 
 // Eliminar un formulario por su RUT
-router.delete('/permisocirculacion/:rut', formController.eliminarFormulario);
+router.delete('/eliminar/:rut', eliminarFormulario);
 
 // Marcar un formulario como pagado por su RUT
-router.put('/permisocirculacion/:rut/pagado', formController.marcarComoPagado);
+router.put('/marcar/:rut/pagado', marcarComoPagado);
 
-module.exports = PermisoCirculacionRoutes;
+export default router;

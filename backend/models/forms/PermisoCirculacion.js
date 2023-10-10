@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // Esquema del Permiso de Circulacion:
-const PermCircSchema = new mongoose.Schema({
+const formSchema = new mongoose.Schema({
     rut: {
         type: String,
         required: true,
@@ -32,6 +32,7 @@ const PermCircSchema = new mongoose.Schema({
     },
 });
 
-const FormularioPermisoCirculacion = mongoose.model('FormularioPermisoCirculacion', formSchema);
+const FormularioPermisoCirculacion = mongoose.model('formularioPermisoCirculacion', formSchema);
 
-module.exports = FormularioPermisoCirculacion;
+//module.exports = FormularioPermisoCirculacion;
+export default FormularioPermisoCirculacion;

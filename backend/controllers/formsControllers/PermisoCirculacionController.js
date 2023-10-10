@@ -1,4 +1,4 @@
-const FormularioPermisoCirculacion = require('../models/forms/PermisoCirculacion.js');
+import FormularioPermisoCirculacion from "../../models/forms/PermisoCirculacion.js";
 
 //  Crear un nuevo formulario de Permiso de Circulación
 const crearFormulario = async (req, res) => {
@@ -9,7 +9,6 @@ const crearFormulario = async (req, res) => {
         const nuevoFormulario = new FormularioPermisoCirculacion({
             rut,
             patente,
-            pagado,
         });
 
         // Guardar el formulario en la base de datos
@@ -78,7 +77,7 @@ const marcarComoPagado = async (req, res) => {
 };
 
 
-module.exports = {
+export {
     crearFormulario,
     obtenerFormularioPorRut,
     eliminarFormulario,
