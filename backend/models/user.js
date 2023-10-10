@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import bcrypt from "bcrypt";
 
 const userSchema = new mongoose.Schema({
   rut: {
@@ -35,8 +34,6 @@ const userSchema = new mongoose.Schema({
   },
   // Historial de transacciones del usuario
 }, {timestamps: true});
-
-
 
 
 const User = mongoose.model('usuario', userSchema,'cliente');

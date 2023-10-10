@@ -15,6 +15,6 @@ app.use('/adm-muni', administradorRoutes);	// Ruta administrador
 app.use('/permcirc', PermisoCirculacionRoutes);
 app.use('/usuario', userRoutes);// ruta usuario
 
-const PORT = process.env.PORT || 4003;	// Puerto de conexión
+const PORT = process.env.PORT || 3005;	// Puerto de conexión
 
 app.listen(PORT, () => console.log('Conexión con el puerto realizada'));    // Inicializa el servidor en el puerto 4000
