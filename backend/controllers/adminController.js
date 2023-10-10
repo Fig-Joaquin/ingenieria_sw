@@ -38,3 +38,23 @@ const confirmAccount = async (req, res) => {
 
 
 export {profile, profileBody,register, confirmAccount};
+
+// Por importar
+/*
+const showApelacion = async () => {
+   const result = await User.aggregate(
+    [
+        {
+            $lookup: 
+            {
+                from: "apelacion",
+                localField: "rut",
+                foreignField: "rut",
+                as: "apelacion"
+            }
+        },
+      
+   ])
+   console.log(result);
+}
+*/
