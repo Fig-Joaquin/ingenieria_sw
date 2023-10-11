@@ -1,5 +1,6 @@
 import Admin from '../models/admin.js'
 import generateJWT from '../helpers/generateJWT.js'
+import jwt from 'jsonwebtoken'
 
 const profile = async (req, res) => {
     const {rut} = req.params;
@@ -12,8 +13,8 @@ const authprofile= async (req, res) => {
     const searchAdmin = await Admin.findOne({rut});
     if(!searchAdmin) return res.status(400).json({msg: "El usuario no existe"});
 
-    if (await searchAdmin.matchPassword(password)) {
-       res.json({token: generateJWT(searchAdmin.id)});
+    if (await searchAdmin.matchPassword(password)) { // Compara la contraseña ingresada con la contraseña en la base de datos
+    res.json({token: generateJWT(searchAdmin.id)}); // Genera el token
     } else {
         const error = new Error('Contraseña incorrecta');
         return res.status(400).json({msg: error.message});
@@ -42,9 +43,12 @@ const confirmAccount = async (req, res) => {
     res.json({msg: "El usuario ha sido confirmado"});
 };
 
+const extractUserIdFromToken = (req,res) => {
+    console.log(req.admin.id);
+};
 
 
-export {profile,authprofile,register,confirmAccount};
+export {profile,authprofile,register,confirmAccount,extractUserIdFromToken};
 
 // Por importar
 /*
