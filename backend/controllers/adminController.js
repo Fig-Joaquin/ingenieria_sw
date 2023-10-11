@@ -1,4 +1,5 @@
 import Admin from '../models/admin.js'
+import generateJWT from '../helpers/generateJWT.js'
 
 const profile = async (req, res) => {
     const {rut} = req.params;
@@ -6,11 +7,17 @@ const profile = async (req, res) => {
     console.log(searchAdmin);
 };
 
-const profileBody = async (req, res) => {
-    const {rut} = req.body;
+const authprofile= async (req, res) => {
+    const {rut, password} = req.body;
     const searchAdmin = await Admin.findOne({rut});
-    console.log(searchAdmin);
-    res.json({msg: "Se ha encontrado el usuario"});
+    if(!searchAdmin) return res.status(400).json({msg: "El usuario no existe"});
+
+    if (await searchAdmin.matchPassword(password)) {
+       res.json({token: generateJWT(searchAdmin.id)});
+    } else {
+        const error = new Error('Contraseña incorrecta');
+        return res.status(400).json({msg: error.message});
+    };
 };
 
 const register = async (req, res) => {   
@@ -37,7 +44,7 @@ const confirmAccount = async (req, res) => {
 
 
 
-export {profile, profileBody,register, confirmAccount};
+export {profile,authprofile,register,confirmAccount};
 
 // Por importar
 /*

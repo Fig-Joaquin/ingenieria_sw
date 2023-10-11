@@ -1,5 +1,5 @@
 import mongoose from 'mongoose'
-import generarId from '../helpers/generarId.js'
+import generateId from '../helpers/generateId.js'
 import bcrypt from 'bcrypt'
 
 const adminSchema = mongoose.Schema({
@@ -30,7 +30,7 @@ const adminSchema = mongoose.Schema({
     },
     token: {
         type: String, // Tipo de dato
-        default: generarId(), // Llamar la función para generar un id único
+        default: generateId(), // Llamar la función para generar un id único
     },
     confirmed: {
         type: Boolean, // Tipo de dato
@@ -47,6 +47,9 @@ adminSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt(10); // Genera un hash de 10 caracteres
     this.password = await bcrypt.hash(this.password, salt); // Encripta la contraseña
 });
-
+// Comprobar password
+adminSchema.methods.matchPassword = async function(passwordForm) { // Método para comparar contraseñas
+    return await bcrypt.compare(passwordForm, this.password); // Compara la contraseña ingresada con la contraseña en la base de datos
+};
 const Admin = mongoose.model('Admin', adminSchema,'administrador'); // Crea el admin en la DB
 export default Admin;

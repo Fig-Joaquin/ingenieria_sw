@@ -1,11 +1,11 @@
 import express from 'express'
 const router = express.Router();
-import {profile,profileBody,register,confirmAccount} from "../controllers/adminController.js";
+import {profile,authprofile,register,confirmAccount} from "../controllers/adminController.js";
 
 router.get('/perfil/:rut', profile);
 router.post('/registro', register)
 router.get('/confirmar/:token', confirmAccount);
-router.get('/buscar/', profileBody);
+router.post('/login', authprofile);
 
 export default router;
 
