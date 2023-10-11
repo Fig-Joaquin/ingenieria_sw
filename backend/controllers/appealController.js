@@ -69,6 +69,30 @@ const createAppealForClient = async (req, res) => {
     }
   };
 
+  const getUserAppeals = async (req, res) => {
+    const { rut } = req.body; // Obtiene el RUT del usuario de los parámetros de la URL
+    try {
+      const client = await User.findOne({ rut }); // Busca al usuario por su RUT
+      if (!client) {
+        return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+  
+      // Buscar apelaciones relacionadas con el usuario
+      const appeals = await Appeal.find({ user: client._id });
+      res.json(appeals);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener las apelaciones del usuario' });
+    }
+  };
+
+  const getAllAppeals = async (req, res) => {
+    try {
+      const appeals = await Appeal.find();
+      res.json(appeals);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al obtener las apelaciones' });
+    }
+  };
 
 
-export {createAppealForClient,decisionAppeal,findAppealsByClientRut};
+export {createAppealForClient,decisionAppeal,findAppealsByClientRut,getUserAppeals,getAllAppeals};

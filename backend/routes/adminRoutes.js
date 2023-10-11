@@ -10,5 +10,6 @@ router.get('/confirmar/:token', confirmAccount);
 router.post('/login', authprofile);
 router.get('/auth', authprofile);
 router.get('/authcheck', checkAuth, extractUserIdFromToken);
+
 export default router;
 
