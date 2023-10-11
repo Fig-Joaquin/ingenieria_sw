@@ -11,16 +11,14 @@ const fineSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-  // Otros detalles de la multa
-  // ...
 
   // Referencia al usuario a quien se le aplicó la multa
   user: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Usuario', // Nombre de tu modelo de usuario
+    ref: 'usuario', // Nombre de tu modelo de usuario
   },
 }, { timestamps: true });
 
-const Fine = mongoose.model('Multa', fineSchema);
+const Fine = mongoose.model('multa', fineSchema);
 
 export default Fine;

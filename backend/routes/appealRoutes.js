@@ -1,6 +1,8 @@
-const express = require('express') // importa express
+import express from 'express' // importa express
 const router = express.Router(); // enrutador
 
-import {createAppealForUser} from "../controllers/appealController.js";
+import {createAppealForClient,decisionAppeal} from "../controllers/appealController.js";
 
-router.post('/nueva-apelacion', createAppealForUser);
+router.post('/nueva-apelacion', createAppealForClient); // Ruta para crear una apelación
+router.put('/decision-apelacion', decisionAppeal); // Ruta para crear una apelación
+export default router; // exporta el enrutador

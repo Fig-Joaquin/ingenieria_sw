@@ -1,45 +1,74 @@
 import Appeal from '../models/appeal.js'
+import User from '../models/user.js'
 
-// Controlador para crear una apelación asignada a un usuario específico
-const createAppealForUser = async (req, res) => {
+// Funcion para crear una apelación asignada a un usuario específico
+const createAppealForClient = async (req, res) => {
     try {
-      const { userId } = req.params; // Obtiene el ID del usuario de los parámetros de la URL
-      const { reason } = req.body; // Obtiene el motivo de la apelación del cuerpo de la solicitud
-  
+      const { reason, rut } = req.body; // Obtiene el motivo de la apelación del cuerpo de la solicitud
+      const client = await User.findOne({ rut }); // Busca el usuario por su rut
+      console.log(client._id);
+      if (!client) {
+        return res.status(404).json({ error: 'Usuario no encontrado' });
+      };
       // Crea una nueva apelación asignada al usuario con el ID proporcionado
-      const newAppeal = new Appeal({
-        user: userId, // Asigna el ID del usuario al campo 'user'
-        reason,
-      });
-  
+    const newAppeal = new Appeal({
+      user: client._id,
+      reason,
+      status: 'pendiente', 
+    });
       // Guarda la apelación en la base de datos
       await newAppeal.save();
   
       res.status(201).json(newAppeal);
     } catch (error) {
       res.status(500).json({ error: 'Error al crear la apelación' });
+    };
+  };
+
+    // Actualizar la apelación - valores: pendiente - aprobada - rechazada
+  const decisionAppeal = async (req, res) => {
+    const { status, rut } = req.body; // Obtiene el motivo de la apelación del cuerpo de la solicitud
+    const client = await User.findOne({ rut }); // Busca al usuario por su RUT
+    if (!client) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  
+    try {
+      // Buscar apelaciones relacionadas con el RUT del cliente
+      const appeals = await Appeal.find({ user: client._id });
+      
+      if (appeals.length === 0) {
+        return res.status(404).json({ error: 'No se encontraron apelaciones para este usuario' });
+      }
+      
+      // Modificar el estado de todas las apelaciones encontradas
+      for (const appeal of appeals) {
+        appeal.status = status;
+        await appeal.save();
+      }
+  
+      res.json({ message: 'Estado de apelaciones actualizado' });
+    } catch (error) {
+      res.status(500).json({ error: 'Error al actualizar las apelaciones' });
     }
   };
 
-//  Formatear la fecha en el formato "día/mes/año"
-const getAppeal = async (req, res) => {
-  try {
-    const appeal = await Appeal.findById(req.params.id);
-    if (!appeal) {
-      return res.status(404).json({ error: 'Apelación no encontrada' });
+  const findAppealsByClientRut = async (req, res) => {
+    const { rut } = req.body; // Obtén el `rut` del cliente desde los parámetros de la solicitud
+  
+    try {
+      const appeals = await Appeal.find({ clientRut: rut });
+  
+      if (!appeals || appeals.length === 0) {
+        return res.status(404).json({ error: 'No se encontraron apelaciones para este cliente' });
+      }
+  
+      res.json(appeals);
+    } catch (error) {
+      res.status(500).json({ error: 'Error al buscar apelaciones por el rut del cliente' });
     }
-
-    // Formatear la fecha en el formato "día/mes/año"
-    const formattedDate = appeal.dateSubmitted.toLocaleDateString('es-ES'); // 'es-ES' para el formato día/mes/año
-
-    // Enviar la apelación con la fecha formateada en la respuesta
-    res.status(200).json({ ...appeal._doc, dateSubmitted: formattedDate });
-  } catch (error) {
-    res.status(500).json({ error: 'Error al obtener la apelación' });
-  }
-};
+  };
 
 
 
-
-export {getAppeal,createAppealForUser};
+export {createAppealForClient,decisionAppeal,findAppealsByClientRut};

@@ -1,6 +1,5 @@
 import Admin from '../models/admin.js'
 import generateJWT from '../helpers/generateJWT.js'
-import jwt from 'jsonwebtoken'
 
 const profile = async (req, res) => {
     const {rut} = req.params;
