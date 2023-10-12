@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     
   },
+  statusUser: {
+    type: String,
+    enum: ['Deudor', 'Solvente'], // Solvente de deuda significa que no carga con deudas pendientes.
+    default: 'Solvente',
+  },
   email: {
     type: String,
     unique: true,
@@ -26,10 +31,10 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   // Información personal del usuario
-  address: {
+  address: { // Direccion del usuario
     type: String,
   },
-  phoneNumber: {
+  phoneNumber: { // Numero de telefono 
     type: String,
   },
   // Historial de transacciones del usuario
@@ -38,6 +43,4 @@ const userSchema = new mongoose.Schema({
 
 const User = mongoose.model('usuario', userSchema,'cliente');
 
-export default User; 
-
-
+export default User;
