@@ -18,6 +18,7 @@ app.use('/adm-muni', adminRoutes, appealRoutes, fineRoutes);	// Ruta administrad
 app.use('/permcirc', PermisoCirculacionRoutes);
 app.use('/usuario', userRoutes);// ruta usuario
 app.use('/nueva-apelacion', appealUserRoutes);	// Ruta apelación para el usuario
+app.use('/nueva-apelacion', appealUserRoutes);	// Ruta apelación para el usuario
 
 
 const PORT = process.env.PORT || 4000;	// Puerto de conexión
