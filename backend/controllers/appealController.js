@@ -6,6 +6,7 @@ const createAppealForClient = async (req, res) => {
     try {
       const { reason, rut } = req.body; // Obtiene el motivo de la apelación del cuerpo de la solicitud
       const client = await User.findOne({ rut }); // Busca el usuario por su rut
+      const lastAppealUser = await AppealUser.findOne({ user: rut }).sort({ dateSubmitted: -1 }); // Busca la última apelación del usuario
       console.log(client._id);
       if (!client) {
         return res.status(404).json({ error: 'Usuario no encontrado' });
@@ -13,12 +14,12 @@ const createAppealForClient = async (req, res) => {
       // Crea una nueva apelación asignada al usuario con el ID proporcionado
     const newAppeal = new Appeal({
       user: client._id,
+      appealOriginal: lastAppealUser._id,
       reason,
       status: 'pendiente', 
     });
       // Guarda la apelación en la base de datos
       await newAppeal.save();
-  
       res.status(201).json(newAppeal);
     } catch (error) {
       res.status(500).json({ error: 'Error al crear la apelación' });

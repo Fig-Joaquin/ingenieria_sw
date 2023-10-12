@@ -5,6 +5,7 @@ import adminRoutes from './routes/adminRoutes.js'	// importa las rutas de admini
 import PermisoCirculacionRoutes from './routes/formsRoutes/PermisoCirculacionRoutes.js'	// importa las rutas de permiso de circulación
 import userRoutes from './routes/userRoutes.js'
 import appealRoutes from './routes/appealRoutes.js'	// importa las rutas de apelación
+import appealUserRoutes from './routes/appealUserRoutes.js'
 
 const app = express();	// Llamado a la función de express
 app.use(express.json());	// Enviar datos de tipo json
@@ -12,9 +13,10 @@ dotenv.config();    // Llamado a la función de dotenv
 conectarDB();	// Llamado a la función de conexión a la base de datos
 
 
-app.use('/adm-muni', adminRoutes, appealRoutes);	// Ruta administrador - tambien dirige a las apelaciones
+app.use('/adm-muni', adminRoutes, appealRoutes);	// Ruta administrador - tambien dirige a las apelaciones con funciones propias del administrador
 app.use('/permcirc', PermisoCirculacionRoutes);
 app.use('/usuario', userRoutes);// ruta usuario
+app.use('/nueva-apelacion', appealUserRoutes);	// Ruta apelación para el usuario
 
 
 const PORT = process.env.PORT || 4000;	// Puerto de conexión
