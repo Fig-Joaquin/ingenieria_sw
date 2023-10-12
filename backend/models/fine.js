@@ -1,23 +1,36 @@
 import mongoose from 'mongoose';
 
 const fineSchema = new mongoose.Schema({
-  // Detalles de la multa
-  amount: {
+  rut: { // Persona asociada a la multa
+    type: String,
+    required: true,
+  },
+  violationType: { // Tipo de multa
+    type: String,
+    required: true,
+  },
+  description: { // Descripccion
+    type: String,
+    required: true,
+  },
+  amount: { // Monto
     type: Number,
     required: true,
   },
-  fineDate: {
+  violationDate: {  // Fecha de la infracción
     type: Date,
     required: true,
-    default: Date.now,
   },
-
-  // Referencia al usuario a quien se le aplicó la multa
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'usuario', // Nombre de tu modelo de usuario
+  location: { // Lugar de la infracción
+    type: String,
+    required: true,
   },
-}, { timestamps: true });
+  status: { // Estado
+    type: String,
+    enum: ['pendiente', 'pagada', 'anulado'],
+    default: 'pendiente',
+  },
+});
 
 const Fine = mongoose.model('multa', fineSchema);
 
