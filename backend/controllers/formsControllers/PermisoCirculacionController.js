@@ -15,6 +15,7 @@ const crearFormulario = async (req, res) => {
         await nuevoFormulario.save();
 
         res.status(201).json({ mensaje: 'Registro exitoso.' });
+        res.redirect('/datos-de-transferencia');
     } catch (error) {
         console.error(error);
         res.status(500).json({ mensaje: 'Error al crear el registro.' });

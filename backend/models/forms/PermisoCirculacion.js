@@ -34,5 +34,4 @@ const formSchema = new mongoose.Schema({
 
 const FormularioPermisoCirculacion = mongoose.model('formularioPermisoCirculacion', formSchema);
 
-//module.exports = FormularioPermisoCirculacion;
 export default FormularioPermisoCirculacion;

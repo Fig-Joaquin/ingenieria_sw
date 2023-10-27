@@ -1,7 +1,6 @@
 import express from 'express'
 const router = express.Router();
 import {crearFormulario,obtenerFormularioPorRut,eliminarFormulario,marcarComoPagado} from "../../controllers/formsControllers/PermisoCirculacionController.js";
-// PERMISO DE CIRCULACIÓN:
 
 // Crear un nuevo formulario de Permiso de Circulación
 router.post('/crear', crearFormulario);
