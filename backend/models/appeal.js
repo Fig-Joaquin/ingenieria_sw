@@ -15,7 +15,7 @@ const appealSchema = new mongoose.Schema({
     type: String, 
     required: true 
   },
-  status: { // Estado de la apelación
+  status: { // Estado de la apelción
     type: String,
     enum: ['pendiente', 'aprobada', 'rechazada'],
     default: 'pendiente',

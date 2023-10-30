@@ -5,10 +5,9 @@ import checkAuth from "../middleware/authMiddleware.js"
 
 
 router.get('/perfil/:rut', profile);
-router.post('/registro', register)
-router.get('/confirmar/:token', confirmAccount);
-router.post('/login', authprofile);
-router.get('/auth', authprofile);
+router.post('/registro',checkAuth, register)
+router.get('/confirmar/:token',checkAuth, confirmAccount);
+router.get('/login', authprofile);
 router.get('/authcheck', checkAuth, extractUserIdFromToken);
 
 export default router;

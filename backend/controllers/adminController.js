@@ -13,7 +13,7 @@ const authprofile= async (req, res) => {
     if(!searchAdmin) return res.status(400).json({msg: "El usuario no existe"});
 
     if (await searchAdmin.matchPassword(password)) { // Compara la contraseña ingresada con la contraseña en la base de datos
-    res.json({token: generateJWT(searchAdmin.id)}); // Genera el token
+    res.json({token: generateJWT(searchAdmin.id, "admin")}); // Genera el token
     } else {
         const error = new Error('Contraseña incorrecta');
         return res.status(400).json({msg: error.message});
