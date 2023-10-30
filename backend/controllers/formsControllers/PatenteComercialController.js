@@ -1,4 +1,5 @@
 import FormularioPatenteComercial from "../../models/forms/PatenteComercial.js";
+import { v4 as uuidv4 } from 'uuid';
 
 // Crear un nuevo formulario de Patentes Comerciales
 const crearFormulario = async (req, res) => {
@@ -34,11 +35,16 @@ const crearFormulario = async (req, res) => {
             ingresosAnuales
         });
 
+        // Generar un identificador único para el comprobante de depósito
+        const comprobanteId = uuidv4();
+
         // Guardar el formulario en la base de datos
         await nuevoFormulario.save();
+        
+        const enlaceComprobante = `/upload/subir-comprobante/${comprobanteId}`;
 
-        res.status(201).json({ mensaje: 'Registro exitoso.' });
-       // res.redirect('/datos-de-transferencia');
+        res.status(201).json({ mensaje: `Registro exitoso. Suba su comprobante de transferencia a ${enlaceComprobante}` });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ mensaje: 'Error al crear el registro.' });

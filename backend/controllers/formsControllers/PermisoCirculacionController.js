@@ -1,9 +1,12 @@
 import FormularioPermisoCirculacion from "../../models/forms/PermisoCirculacion.js";
-
+import { v4 as uuidv4 } from 'uuid';
 //  Crear un nuevo formulario de Permiso de Circulación
 const crearFormulario = async (req, res) => {
     try {
         const { rut, patente } = req.body;
+
+        // Generar un identificador único para el comprobante de depósito
+        const comprobanteId = uuidv4();
 
         // Crea un nuevo formulario
         const nuevoFormulario = new FormularioPermisoCirculacion({
@@ -13,8 +16,8 @@ const crearFormulario = async (req, res) => {
 
         // Guardar el formulario en la base de datos
         await nuevoFormulario.save();
-
-        res.status(201).json({ mensaje: 'Registro exitoso.' });
+        const enlaceComprobante = `/upload/subir-comprobante/${comprobanteId}`;
+        res.status(201).json({ mensaje: `Registro exitoso. Suba su comprobante de transferencia a ${enlaceComprobante}` });
     } catch (error) {
         console.error(error);
         res.status(500).json({ mensaje: 'Error al crear el registro.' });
@@ -55,7 +58,7 @@ const eliminarFormulario = async (req, res) => {
 };
 
 //  Marcar un formulario como pagado por RUT
-// -IMPORTANTE: VALIDAR RANGO ADMIN PARA HACER PUT AQUÍ-
+
 const marcarComoPagado = async (req, res) => {
     try {
         const { rut } = req.params;
