@@ -51,7 +51,30 @@ const getFinesByRut = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener las multas por rut' });
     }
 };
+const updateFineStatus = async (req, res) => {
+  try {
+    const { fineId, newStatus } = req.body; // Obtén el ID de la multa y el nuevo estado desde la solicitud
+
+    // Busca la multa por su ID en la base de datos
+    const fine = await Fine.findById(fineId);
+
+    if (!fine) {
+      return res.status(404).json({ error: 'Multa no encontrada' });
+    }
+
+    // Actualiza el estado de la multa
+    fine.status = newStatus;
+
+    // Guarda la multa actualizada en la base de datos
+    await fine.save();
+
+    res.status(200).json(fine); // Devuelve la multa actualizada como respuesta
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al actualizar el estado de la multa' });
+  }
+};
 
 
 
-export {createFine, getAllFines, getFinesByRut};
+export {createFine, getAllFines, getFinesByRut, updateFineStatus };
