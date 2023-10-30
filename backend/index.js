@@ -32,7 +32,7 @@ app.use('/permconst', PermisoConstruccionRoutes); //Ruta permiso de construcció
 app.use('/permedif', PermisoEdificacionRoutes); //Ruta permiso de edificacion
 app.use('/permevent', PermisoEventosRoutes); //Ruta permiso de eventos
 app.use('/datosmunicipalidad', datosTransferenciaRoutes); //Ruta para obtener datos de municipalidad, opcional de usar manualmente.
-
+app.use('/multas-usuario', fineRoutes);
 const PORT = process.env.PORT || 443; //443;	// Puerto de conexión
 
 app.listen(PORT, () => console.log('Conexión con el puerto 443 - 1705'));    // Inicializa el servidor en el puerto 4000
