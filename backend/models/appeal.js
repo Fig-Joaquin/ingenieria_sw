@@ -6,11 +6,6 @@ const appealSchema = new mongoose.Schema({
     ref: 'usuario', 
     required: true 
   },
- appealOriginal: { // Apelación original
-  type: mongoose.Schema.Types.ObjectId, 
-    ref: 'apelacionUsuario', 
-    required: true 
-},
   reason: {  // Motivo de la apelación
     type: String, 
     required: true 

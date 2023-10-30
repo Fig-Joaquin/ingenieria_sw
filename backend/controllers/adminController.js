@@ -1,4 +1,5 @@
 import Admin from '../models/admin.js'
+import User from '../models/user.js';
 import generateJWT from '../helpers/generateJWT.js'
 
 const profile = async (req, res) => {
@@ -45,9 +46,45 @@ const confirmAccount = async (req, res) => {
 const extractUserIdFromToken = (req,res) => {
     console.log(req.admin.id);
 };
+const getAllUser = async (req, res) => {
+    try {
+    const user = await User.find();
+    res.json(user);
+    } catch (error) {
+    res.status(500).json({ error: 'Error al obtener las apelaciones' });
+    }
+};
+
+const changeUserStatus = async (req, res) => {
+    const { rut, status } = req.body; // Asegúrate de que el nombre del campo coincida con el enviado en la solicitud
+
+    try {
+        const user = await User.findOne({ rut });
+
+        if (!user) {
+            return res.status(404).json({ error: 'Usuario no encontrado' });
+        }
+
+        if (!user.schema.path('statusUser').enumValues.includes(status)) {
+            console.log(status);
+            return res.status(400).json({ error: 'El nuevo estado no es válido' });
+        }
+
+        user.statusUser = status;
+        await user.save();
+
+        res.json({ message: 'Estado del usuario actualizado' });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Error al actualizar el estado del usuario' });
+    }
+};
 
 
-export {profile,authprofile,register,confirmAccount,extractUserIdFromToken};
+
+
+
+export {profile,authprofile,register,changeUserStatus,confirmAccount,extractUserIdFromToken,getAllUser};
 
 // Por importar
 /*

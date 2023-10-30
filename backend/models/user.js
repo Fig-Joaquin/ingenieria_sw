@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
   },
   statusUser: {
     type: String,
-    enum: ['Deudor', 'Solvente'], // Solvente de deuda significa que no carga con deudas pendientes.
-    default: 'Solvente',
+    enum: ['deudor', 'solvente'], // Solvente de deuda significa que no carga con deudas pendientes.
+    default: 'solvente',
   },
   email: {
     type: String,

@@ -51,6 +51,7 @@ const getFinesByRut = async (req, res) => {
     res.status(500).json({ error: 'Error al obtener las multas por rut' });
     }
 };
+
 const updateFineStatus = async (req, res) => {
   try {
     const { fineId, newStatus } = req.body; // Obtén el ID de la multa y el nuevo estado desde la solicitud
