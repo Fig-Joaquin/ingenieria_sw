@@ -30,6 +30,7 @@ const formSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    image: Buffer,
 });
 
 const FormularioPermisoCirculacion = mongoose.model('formularioPermisoCirculacion', formSchema);

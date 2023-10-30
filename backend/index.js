@@ -9,6 +9,8 @@ import appealUserRoutes from './routes/appealUserRoutes.js'
 import fineRoutes from './routes/fineRoutes.js'	// importa las rutas de multas
 import PatenteComercialRoutes from './routes/formsRoutes/PatenteComercialRoutes.js' // importa rutas de patente comercial
 import uploadRoutes from './routes/uploadRoutes.js' // importa rutas para subida de comprobantes
+import DerechoDeAseoRoutes from './routes/formsRoutes/DerechoDeAseoRoutes.js' //importa rutas para derechos de aseo
+import PermisoConstruccionRoutes from './routes/formsRoutes/PermisoConstruccionRoutes.js'
 
 
 const app = express();	// Llamado a la función de express
@@ -23,7 +25,8 @@ app.use('/usuario', userRoutes);// ruta usuario
 app.use('/nueva-apelacion', appealUserRoutes);	// Ruta apelación para el usuario
 app.use('/patcom', PatenteComercialRoutes); // Ruta Patente Comercial
 app.use('/upload', uploadRoutes); // Ruta para subir archivos
-
+app.use('/aseo', DerechoDeAseoRoutes); // Ruta para derecho de aseo
+app.use('/permconst', PermisoConstruccionRoutes); //Ruta permiso de construcción
 
 const PORT = process.env.PORT || 443; //443;	// Puerto de conexión
 
