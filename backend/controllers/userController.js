@@ -1,7 +1,9 @@
 import User from '../models/user.js';
 
+
+//Funciones de registro
 const register = async (req, res) => {   
-    const {rut} = req.body;
+    const {rut} = req.body;//Extrae el rut para buscar el usuario
 
     const UserExists = await User.findOne({rut});
     if(UserExists) return res.status(400).json({msg: "El usuario ya existe"});
@@ -15,9 +17,9 @@ const register = async (req, res) => {
     }
 };
 
-
+//Funciones de login
 const login = async (req, res) => {
-    const {rut, password} = req.body;
+    const {rut, password} = req.body;//Extrae el rut y la contraseña para buscar el usuario
 
     const user = await User.findOne({rut});
     if(!user) return res.status(400).json({msg: "El usuario no existe"});
@@ -27,9 +29,9 @@ const login = async (req, res) => {
     res.json({msg: "Inicio de sesión exitoso"});
 };
 
-
+//Funciones de obtener datos del usuario
 const getUser = async (req, res) => {
-    const {rut} = req.query;
+    const {rut} = req.query;//Extrae el rut para buscar el usuario
 
     const user = await User.findOne({rut});
     if(!user) return res.status(404).json({msg: "Usuario no encontrado"});
@@ -39,9 +41,9 @@ const getUser = async (req, res) => {
 
 
 
-
+//Funciones de actualizar datos del usuario
 const updateUser = async (req, res) => {
-  const { rut } = req.body; // Suponemos que la ruta incluye el rut del usuario a actualizar
+  const { rut } = req.body; // Extrae rut para buscar el usuario
   const userDataToUpdate = req.body; // Los datos que deseas actualizar
 
   try {
@@ -52,9 +54,7 @@ const updateUser = async (req, res) => {
       return res.status(404).json({ msg: "Usuario no encontrado" });
     }
 
-    // Actualiza los campos que desees
-    // Aquí asumimos que los campos a actualizar están en userDataToUpdate
-    // Por ejemplo, si deseas actualizar el nombre y el apellido:
+
     user.name = userDataToUpdate.name || user.name;
     user.lastName = userDataToUpdate.lastName || user.lastName;
     user.email = userDataToUpdate.email || user.email;
