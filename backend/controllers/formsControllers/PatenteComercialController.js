@@ -1,35 +1,62 @@
-import FormularioPermisoCirculacion from "../../models/forms/PermisoCirculacion.js";
+import FormularioPatenteComercial from "../../models/forms/PatenteComercial.js";
 import { v4 as uuidv4 } from 'uuid';
-//  Crear un nuevo formulario de Permiso de Circulación
+
+// Crear un nuevo formulario de Patentes Comerciales
 const crearFormulario = async (req, res) => {
     try {
-        const { rut, patente } = req.body;
+        const {
+            nombreComercio,
+            rubro,
+            direccion,
+            numeroLocal,
+            rutTitular,
+            nombreTitular,
+            telefono,
+            email,
+            fechaInicioActividades,
+            actividadEconomica,
+            cantidadEmpleados,
+            ingresosAnuales
+        } = req.body;
+
+        // Crea un nuevo formulario
+        const nuevoFormulario = new FormularioPatenteComercial({
+            nombreComercio,
+            rubro,
+            direccion,
+            numeroLocal,
+            rutTitular,
+            nombreTitular,
+            telefono,
+            email,
+            fechaInicioActividades,
+            actividadEconomica,
+            cantidadEmpleados,
+            ingresosAnuales
+        });
 
         // Generar un identificador único para el comprobante de depósito
         const comprobanteId = uuidv4();
 
-        // Crea un nuevo formulario
-        const nuevoFormulario = new FormularioPermisoCirculacion({
-            rut,
-            patente,
-        });
-
         // Guardar el formulario en la base de datos
         await nuevoFormulario.save();
+        
         const enlaceComprobante = `/upload/subir-comprobante/${comprobanteId}`;
+
         res.status(201).json({ mensaje: `Registro exitoso. Suba su comprobante de transferencia a ${enlaceComprobante}` });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ mensaje: 'Error al crear el registro.' });
     }
 };
 
-//  Obtener un formulario a partir del RUT
+// Obtener un formulario de Patentes Comerciales a partir del RUT
 const obtenerFormularioPorRut = async (req, res) => {
     try {
-        const { rut } = req.params;
+        const { rutTitular } = req.params;
 
-        const formulario = await FormularioPermisoCirculacion.findOne({ rut });
+        const formulario = await FormularioPatenteComercial.findOne({ rutTitular });
 
         if (!formulario) {
             return res.status(404).json({ mensaje: 'Registro no encontrado.' });
@@ -42,13 +69,13 @@ const obtenerFormularioPorRut = async (req, res) => {
     }
 };
 
-// Eliminar un formulario
+// Eliminar un formulario de Patentes Comerciales
 const eliminarFormulario = async (req, res) => {
     try {
-        const { rut } = req.params;
+        const { rutTitular } = req.params;
 
-        // Eliminar el formulario por su RUT
-        await FormularioPermisoCirculacion.findOneAndRemove({ rut });
+        // Eliminar el formulario de Patentes Comerciales por su RUT
+        await FormularioPatenteComercial.findOneAndRemove({ rutTitular });
 
         res.status(200).json({ mensaje: 'Registro eliminado exitosamente.' });
     } catch (error) {
@@ -57,13 +84,13 @@ const eliminarFormulario = async (req, res) => {
     }
 };
 
-//  Marcar un formulario como pagado por RUT
-
+// Marcar un formulario de Patentes Comerciales como pagado por RUT
+// -IMPORTANTE: VALIDAR RANGO ADMIN PARA HACER PUT AQUÍ-
 const marcarComoPagado = async (req, res) => {
     try {
-        const { rut } = req.params;
+        const { rutTitular } = req.params;
 
-        const formulario = await FormularioPermisoCirculacion.findOne({ rut });
+        const formulario = await FormularioPatenteComercial.findOne({ rutTitular });
 
         if (!formulario) {
             return res.status(404).json({ mensaje: 'Registro no encontrado.' });
@@ -78,7 +105,6 @@ const marcarComoPagado = async (req, res) => {
         res.status(500).json({ mensaje: 'Error al marcar el registro como pagado.' });
     }
 };
-
 
 export {
     crearFormulario,

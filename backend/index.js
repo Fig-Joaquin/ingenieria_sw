@@ -7,6 +7,9 @@ import userRoutes from './routes/userRoutes.js'
 import appealRoutes from './routes/appealRoutes.js'	// importa las rutas de apelación
 import appealUserRoutes from './routes/appealUserRoutes.js'
 import fineRoutes from './routes/fineRoutes.js'	// importa las rutas de multas
+import PatenteComercialRoutes from './routes/formsRoutes/PatenteComercialRoutes.js' // importa rutas de patente comercial
+import uploadRoutes from './routes/uploadRoutes.js' // importa rutas para subida de comprobantes
+
 
 const app = express();	// Llamado a la función de express
 app.use(express.json());	// Enviar datos de tipo json
@@ -18,6 +21,8 @@ app.use('/adm-muni', adminRoutes, appealRoutes, fineRoutes);	// Ruta administrad
 app.use('/permcirc', PermisoCirculacionRoutes);
 app.use('/usuario', userRoutes);// ruta usuario
 app.use('/nueva-apelacion', appealUserRoutes);	// Ruta apelación para el usuario
+app.use('/patcom', PatenteComercialRoutes); // Ruta Patente Comercial
+app.use('/upload', uploadRoutes); // Ruta para subir archivos
 
 
 const PORT = process.env.PORT || 443; //443;	// Puerto de conexión
