@@ -1,5 +1,6 @@
 import DerechosDeAseo from "../../models/forms/DerechoDeAseo.js";
 import { v4 as uuidv4 } from 'uuid';
+import { obtenerDatosTransferencia } from "../datosTransferenciaController.js";
 
 const crearDerechosDeAseo = async (req, res) => {
     try {
@@ -27,7 +28,20 @@ const crearDerechosDeAseo = async (req, res) => {
         const enlaceComprobante = `/upload/subir-comprobante/${comprobanteId}`;
         
         res.status(201).json({ mensaje: `Registro exitoso. Suba su comprobante de transferencia a ${enlaceComprobante}` });
-
+        const getDatos = async (req, res) => {
+            try {
+                // Llama a la función para obtener los datos de transferencia
+                const datos = await obtenerDatosTransferencia(req, res);
+        
+                // Muestra los datos (solo valido con html)
+                console.log(datos);
+        
+                res.status(200).json({ mensaje: 'Esperamos su depósito.' });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ mensaje: 'Error al obtener los datos de transferencia.' });
+            }
+        };
     } catch (error) {
         console.error(error);
         res.status(500).json({ mensaje: 'Error al crear el registro de Derechos de Aseo.' });
