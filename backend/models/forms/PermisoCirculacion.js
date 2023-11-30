@@ -4,26 +4,28 @@ import mongoose from 'mongoose';
 const formSchema = new mongoose.Schema({
     rut: {
         type: String,
-        required: true,
+        required: [true, 'El RUT del titular es obligatorio.'],
         unique: true,
         validate: {
             validator: function (value) {
-                // Validar el formato del RUT (por ejemplo, 12345678-9)
-                return /^\d{7,8}-[\dkK]$/.test(value);
+                return /^\d{7,8}[\dkK]$/.test(value);
             },
-            message: 'El formato del RUT no es válido. No puede tener puntos y debe considerar guión, por ejemplo: 12345678-9.'
+            message: 'El formato del RUT no es válido. Debe ser 123456789 o 12345678K.',
         }
     },
     patente: {
         type: String,
-        required: true,
+        required: [true, 'La patente es obligatoria.'],
         unique: true,
         validate: {
             validator: function (value) {
-                // Validar el formato de la patente (por ejemplo, AB123CD)
-                return /^[A-Z]{2}\d{3}[A-Z]{2}$/.test(value);
+                // Validar el formato de la patente
+                // Formato antiguo: XX1234 (dos letras y cuatro números)
+                // Formato nuevo: BBBBXX (cuatro letras B y dos letras X)
+                // Formato para motos: XX123 (dos letras y tres números)
+                return /^[A-Z]{2}\d{4}$/.test(value) || /^[A-Z]{4}\d{2}$/.test(value) || /^[A-Z]{2}\d{3}$/.test(value);
             },
-            message: 'El formato de la patente no es válido. Debe ser por ejemplo: AB123CD.'
+            message: 'El formato de la patente no es válido. Debe ser por ejemplo: AB1234, BBBB12 o AB123.'
         }
     },
     pagado: {

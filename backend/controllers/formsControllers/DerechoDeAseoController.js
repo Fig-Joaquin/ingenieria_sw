@@ -44,7 +44,7 @@ const crearDerechosDeAseo = async (req, res) => {
         };
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensaje: 'Error al crear el registro de Derechos de Aseo.' });
+        res.status(500).json({ mensaje: 'Registro de Derecho de Aseo invalido.' });
     }
 };
 
