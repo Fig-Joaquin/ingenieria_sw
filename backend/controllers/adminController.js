@@ -51,7 +51,7 @@ const getAllUser = async (req, res) => {
     const user = await User.find();
     res.json(user);
     } catch (error) {
-    res.status(500).json({ error: 'Error al obtener las apelaciones' });
+    res.status(400).json({ error: 'Error al obtener las apelaciones' });
     }
 };
 
@@ -75,7 +75,7 @@ const changeUserStatus = async (req, res) => {
       const user = await User.findOne({ rut });
   
       if (!user) {
-        return res.status(404).json({ error: 'Usuario no encontrado' });
+        return res.status(400).json({ error: 'Usuario no encontrado' });
       }
   
       const allowedStatus = ["deudor", "solvente"];
@@ -92,7 +92,7 @@ const changeUserStatus = async (req, res) => {
       res.json({ message: 'Estado del usuario actualizado' });
     } catch (error) {
       console.log(error);
-      res.status(500).json({ error: 'Error al actualizar el estado del usuario' });
+      res.status(400).json({ error: 'Error al actualizar el estado del usuario' });
     }
   };
   

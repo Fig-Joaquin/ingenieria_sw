@@ -22,7 +22,7 @@ const login = async (req, res) => {
     const user = await User.findOne({rut});
     if(!user) return res.status(400).json({msg: "El usuario no existe"});
 
-    if(user.password !== password) return res.status(401).json({msg: "Contraseña incorrecta"});
+    if(user.password !== password) return res.status(400).json({msg: "Contraseña incorrecta"});
 
     res.json({msg: "Inicio de sesión exitoso"});
 };
@@ -32,7 +32,7 @@ const getUser = async (req, res) => {
     const {rut} = req.query;
 
     const user = await User.findOne({rut});
-    if(!user) return res.status(404).json({msg: "Usuario no encontrado"});
+    if(!user) return res.status(400).json({msg: "Usuario no encontrado"});
 
     res.json({user});
 };
@@ -49,7 +49,7 @@ const updateUser = async (req, res) => {
     const user = await User.findOne({ rut });
 
     if (!user) {
-      return res.status(404).json({ msg: "Usuario no encontrado" });
+      return res.status(400).json({ msg: "Usuario no encontrado" });
     }
 
     // Actualiza los campos que desees
@@ -68,7 +68,7 @@ const updateUser = async (req, res) => {
     res.json({ msg: "Usuario actualizado exitosamente" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ msg: "Error interno del servidor" });
+    res.status(400).json({ msg: "Error interno del servidor" });
   }
 };
 

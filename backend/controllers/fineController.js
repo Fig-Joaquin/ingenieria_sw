@@ -46,10 +46,10 @@ const createFine = async (req, res) => {
     // Guarda la nueva multa en la base de datos
     await newFine.save();
 
-    res.status(201).json(newFine);
+    res.status(200).json(newFine);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al crear la multa' });
+    res.status(400).json({ error: 'Error al crear la multa' });
   }
 };
 
@@ -62,7 +62,7 @@ const getAllFines = async (req, res) => {
       res.status(200).json(fines); // Devuelve todas las multas como respuesta
     } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al obtener las multas' });
+    res.status(400).json({ error: 'Error al obtener las multas' });
     }
 };
 
@@ -83,7 +83,7 @@ const getFinesByRut = async (req, res) => {
       res.status(200).json(fines); // Devuelve las multas encontradas como respuesta
     } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al obtener las multas por rut' });
+    res.status(400).json({ error: 'Error al obtener las multas por rut' });
     }
 };
 
@@ -95,7 +95,7 @@ const updateFineStatus = async (req, res) => {
     const fine = await Fine.findById(fineId);
 
     if (!fine) {
-      return res.status(404).json({ error: 'Multa no encontrada' });
+      return res.status(400).json({ error: 'Multa no encontrada' });
     }
 
     const allowedStatus = ['pendiente', 'pagada', 'anulado'];
@@ -114,7 +114,7 @@ const updateFineStatus = async (req, res) => {
     res.status(200).json(fine); // Devuelve la multa actualizada como respuesta
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Error al actualizar el estado de la multa' });
+    res.status(400).json({ error: 'Error al actualizar el estado de la multa' });
   }
 };
 
@@ -127,7 +127,7 @@ const getFinesByRutUser = async (req, res) => {
       const fines = await Fine.findOne({ rut });
 
       if (!fines || fines.length === 0) {
-          return res.status(404).json({ error: 'No se encontraron multas para este RUT' });
+          return res.status(400).json({ error: 'No se encontraron multas para este RUT' });
       }
 
       res.json(fines); // Devuelve las multas encontradas para el RUT especificado

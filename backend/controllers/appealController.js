@@ -13,7 +13,7 @@ const createAppealForClient = async (req, res) => {
 
     const client = await User.findOne({ rut });
     if (!client) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
+      return res.status(400).json({ error: 'Usuario no encontrado' });
     }
 
     // Crea una nueva apelación asignada al usuario con el ID proporcionado
@@ -25,10 +25,10 @@ const createAppealForClient = async (req, res) => {
 
     // Guarda la apelación en la base de datos
     await newAppeal.save();
-    res.status(201).json(newAppeal);
+    res.status(200).json(newAppeal);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Error al crear la apelación' });
+    res.status(400).json({ error: 'Error al crear la apelación' });
   }
 };
 
@@ -47,9 +47,9 @@ const createAppealForClient = async (req, res) => {
         // Guardar la apelación en la base de datos
         const savedAppeal = await newAppeal.save();
 
-        res.status(201).json(savedAppeal); // Devolver la apelación creada como respuesta
+        res.status(200).json(savedAppeal); // Devolver la apelación creada como respuesta
     } catch (error) {
-        res.status(500).json({ message: 'Hubo un error al crear la apelación', error: error.message });
+        res.status(400).json({ message: 'Hubo un error al crear la apelación', error: error.message });
     }
 };
 
@@ -63,7 +63,7 @@ const decisionAppeal = async (req, res) => {
 
   const client = await User.findOne({ rut });
   if (!client) {
-    return res.status(404).json({ error: 'Usuario no encontrado' });
+    return res.status(400).json({ error: 'Usuario no encontrado' });
   }
 
   // Validar el formato del status
@@ -78,7 +78,7 @@ const decisionAppeal = async (req, res) => {
       .exec();
 
     if (!latestAppeal) {
-      return res.status(404).json({ error: 'No se encontró la última apelación para este usuario' });
+      return res.status(400).json({ error: 'No se encontró la última apelación para este usuario' });
     }
 
     latestAppeal.status = status;
@@ -86,7 +86,7 @@ const decisionAppeal = async (req, res) => {
 
     res.json({ message: 'Estado de la última apelación actualizado' });
   } catch (error) {
-    res.status(500).json({ error: 'Error al actualizar la última apelación' });
+    res.status(400).json({ error: 'Error al actualizar la última apelación' });
   }
 };
 
@@ -98,12 +98,12 @@ const decisionAppeal = async (req, res) => {
       const appeals = await Appeal.find({ clientRut: rut });
   
       if (!appeals || appeals.length === 0) {
-        return res.status(404).json({ error: 'No se encontraron apelaciones para este cliente' });
+        return res.status(400).json({ error: 'No se encontraron apelaciones para este cliente' });
       }
   
       res.json(appeals);
     } catch (error) {
-      res.status(500).json({ error: 'Error al buscar apelaciones por el rut del cliente' });
+      res.status(400).json({ error: 'Error al buscar apelaciones por el rut del cliente' });
     }
   };
 /*

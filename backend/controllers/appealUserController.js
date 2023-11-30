@@ -13,10 +13,10 @@ try {
     });
       // Guarda la nueva apelación en la base de datos
     await newAppealUser.save();
-    res.status(201).json(newAppealUser);
+    res.status(200).json(newAppealUser);
     } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Error al crear la apelación' });
+    res.status(400).json({ error: 'Error al crear la apelación' });
     }
 };
 

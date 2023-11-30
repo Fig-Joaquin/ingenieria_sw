@@ -9,7 +9,7 @@ const crearDatosTransferenciaFijos = async (req, res) => {
         res.status(200).json({ mensaje: 'Datos de transferencia fijos creados exitosamente.' });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensaje: 'Error al crear los datos de transferencia fijos.' });
+        res.status(400).json({ mensaje: 'Error al crear los datos de transferencia fijos.' });
     }
 };
 
@@ -18,13 +18,13 @@ const obtenerDatosTransferencia = async (req, res) => {
         const datosTransferencia = await TransferenciaDatos.findOne();
 
         if (!datosTransferencia) {
-            return res.status(404).json({ mensaje: 'Datos de transferencia no encontrados.' });
+            return res.status(400).json({ mensaje: 'Datos de transferencia no encontrados.' });
         }
 
         res.status(200).json(datosTransferencia);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensaje: 'Error al obtener los datos de transferencia.' });
+        res.status(400).json({ mensaje: 'Error al obtener los datos de transferencia.' });
     }
 };
 
