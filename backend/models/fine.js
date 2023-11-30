@@ -7,6 +7,7 @@ const fineSchema = new mongoose.Schema({
   },
   violationType: { // Tipo de multa
     type: String,
+    enum: ['falta gravisima', 'falta grave', 'falta menos grave', 'falta leve'],
     required: true,
   },
   description: { // Descripccion

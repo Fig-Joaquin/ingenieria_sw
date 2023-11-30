@@ -55,30 +55,47 @@ const getAllUser = async (req, res) => {
     }
 };
 
+const isValidRut = (rut) => {
+    const rutRegex = /^[0-9]{7,8}-?[0-9kK]$/;
+  
+    return rutRegex.test(rut);
+  };
+  
+
 const changeUserStatus = async (req, res) => {
-    const { rut, status } = req.body; // Asegúrate de que el nombre del campo coincida con el enviado en la solicitud
-
-    try {
-        const user = await User.findOne({ rut });
-
-        if (!user) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
-
-        if (!user.schema.path('statusUser').enumValues.includes(status)) {
-            console.log(status);
-            return res.status(400).json({ error: 'El nuevo estado no es válido' });
-        }
-
-        user.statusUser = status;
-        await user.save();
-
-        res.json({ message: 'Estado del usuario actualizado' });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Error al actualizar el estado del usuario' });
+    const { rut, status } = req.body;
+  
+    // Validar el formato del RUT
+    if (!isValidRut(rut)) {
+      return res.status(400).json({ error: 'RUT no válido' });
     }
-};
+  
+    // Asegúrate de que el nombre del campo coincida con el enviado en la solicitud
+    try {
+      const user = await User.findOne({ rut });
+  
+      if (!user) {
+        return res.status(404).json({ error: 'Usuario no encontrado' });
+      }
+  
+      const allowedStatus = ["deudor", "solvente"];
+  
+      // Validar que el nuevo estado sea válido
+      if (!allowedStatus.includes(status.toLowerCase())) {
+        console.log(status);
+        return res.status(400).json({ error: 'El nuevo estado no es válido' });
+      }
+  
+      user.statusUser = status;
+      await user.save();
+  
+      res.json({ message: 'Estado del usuario actualizado' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Error al actualizar el estado del usuario' });
+    }
+  };
+  
 
 
 

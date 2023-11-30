@@ -3,27 +3,35 @@ import User from '../models/user.js'
 
 // Funcion para crear una apelación asignada a un usuario específico
 const createAppealForClient = async (req, res) => {
-    try {
-      const { reason, rut, status } = req.body; // Obtiene el motivo de la apelación del cuerpo de la solicitud
-      const client = await User.findOne({ rut }); // Busca el usuario por su rut
-      console.log(client._id);
-      if (!client) {
-        return res.status(404).json({ error: 'Usuario no encontrado' });
-      };
-      // Crea una nueva apelación asignada al usuario con el ID proporcionado
+  try {
+    const { reason, rut, status } = req.body;
+    
+    // Validar el formato del RUT
+    if (!isValidRut(rut)) {
+      return res.status(400).json({ error: 'RUT no válido' });
+    }
+
+    const client = await User.findOne({ rut });
+    if (!client) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    // Crea una nueva apelación asignada al usuario con el ID proporcionado
     const newAppeal = new Appeal({
       user: client._id,
       reason,
-      status: status || 'pendiente', 
+      status: status || 'pendiente',
     });
-      // Guarda la apelación en la base de datos
-      await newAppeal.save();
-      res.status(201).json(newAppeal);
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: 'Error al crear la apelación' });
-    };
-  };
+
+    // Guarda la apelación en la base de datos
+    await newAppeal.save();
+    res.status(201).json(newAppeal);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Error al crear la apelación' });
+  }
+};
+
 
   const createAppealUser = async (req, res) => {
     try {
@@ -45,33 +53,43 @@ const createAppealForClient = async (req, res) => {
     }
 };
 
-    // Actualizar la apelación - valores: pendiente - aprobada - rechazada
-    const decisionAppeal = async (req, res) => {
-      const { status, rut } = req.body; // Obtiene el estado de la apelación del cuerpo de la solicitud
-      const client = await User.findOne({ rut }); // Busca al usuario por su RUT
-      if (!client) {
-          return res.status(404).json({ error: 'Usuario no encontrado' });
-      }
+const decisionAppeal = async (req, res) => {
+  const { status, rut } = req.body;
   
-      try {
-          // Buscar y ordenar las apelaciones relacionadas con el RUT del cliente por fecha de presentación (de más reciente a más antigua)
-          const latestAppeal = await Appeal.findOne({ user: client._id })
-              .sort({ dateSubmitted: -1 }) // Ordenar por fecha de presentación de forma descendente (la más reciente primero)
-              .exec();
-  
-          if (!latestAppeal) {
-              return res.status(404).json({ error: 'No se encontró la última apelación para este usuario' });
-          }
-  
-          // Modificar el estado de la última apelación encontrada
-          latestAppeal.status = status;
-          await latestAppeal.save();
-  
-          res.json({ message: 'Estado de la última apelación actualizado' });
-      } catch (error) {
-          res.status(500).json({ error: 'Error al actualizar la última apelación' });
-      }
-  };
+  // Validar el formato del RUT
+  if (!isValidRut(rut)) {
+    return res.status(400).json({ error: 'RUT no válido' });
+  }
+
+  const client = await User.findOne({ rut });
+  if (!client) {
+    return res.status(404).json({ error: 'Usuario no encontrado' });
+  }
+
+  // Validar el formato del status
+  const allowedStatus = ["pendiente", "aprobada", "rechazada"];
+  if (!allowedStatus.includes(status.toLowerCase())) {
+    return res.status(400).json({ error: 'Estado no válido. Debe ser "pendiente", "aprobada" o "rechazada"' });
+  }
+
+  try {
+    const latestAppeal = await Appeal.findOne({ user: client._id })
+      .sort({ dateSubmitted: -1 })
+      .exec();
+
+    if (!latestAppeal) {
+      return res.status(404).json({ error: 'No se encontró la última apelación para este usuario' });
+    }
+
+    latestAppeal.status = status;
+    await latestAppeal.save();
+
+    res.json({ message: 'Estado de la última apelación actualizado' });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al actualizar la última apelación' });
+  }
+};
+
 
   const findAppealsByClientRut = async (req, res) => {
     const { rut } = req.body; // Obtén el `rut` del cliente desde los parámetros de la solicitud
@@ -88,7 +106,7 @@ const createAppealForClient = async (req, res) => {
       res.status(500).json({ error: 'Error al buscar apelaciones por el rut del cliente' });
     }
   };
-
+/*
   const getUserAppeals = async (req, res) => { 
     const { rut } = req.body; // Obtiene el RUT del usuario de los parámetros de la URL
     try {
@@ -104,6 +122,32 @@ const createAppealForClient = async (req, res) => {
       res.status(500).json({ error: 'Error al obtener las apelaciones del usuario' });
     }
   };
+*/
+
+const isValidRut = (rut) => {
+  const rutRegex = /^[0-9]{7,8}-?[0-9kK]$/;
+
+  return rutRegex.test(rut);
+};
+
+const getUserAppeals = async (req, res) => {
+  const { rut } = req.body;
+  try {
+    if (!isValidRut(rut)) {
+      return res.status(400).json({ error: 'RUT no válido' });
+    }
+
+    const client = await User.findOne({ rut });
+    if (!client) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    const appeals = await Appeal.find({ user: client._id });
+    res.json(appeals);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener las apelaciones del usuario' });
+  }
+};
 
   const getAllAppeals = async (req, res) => {
     try {
