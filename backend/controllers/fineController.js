@@ -133,7 +133,7 @@ const getFinesByRutUser = async (req, res) => {
       res.json(fines); // Devuelve las multas encontradas para el RUT especificado
   } catch (error) {
       console.error(error);
-      res.status(500).json({ error: 'Error al buscar las multas por RUT' });
+      res.status(400).json({ error: 'Error al buscar las multas por RUT' });
   }
 };
 
