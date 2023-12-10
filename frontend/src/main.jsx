@@ -1,9 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
+import { CrearPagoBasura }  from './components/CrearAseo.jsx'
+import { CrearPatenteComercial } from './components/CrearPatcom.jsx'
+import { CrearPermisoCirculacion } from './components/CrearPermcirc.jsx'
+import './styles/styles.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <CrearPatenteComercial/>
+    <CrearPagoBasura/>
+    <CrearPermisoCirculacion/>
   </React.StrictMode>,
 )
