@@ -13,7 +13,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
-import BackToHomeButton from './back';
+
 
 export const CrearPermisoEdificacion = () => {
   const [formulario, setFormulario] = useState({
@@ -142,8 +142,6 @@ export const CrearPermisoEdificacion = () => {
                     Enviar solicitud
                   </Button>
                 </VStack>
-                
-             <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
               </form>
               <BackToHomeButton />
             </Box>

@@ -13,7 +13,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
-import BackToHomeButton from './back';
+
 
 export const CrearPatenteComercial = () => {
   const [formulario, setFormulario] = useState({
@@ -125,8 +125,6 @@ export const CrearPatenteComercial = () => {
                     Continuar
                   </Button>
                 </VStack>
-         
-             <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
               </form>
               <BackToHomeButton />
             </Box>

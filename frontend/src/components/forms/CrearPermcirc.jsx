@@ -13,7 +13,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
-import BackToHomeButton from './back';
+
 
 export const CrearPermisoCirculacion = () => {
   const [formulario, setFormulario] = useState({
@@ -81,8 +81,6 @@ export const CrearPermisoCirculacion = () => {
                     Continuar
                   </Button>
                 </VStack>
-                
-               <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
               </form>
               <BackToHomeButton />
             </Box>

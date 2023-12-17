@@ -13,7 +13,6 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
-import BackToHomeButton from './back';
 
 export const CrearPermisoEventos = () => {
   const [formulario, setFormulario] = useState({
@@ -123,11 +122,7 @@ export const CrearPermisoEventos = () => {
                   </FormControl>
                   <FormControl>
                     <FormLabel>
-                      Teléfono de contacto{' '}
-                      <Box as="span" fontStyle="italic">
-                        (formato +56912345678)
-                      </Box>
-                      :
+                      Teléfono de contacto:
                     </FormLabel>
                     <Input
                       type="text"
@@ -151,8 +146,6 @@ export const CrearPermisoEventos = () => {
                     Continuar
                   </Button>
                 </VStack>
-                
-              <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
               </form>
               <BackToHomeButton/>
             </Box>
