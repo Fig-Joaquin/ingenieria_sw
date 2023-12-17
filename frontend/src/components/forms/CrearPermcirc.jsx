@@ -85,3 +85,5 @@ export const CrearPermisoCirculacion = () => {
     </ChakraProvider>
   );
 };
+
+export default CrearPermisoCirculacion;

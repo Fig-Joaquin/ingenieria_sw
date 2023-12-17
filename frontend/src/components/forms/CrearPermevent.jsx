@@ -151,3 +151,5 @@ export const CrearPermisoEventos = () => {
     </ChakraProvider>
   );
 };
+
+export default CrearPermisoEventos;

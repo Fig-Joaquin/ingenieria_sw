@@ -135,3 +135,6 @@ export const CrearPermisoEdificacion = () => {
     </ChakraProvider>
   );
 };
+
+
+export default CrearPermisoEdificacion;

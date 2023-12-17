@@ -14,12 +14,15 @@ import PermisoConstruccionRoutes from './routes/formsRoutes/PermisoConstruccionR
 import PermisoEdificacionRoutes from './routes/formsRoutes/PermisoEdificacionRoutes.js' // ..
 import PermisoEventosRoutes from './routes/formsRoutes/PermisoEventosRoutes.js' // ..
 import datosTransferenciaRoutes from './routes/datosTransferenciaRoutes.js' // ..
+import cors from 'cors'; // Importa cors
 
 const app = express();	// Llamado a la función de express
 app.use(express.json());	// Enviar datos de tipo json
 dotenv.config();    // Llamado a la función de dotenv
 conectarDB();	// Llamado a la función de conexión a la base de datos
-
+// Configura CORS (antes de las definiciones de rutas)
+// Configura CORS para todas las rutas
+app.use(cors());
 
 app.use('/adm-muni', adminRoutes, appealRoutes, fineRoutes);	// Ruta administrador - tambien dirige a las apelaciones con funciones propias del administrador
 app.use('/permcirc', PermisoCirculacionRoutes);

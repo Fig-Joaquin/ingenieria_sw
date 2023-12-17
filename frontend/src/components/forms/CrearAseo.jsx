@@ -9,7 +9,7 @@ import {
   Button,
 } from '@chakra-ui/react';
 
-export const CrearPagoBasura = () => {
+const CrearPagoBasura = () => {
   const [formulario, setFormulario] = useState({
     nombreResidente: '',
     rutResidente: '',
@@ -29,11 +29,13 @@ export const CrearPagoBasura = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/aseo/crear', formulario);
+      const response = await axios.post('http://localhost:443/aseo/crear', formulario);
       console.log(response.data.mensaje);
-
-      // Añadir redirección pendiente.
-
+      if (response.status === 200) {
+        console.log('¡Registro exitoso!', 'El usuario ha sido registrado correctamente.', 'success');
+      } else if (response.status === 400) {
+        console.log('No se ha registrado el usuario', 'Error', '!');
+      }
     } catch (error) {
       console.error(error);
     }
@@ -103,3 +105,5 @@ export const CrearPagoBasura = () => {
     </Box>
   );
 };
+
+export default CrearPagoBasura;
