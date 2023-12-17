@@ -36,7 +36,7 @@ const AppealsForm = () => {
     //*VERIFICAR RUTA DE LA API EN BACKEND*
 
     try {
-      const response = await axios.post('http://localhost:443/create-appeal', formData);
+      const response = await axios.post('http://localhost:443/admin-muni', formData);
 
       console.log('Appeal created:', response.data);
 

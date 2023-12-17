@@ -132,7 +132,7 @@ const DatosTransferencia = () => {
             <ModalHeader>¡Muchas Gracias!</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              Su comprobante se ha subido con éxito. Porfavor espere a que un administrador valide su comprobante (1-3 días hábiles).
+              Su comprobante se ha subido con éxito. Por favor estar a la espera de que un administrador valide su comprobante (1-3 días hábiles).
             </ModalBody>
             <ModalFooter>
               <BackToHomeButton />

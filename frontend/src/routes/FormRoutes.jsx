@@ -17,6 +17,7 @@ import CrearPermisoEdificacion from '../components/forms/CrearPermedif';
 import CrearPermisoConstruccion from '../components/forms/CrearPermconst';
 import CrearPatenteComercial from '../components/forms/CrearPatcom';
 import CrearPermisoEventos from '../components/forms/CrearPermevent';
+import DatosTransferencia from '../components/DatosTransferencia';
 
 import App from '../app.jsx';
 const HomePage = () => {
@@ -82,6 +83,7 @@ const Form = () => {
           <Route path="/CrearPermisoConstruccion" element={<CrearPermisoConstruccion />} />
           <Route path="/CrearPatenteComercial" element={<CrearPatenteComercial />} />
           <Route path="/crearPermisoEventos" element={<CrearPermisoEventos />} />
+          <Route path="/DatosTransferencia" element={<DatosTransferencia />} />
         </Routes>
       </ChakraProvider>
     </Router>
