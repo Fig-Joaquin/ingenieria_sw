@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from 'axios';  
+import BackToHomeButton from './back';
 import {
   ChakraProvider,
   Box,
@@ -40,7 +41,7 @@ export const CrearPatenteComercial = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/patcom/crear', formulario);
+      const response = await axios.post('http://localhost:443/patcom/crear', formulario);
       console.log(response.data.mensaje);
 
       // Añadir redirección.
@@ -117,6 +118,8 @@ export const CrearPatenteComercial = () => {
                     Continuar
                   </Button>
                 </VStack>
+         
+             <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
               </form>
             </Box>
           </VStack>

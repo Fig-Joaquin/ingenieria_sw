@@ -103,6 +103,7 @@ const CrearPagoBasura = () => {
           Continuar
         </Button>
       </form>
+      
       <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
     </Box>
   );
