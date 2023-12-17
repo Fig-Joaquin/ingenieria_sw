@@ -18,6 +18,7 @@ import CrearPermisoConstruccion from '../components/forms/CrearPermconst';
 import CrearPatenteComercial from '../components/forms/CrearPatcom';
 import CrearPermisoEventos from '../components/forms/CrearPermevent';
 
+import App from '../app.jsx';
 const HomePage = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
@@ -72,6 +73,7 @@ const Form = () => {
   return (
     <Router>
       <ChakraProvider>
+      <App />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/CrearPermisoCirculacion" element={<CrearPermisoCirculacion />} />

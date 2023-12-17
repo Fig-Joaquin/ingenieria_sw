@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import BackToHomeButton from './back';
 import {
   ChakraProvider,
   Box,
@@ -37,7 +38,7 @@ export const CrearPermisoConstruccion = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('/permconst/crear', formulario);
+      const response = await axios.post('http://localhost:443/permconst/crear', formulario);
       console.log(response.data.mensaje);
 
       // Aquí redirigir al usuario.
@@ -148,6 +149,8 @@ export const CrearPermisoConstruccion = () => {
                     Continuar
                   </Button>
                 </VStack>
+                
+              <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
               </form>
               <BackToHomeButton />
             </Box>
