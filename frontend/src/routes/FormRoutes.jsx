@@ -6,7 +6,7 @@ import CrearPermisoCirculacion from '../components/forms/CrearPermcirc';
 import CrearPermisoEdificacion from '../components/forms/CrearPermedif';
 import CrearPermisoConstruccion from '../components/forms/CrearPermconst';
 import CrearPatenteComercial from '../components/forms/CrearPatcom';
-
+import App from '../app.jsx';
 const HomePage = () => {
   const [showBackButton, setShowBackButton] = useState(false);
 
@@ -53,6 +53,7 @@ const Form = () => {
   return (
     <Router>
       <ChakraProvider>
+      <App />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/CrearPermisoCirculacion" element={<CrearPermisoCirculacion />} />
