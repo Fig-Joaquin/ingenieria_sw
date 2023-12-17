@@ -1,5 +1,13 @@
 import { useState } from 'react';
 import axios from 'axios';
+import {
+  Box,
+  Heading,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+} from '@chakra-ui/react';
 
 export const CrearPagoBasura = () => {
   const [formulario, setFormulario] = useState({
@@ -19,78 +27,79 @@ export const CrearPagoBasura = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.post('/aseo/crear', formulario);
       console.log(response.data.mensaje);
 
       // Añadir redirección pendiente.
-      
+
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
-      <h1>Servicio De Basura:</h1>
-      <p><h2>Ingrese los datos a continuación:</h2></p>
+    <Box p={8} maxWidth="500px" mx="auto">
+      <Heading as="h1" mb={8} textAlign="center">
+        Servicio De Basura
+      </Heading>
       <form onSubmit={handleSubmit}>
-        <label>
-          NOMBRE: 
-          <input
+        <FormControl>
+          <FormLabel>Nombre completo:</FormLabel>
+          <Input
             type="text"
             name="nombreResidente"
             value={formulario.nombreResidente}
             onChange={handleChange}
           />
-        </label>
-        <p></p>
-        <label>
-          RUT:
-          <input
+        </FormControl>
+        <FormControl mt={4}>
+        <FormLabel>
+          RUT del solicitante{' '}
+          <Box as="span" fontStyle="italic">
+           (sin puntos ni guión)
+          </Box>
+          :
+        </FormLabel>
+          <Input
             type="text"
             name="rutResidente"
             value={formulario.rutResidente}
             onChange={handleChange}
           />
-        </label>
-        <p></p>
-        <label>
-          DIRECCIÓN:
-          <input
+        </FormControl>
+        <FormControl mt={4}>
+          <FormLabel>Dirección:</FormLabel>
+          <Input
             type="text"
             name="direccion"
             value={formulario.direccion}
             onChange={handleChange}
           />
-        </label>
-        <p></p>
-        <label>
-          TELEFONO:
-          <input
+        </FormControl>
+        <FormControl mt={4}>
+          <FormLabel>Teléfono:</FormLabel>
+          <Input
             type="text"
             name="telefono"
             value={formulario.telefono}
             onChange={handleChange}
           />
-        </label>
-        <p></p>
-        <label>
-          CORREO ELECTRÓNICO:
-          <input
+        </FormControl>
+        <FormControl mt={4}>
+          <FormLabel>Correo electrónico:</FormLabel>
+          <Input
             type="text"
             name="email"
             value={formulario.email}
             onChange={handleChange}
           />
-        </label>
-        <p></p>
-        <button type="submit">Continuar</button>
+        </FormControl>
+        <Button type="submit" mt={8} colorScheme="teal">
+          Continuar
+        </Button>
       </form>
-    </div>
+    </Box>
   );
 };
-
-
-

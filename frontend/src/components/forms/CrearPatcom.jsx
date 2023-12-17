@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {
+  ChakraProvider,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Container,
+  Heading,
+  VStack,
+  Spacer,
+} from '@chakra-ui/react';
 
 export const CrearPatenteComercial = () => {
   const [formulario, setFormulario] = useState({
@@ -31,82 +43,85 @@ export const CrearPatenteComercial = () => {
       const response = await axios.post('/patcom/crear', formulario);
       console.log(response.data.mensaje);
 
-      // Añadir redirección. 
-      
+      // Añadir redirección.
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
-      <h1>Solicitud de Patente Comercial:</h1>
-      <p>
-        <h2>Ingrese los datos del comercio:</h2>
-      </p>
-      <form onSubmit={handleSubmit}>
-        <label>
-          NOMBRE COMERCIO:
-          <input
-            type="text"
-            name="nombreComercio"
-            value={formulario.nombreComercio}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          RUBRO:
-          <input
-            type="text"
-            name="rubro"
-            value={formulario.rubro}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          DIRECCIÓN:
-          <input
-            type="text"
-            name="direccion"
-            value={formulario.direccion}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          NÚMERO DEL LOCAL:
-          <input
-            type="number"
-            name="numeroLocal"
-            value={formulario.numeroLocal}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          CANTIDAD DE EMPLEADOS:
-          <input
-            type="number"
-            name="cantidadEmpleados"
-            value={formulario.cantidadEmpleados}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          INGRESOS ANUALES APROXIMADOS:
-          <input
-            type="number"
-            name="ingresosAnuales"
-            value={formulario.ingresosAnuales}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <button type="submit">Enviar solicitud</button>
-      </form>
-    </div>
+    <ChakraProvider>
+      <Box p={8}>
+        <Container maxW="xl">
+          <VStack spacing={4} align="stretch">
+            <Heading>Solicitud de Patente Comercial</Heading>
+            <Box>
+              <form onSubmit={handleSubmit}>
+                <VStack spacing={4} align="stretch">
+                  <FormControl>
+                    <FormLabel>Nombre del comercio:</FormLabel>
+                    <Input
+                      type="text"
+                      name="nombreComercio"
+                      value={formulario.nombreComercio}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Rubro:</FormLabel>
+                    <Input
+                      type="text"
+                      name="rubro"
+                      value={formulario.rubro}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Dirección del comercio:</FormLabel>
+                    <Input
+                      type="text"
+                      name="direccion"
+                      value={formulario.direccion}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Número del local:</FormLabel>
+                    <Input
+                      type="number"
+                      name="numeroLocal"
+                      value={formulario.numeroLocal}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Cantidad de empleados a la fecha:</FormLabel>
+                    <Input
+                      type="number"
+                      name="cantidadEmpleados"
+                      value={formulario.cantidadEmpleados}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Ingresos anuales aproximados:</FormLabel>
+                    <Input
+                      type="number"
+                      name="ingresosAnuales"
+                      value={formulario.ingresosAnuales}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <Spacer />
+                  <Button type="submit" mt={8} colorScheme="teal">
+                    Continuar
+                  </Button>
+                </VStack>
+              </form>
+            </Box>
+          </VStack>
+        </Container>
+      </Box>
+    </ChakraProvider>
   );
 };

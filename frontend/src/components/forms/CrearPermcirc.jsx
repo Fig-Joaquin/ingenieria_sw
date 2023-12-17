@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {
+  ChakraProvider,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Container,
+  Heading,
+  VStack,
+  Spacer,
+} from '@chakra-ui/react';
 
 export const CrearPermisoCirculacion = () => {
   const [formulario, setFormulario] = useState({
@@ -22,41 +34,54 @@ export const CrearPermisoCirculacion = () => {
       console.log(response.data.mensaje);
 
       // Añadir redirección
-      
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
-      <h1>Solicitud de Permiso de Circulación:</h1>
-      <p>
-        <h2>Ingrese los datos del solicitante:</h2>
-      </p>
-      <form onSubmit={handleSubmit}>
-        <label>
-          RUT:
-          <input
-            type="text"
-            name="rut"
-            value={formulario.rut}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          PATENTE:
-          <input
-            type="text"
-            name="patente"
-            value={formulario.patente}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <button type="submit">Enviar solicitud</button>
-      </form>
-    </div>
+    <ChakraProvider>
+      <Box p={8}>
+        <Container maxW="xl">
+          <VStack spacing={4} align="stretch">
+            <Heading>Permiso De Circulación</Heading>
+            <Box>
+              <form onSubmit={handleSubmit}>
+                <VStack spacing={4} align="stretch">
+                  <FormControl>
+                  <FormLabel>
+                      RUT del solicitante{' '}
+                      <Box as="span" fontStyle="italic">
+                        (sin puntos ni guión)
+                      </Box>
+                      :
+                    </FormLabel>
+                    <Input
+                      type="text"
+                      name="rut"
+                      value={formulario.rut}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Patente:</FormLabel>
+                    <Input
+                      type="text"
+                      name="patente"
+                      value={formulario.patente}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <Spacer />
+                  <Button type="submit" mt={8} colorScheme="teal">
+                    Continuar
+                  </Button>
+                </VStack>
+              </form>
+            </Box>
+          </VStack>
+        </Container>
+      </Box>
+    </ChakraProvider>
   );
 };

@@ -1,5 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {
+  ChakraProvider,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Container,
+  Heading,
+  VStack,
+  Spacer,
+} from '@chakra-ui/react';
 
 export const CrearPermisoEdificacion = () => {
   const [formulario, setFormulario] = useState({
@@ -10,7 +22,6 @@ export const CrearPermisoEdificacion = () => {
     comunaEdificacion: '',
     telefono: '',
     email: '',
-    montoPago: '',
   });
 
   const handleChange = (e) => {
@@ -28,102 +39,99 @@ export const CrearPermisoEdificacion = () => {
       console.log(response.data.mensaje);
 
       // Añadir redirección
-
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
-      <h1>Permiso de Edificación:</h1>
-      <p>
-        <h2>Ingrese los datos del solicitante:</h2>
-      </p>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Nombre del Solicitante:
-          <input
-            type="text"
-            name="nombreSolicitante"
-            value={formulario.nombreSolicitante}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          RUT del Solicitante:
-          <input
-            type="text"
-            name="rutSolicitante"
-            value={formulario.rutSolicitante}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          Tipo de Edificación:
-          <input
-            type="text"
-            name="tipoEdificacion"
-            value={formulario.tipoEdificacion}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          Dirección de la Edificación:
-          <input
-            type="text"
-            name="direccionEdificacion"
-            value={formulario.direccionEdificacion}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          Comuna de la Edificación:
-          <input
-            type="text"
-            name="comunaEdificacion"
-            value={formulario.comunaEdificacion}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          Teléfono:
-          <input
-            type="text"
-            name="telefono"
-            value={formulario.telefono}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          Correo Electrónico:
-          <input
-            type="text"
-            name="email"
-            value={formulario.email}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <label>
-          Monto de Pago:
-          <input
-            type="text"
-            name="montoPago"
-            value={formulario.montoPago}
-            onChange={handleChange}
-          />
-        </label>
-        <p></p>
-        <button type="submit">Enviar solicitud de permiso de edificación</button>
-      </form>
-    </div>
+    <ChakraProvider>
+      <Box p={8}>
+        <Container maxW="xl">
+          <VStack spacing={4} align="stretch">
+            <Heading>Permiso de Edificación</Heading>
+            <Box>
+              <form onSubmit={handleSubmit}>
+                <VStack spacing={4} align="stretch">
+                  <FormControl>
+                    <FormLabel>Nombre del solicitante:</FormLabel>
+                    <Input
+                      type="text"
+                      name="nombreSolicitante"
+                      value={formulario.nombreSolicitante}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                     <FormLabel>
+                      RUT del solicitante{' '}
+                      <Box as="span" fontStyle="italic">
+                        (sin puntos ni guión)
+                      </Box>
+                      :
+                    </FormLabel>
+                    <Input
+                      type="text"
+                      name="rutSolicitante"
+                      value={formulario.rutSolicitante}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Tipo de edificación:</FormLabel>
+                    <Input
+                      type="text"
+                      name="tipoEdificacion"
+                      value={formulario.tipoEdificacion}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Dirección donde se realizará la edificación:</FormLabel>
+                    <Input
+                      type="text"
+                      name="direccionEdificacion"
+                      value={formulario.direccionEdificacion}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Comuna donde se realizará la edificación:</FormLabel>
+                    <Input
+                      type="text"
+                      name="comunaEdificacion"
+                      value={formulario.comunaEdificacion}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Teléfono de contacto:</FormLabel>
+                    <Input
+                      type="text"
+                      name="telefono"
+                      value={formulario.telefono}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <FormControl>
+                    <FormLabel>Correo electrónico:</FormLabel>
+                    <Input
+                      type="text"
+                      name="email"
+                      value={formulario.email}
+                      onChange={handleChange}
+                    />
+                  </FormControl>
+                  <Spacer />
+                  <Button type="submit" mt={8} colorScheme="teal">
+                    Enviar solicitud
+                  </Button>
+                </VStack>
+              </form>
+            </Box>
+          </VStack>
+        </Container>
+      </Box>
+    </ChakraProvider>
   );
 };
-

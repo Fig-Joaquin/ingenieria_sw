@@ -12,7 +12,6 @@ const crearPermisoEdificacion = async (req, res) => {
             comunaEdificacion,
             telefono,
             email,
-            montoPago,
         } = req.body;
 
         // Genera un identificador único para el comprobante de depósito
@@ -26,7 +25,6 @@ const crearPermisoEdificacion = async (req, res) => {
             comunaEdificacion,
             telefono,
             email,
-            montoPago,
         });
 
         await nuevoPermiso.save();
