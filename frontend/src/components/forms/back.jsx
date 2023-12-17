@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from '@chakra-ui/react'; // Asegúrate de importar el componente Button de tu biblioteca de UI
+import { Button } from '@chakra-ui/react'; 
 
 const BackToHomeButton = ({ to = '/' }) => {
   return (
     <Link to={to}>
-      <Button colorScheme="teal" size="md" borderRadius="md">
+      <Button colorScheme="purple" mt={8} spacing={4} align="stretch">
         Volver a la página principal
       </Button>
     </Link>

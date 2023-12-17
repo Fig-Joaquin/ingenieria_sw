@@ -12,6 +12,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
+import BackToHomeButton from './back';
 
 export const CrearPermisoCirculacion = () => {
   const [formulario, setFormulario] = useState({
@@ -49,7 +50,7 @@ export const CrearPermisoCirculacion = () => {
               <form onSubmit={handleSubmit}>
                 <VStack spacing={4} align="stretch">
                   <FormControl>
-                  <FormLabel>
+                    <FormLabel>
                       RUT del solicitante{' '}
                       <Box as="span" fontStyle="italic">
                         (sin puntos ni guión)
@@ -61,6 +62,7 @@ export const CrearPermisoCirculacion = () => {
                       name="rut"
                       value={formulario.rut}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 12345678K"
                     />
                   </FormControl>
                   <FormControl>
@@ -70,14 +72,16 @@ export const CrearPermisoCirculacion = () => {
                       name="patente"
                       value={formulario.patente}
                       onChange={handleChange}
+                      placeholder="Ejemplo: BBCL34"
                     />
                   </FormControl>
                   <Spacer />
-                  <Button type="submit" mt={8} colorScheme="teal">
+                  <Button type="submit" mt={8} colorScheme="purple" width="43%">
                     Continuar
                   </Button>
                 </VStack>
               </form>
+              <BackToHomeButton />
             </Box>
           </VStack>
         </Container>

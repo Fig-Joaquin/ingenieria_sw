@@ -12,6 +12,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
+import BackToHomeButton from './back';
 
 export const CrearPermisoEventos = () => {
   const [formulario, setFormulario] = useState({
@@ -61,10 +62,11 @@ export const CrearPermisoEventos = () => {
                       name="nombreSolicitante"
                       value={formulario.nombreSolicitante}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Juan Esteban Pérez González, Productora XYZ"
                     />
                   </FormControl>
                   <FormControl>
-                  <FormLabel>
+                    <FormLabel>
                       RUT del solicitante{' '}
                       <Box as="span" fontStyle="italic">
                         (sin puntos ni guión)
@@ -76,6 +78,7 @@ export const CrearPermisoEventos = () => {
                       name="rutSolicitante"
                       value={formulario.rutSolicitante}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 12345678K"
                     />
                   </FormControl>
                   <FormControl>
@@ -85,6 +88,7 @@ export const CrearPermisoEventos = () => {
                       name="tipoEvento"
                       value={formulario.tipoEvento}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Concierto, Boda, Conferencia, etc."
                     />
                   </FormControl>
                   <FormControl>
@@ -103,6 +107,7 @@ export const CrearPermisoEventos = () => {
                       name="asistentesAprox"
                       value={formulario.asistentesAprox}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 1000"
                     />
                   </FormControl>
                   <FormControl>
@@ -112,10 +117,11 @@ export const CrearPermisoEventos = () => {
                       name="lugarEvento"
                       value={formulario.lugarEvento}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Auditorio XYZ"
                     />
                   </FormControl>
                   <FormControl>
-                  <FormLabel>
+                    <FormLabel>
                       Teléfono de contacto{' '}
                       <Box as="span" fontStyle="italic">
                         (formato +56912345678)
@@ -127,6 +133,7 @@ export const CrearPermisoEventos = () => {
                       name="telefono"
                       value={formulario.telefono}
                       onChange={handleChange}
+                      placeholder="Ejemplo: +56912345678"
                     />
                   </FormControl>
                   <FormControl>
@@ -136,14 +143,15 @@ export const CrearPermisoEventos = () => {
                       name="email"
                       value={formulario.email}
                       onChange={handleChange}
+                      placeholder="Ejemplo: ejemplo@correo.com"
                     />
                   </FormControl>
-                  <Spacer />
-                  <Button type="submit" mt={8} colorScheme="teal">
-                    Enviar solicitud
+                  <Button type="submit" mt={8} colorScheme="purple" width="43%">
+                    Continuar
                   </Button>
                 </VStack>
               </form>
+              <BackToHomeButton/>
             </Box>
           </VStack>
         </Container>

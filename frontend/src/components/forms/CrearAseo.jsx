@@ -55,21 +55,17 @@ const CrearPagoBasura = () => {
             name="nombreResidente"
             value={formulario.nombreResidente}
             onChange={handleChange}
+            placeholder="Ejemplo: Juan Miguel Pérez González"
           />
         </FormControl>
         <FormControl mt={4}>
-        <FormLabel>
-          RUT del solicitante{' '}
-          <Box as="span" fontStyle="italic">
-           (sin puntos ni guión)
-          </Box>
-          :
-        </FormLabel>
+          <FormLabel>RUT del solicitante (sin puntos ni guión):</FormLabel>
           <Input
             type="text"
             name="rutResidente"
             value={formulario.rutResidente}
             onChange={handleChange}
+            placeholder="Ejemplo: 12345678K"
           />
         </FormControl>
         <FormControl mt={4}>
@@ -79,15 +75,17 @@ const CrearPagoBasura = () => {
             name="direccion"
             value={formulario.direccion}
             onChange={handleChange}
+            placeholder="Ejemplo: Calle #123 Concepción"
           />
         </FormControl>
         <FormControl mt={4}>
-          <FormLabel>Teléfono:</FormLabel>
+          <FormLabel>Teléfono de contacto:</FormLabel>
           <Input
             type="text"
             name="telefono"
             value={formulario.telefono}
             onChange={handleChange}
+            placeholder="Ejemplo: +56912345678"
           />
         </FormControl>
         <FormControl mt={4}>
@@ -97,13 +95,14 @@ const CrearPagoBasura = () => {
             name="email"
             value={formulario.email}
             onChange={handleChange}
+            placeholder="Ejemplo: juan@gmail.com"
           />
         </FormControl>
-        <Button type="submit" mt={8} colorScheme="teal">
+        <Button type="submit" mt={8} colorScheme="purple" width="54%">
           Continuar
         </Button>
       </form>
-      <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
+      <BackToHomeButton />
     </Box>
   );
 };

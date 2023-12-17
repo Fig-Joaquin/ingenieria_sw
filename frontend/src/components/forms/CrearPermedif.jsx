@@ -12,6 +12,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
+import BackToHomeButton from './back';
 
 export const CrearPermisoEdificacion = () => {
   const [formulario, setFormulario] = useState({
@@ -60,10 +61,11 @@ export const CrearPermisoEdificacion = () => {
                       name="nombreSolicitante"
                       value={formulario.nombreSolicitante}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Juan Esteban Pérez González"
                     />
                   </FormControl>
                   <FormControl>
-                     <FormLabel>
+                    <FormLabel>
                       RUT del solicitante{' '}
                       <Box as="span" fontStyle="italic">
                         (sin puntos ni guión)
@@ -75,6 +77,7 @@ export const CrearPermisoEdificacion = () => {
                       name="rutSolicitante"
                       value={formulario.rutSolicitante}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 12345678K"
                     />
                   </FormControl>
                   <FormControl>
@@ -84,6 +87,7 @@ export const CrearPermisoEdificacion = () => {
                       name="tipoEdificacion"
                       value={formulario.tipoEdificacion}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Residencial, Comercial, Industrial, etc..."
                     />
                   </FormControl>
                   <FormControl>
@@ -93,6 +97,7 @@ export const CrearPermisoEdificacion = () => {
                       name="direccionEdificacion"
                       value={formulario.direccionEdificacion}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Calle #123"
                     />
                   </FormControl>
                   <FormControl>
@@ -102,15 +107,23 @@ export const CrearPermisoEdificacion = () => {
                       name="comunaEdificacion"
                       value={formulario.comunaEdificacion}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Concepción"
                     />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>Teléfono de contacto:</FormLabel>
+                    <FormLabel>
+                      Teléfono de contacto{' '}
+                      <Box as="span" fontStyle="italic">
+                        (formato +56912345678)
+                      </Box>
+                      :
+                    </FormLabel>
                     <Input
                       type="text"
                       name="telefono"
                       value={formulario.telefono}
                       onChange={handleChange}
+                      placeholder="Ejemplo: +56912345678"
                     />
                   </FormControl>
                   <FormControl>
@@ -120,14 +133,16 @@ export const CrearPermisoEdificacion = () => {
                       name="email"
                       value={formulario.email}
                       onChange={handleChange}
+                      placeholder="Ejemplo: ejemplo@correo.com"
                     />
                   </FormControl>
                   <Spacer />
-                  <Button type="submit" mt={8} colorScheme="teal">
+                  <Button type="submit" mt={8} colorScheme="purple" width="43%">
                     Enviar solicitud
                   </Button>
                 </VStack>
               </form>
+              <BackToHomeButton />
             </Box>
           </VStack>
         </Container>
@@ -135,6 +150,5 @@ export const CrearPermisoEdificacion = () => {
     </ChakraProvider>
   );
 };
-
 
 export default CrearPermisoEdificacion;

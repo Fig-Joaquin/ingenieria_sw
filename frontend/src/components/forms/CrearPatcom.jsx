@@ -12,6 +12,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
+import BackToHomeButton from './back';
 
 export const CrearPatenteComercial = () => {
   const [formulario, setFormulario] = useState({
@@ -65,6 +66,7 @@ export const CrearPatenteComercial = () => {
                       name="nombreComercio"
                       value={formulario.nombreComercio}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Mi Tienda S.A."
                     />
                   </FormControl>
                   <FormControl>
@@ -74,6 +76,7 @@ export const CrearPatenteComercial = () => {
                       name="rubro"
                       value={formulario.rubro}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Venta de Ropa y Accesorios"
                     />
                   </FormControl>
                   <FormControl>
@@ -83,6 +86,7 @@ export const CrearPatenteComercial = () => {
                       name="direccion"
                       value={formulario.direccion}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Av. Collao"
                     />
                   </FormControl>
                   <FormControl>
@@ -92,6 +96,7 @@ export const CrearPatenteComercial = () => {
                       name="numeroLocal"
                       value={formulario.numeroLocal}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 101"
                     />
                   </FormControl>
                   <FormControl>
@@ -101,6 +106,7 @@ export const CrearPatenteComercial = () => {
                       name="cantidadEmpleados"
                       value={formulario.cantidadEmpleados}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 10"
                     />
                   </FormControl>
                   <FormControl>
@@ -110,14 +116,16 @@ export const CrearPatenteComercial = () => {
                       name="ingresosAnuales"
                       value={formulario.ingresosAnuales}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 5000000"
                     />
                   </FormControl>
                   <Spacer />
-                  <Button type="submit" mt={8} colorScheme="teal">
+                  <Button type="submit" mt={8} colorScheme="purple" width="43%">
                     Continuar
                   </Button>
                 </VStack>
               </form>
+              <BackToHomeButton />
             </Box>
           </VStack>
         </Container>

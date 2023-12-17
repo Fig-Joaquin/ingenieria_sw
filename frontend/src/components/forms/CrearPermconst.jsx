@@ -12,6 +12,7 @@ import {
   VStack,
   Spacer,
 } from '@chakra-ui/react';
+import BackToHomeButton from './back';
 
 export const CrearPermisoConstruccion = () => {
   const [formulario, setFormulario] = useState({
@@ -61,21 +62,23 @@ export const CrearPermisoConstruccion = () => {
                       name="nombreSolicitante"
                       value={formulario.nombreSolicitante}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Juan Esteban Pérez González"
                     />
                   </FormControl>
                   <FormControl>
-                      <FormLabel>
+                    <FormLabel>
                       RUT del solicitante{' '}
                       <Box as="span" fontStyle="italic">
                         (sin puntos ni guión)
                       </Box>
                       :
-                     </FormLabel>
+                    </FormLabel>
                     <Input
                       type="text"
                       name="rutSolicitante"
                       value={formulario.rutSolicitante}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 12345678K"
                     />
                   </FormControl>
                   <FormControl>
@@ -85,6 +88,7 @@ export const CrearPermisoConstruccion = () => {
                       name="direccionObra"
                       value={formulario.direccionObra}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Calle 123"
                     />
                   </FormControl>
                   <FormControl>
@@ -94,6 +98,7 @@ export const CrearPermisoConstruccion = () => {
                       name="comunaObra"
                       value={formulario.comunaObra}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Talcahuano"
                     />
                   </FormControl>
                   <FormControl>
@@ -103,6 +108,7 @@ export const CrearPermisoConstruccion = () => {
                       name="empresa"
                       value={formulario.empresa}
                       onChange={handleChange}
+                      placeholder="Ejemplo: Constructora ABC"
                     />
                   </FormControl>
                   <FormControl>
@@ -112,15 +118,19 @@ export const CrearPermisoConstruccion = () => {
                       name="cantidadTrabajadores"
                       value={formulario.cantidadTrabajadores}
                       onChange={handleChange}
+                      placeholder="Ejemplo: 35"
                     />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>Teléfono de contacto:</FormLabel>
+                    <FormLabel>
+                      Teléfono de contacto:
+                    </FormLabel>
                     <Input
                       type="text"
                       name="telefono"
                       value={formulario.telefono}
                       onChange={handleChange}
+                      placeholder="Ejemplo: +56912345678"
                     />
                   </FormControl>
                   <FormControl>
@@ -130,14 +140,16 @@ export const CrearPermisoConstruccion = () => {
                       name="email"
                       value={formulario.email}
                       onChange={handleChange}
+                      placeholder="Ejemplo: contacto@constructora.com"
                     />
                   </FormControl>
                   <Spacer />
-                  <Button type="submit" mt={8} colorScheme="teal">
+                  <Button type="submit" mt={8} colorScheme="purple" width="43%">
                     Continuar
                   </Button>
                 </VStack>
               </form>
+              <BackToHomeButton />
             </Box>
           </VStack>
         </Container>
