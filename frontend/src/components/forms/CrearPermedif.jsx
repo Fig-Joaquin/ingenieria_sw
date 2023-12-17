@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import BackToHomeButton from './back';
+import { useNavigate } from 'react-router-dom';
 import {
   ChakraProvider,
   Box,
@@ -16,6 +17,7 @@ import {
 
 
 export const CrearPermisoEdificacion = () => {
+  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     nombreSolicitante: '',
     rutSolicitante: '',
@@ -39,8 +41,7 @@ export const CrearPermisoEdificacion = () => {
     try {
       const response = await axios.post('http://localhost:443/permedif/crear', formulario);
       console.log(response.data.mensaje);
-
-      // Añadir redirección
+      navigate('/DatosTransferencia');
     } catch (error) {
       console.error(error);
     }
@@ -62,7 +63,7 @@ export const CrearPermisoEdificacion = () => {
                       name="nombreSolicitante"
                       value={formulario.nombreSolicitante}
                       onChange={handleChange}
-                      placeholder="Ejemplo: Juan Esteban Pérez González"
+                      placeholder="Ejemplo: Juan Miguel Perez Gonzalez"
                     />
                   </FormControl>
                   <FormControl>
@@ -138,8 +139,8 @@ export const CrearPermisoEdificacion = () => {
                     />
                   </FormControl>
                   <Spacer />
-                  <Button type="submit" mt={8} colorScheme="purple" width="43%">
-                    Enviar solicitud
+                  <Button width="43%" mt={4} colorScheme="purple" type="submit">
+                  Continuar
                   </Button>
                 </VStack>
               </form>

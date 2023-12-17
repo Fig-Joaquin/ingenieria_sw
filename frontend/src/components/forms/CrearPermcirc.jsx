@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import BackToHomeButton from './back';
+import { useNavigate } from 'react-router-dom';
 import {
   ChakraProvider,
   Box,
@@ -16,6 +17,7 @@ import {
 
 
 export const CrearPermisoCirculacion = () => {
+  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     rut: '',
     patente: '',
@@ -32,10 +34,9 @@ export const CrearPermisoCirculacion = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:443/permiso/crear', formulario);
+      const response = await axios.post('http://localhost:443/permcirc/crear', formulario);
       console.log(response.data.mensaje);
-
-      // Añadir redirección
+      navigate('/DatosTransferencia');
     } catch (error) {
       console.error(error);
     }
@@ -77,9 +78,9 @@ export const CrearPermisoCirculacion = () => {
                     />
                   </FormControl>
                   <Spacer />
-                  <Button type="submit" mt={8} colorScheme="purple" width="43%">
-                    Continuar
-                  </Button>
+                  <Button width="43%" mt={4} colorScheme="purple" type="submit">
+                   Continuar
+                   </Button>
                 </VStack>
               </form>
               <BackToHomeButton />

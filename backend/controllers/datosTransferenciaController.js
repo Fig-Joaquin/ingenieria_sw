@@ -12,11 +12,10 @@ const crearDatosTransferenciaFijos = async (req, res) => {
         res.status(400).json({ mensaje: 'Error al crear los datos de transferencia fijos.' });
     }
 };
-
 const obtenerDatosTransferencia = async (req, res) => {
     try {
         const datosTransferencia = await TransferenciaDatos.findOne();
-
+        
         if (!datosTransferencia) {
             return res.status(400).json({ mensaje: 'Datos de transferencia no encontrados.' });
         }

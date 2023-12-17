@@ -34,7 +34,7 @@ const upload = multer({ storage, fileFilter });
 const uploadComprobante = (req, res) => {
     upload.single('comprobante')(req, res, (err) => {
         if (err) {
-            return res.status(400).json({ error: 'Error al subir el comprobante' });
+            return res.status(400).json({ error: 'Error al subir el comprobante. Revise si su archivo es png' });
         }
         try {
             helperImg(req.file.path, `resize-${req.file.filename}`, 300);

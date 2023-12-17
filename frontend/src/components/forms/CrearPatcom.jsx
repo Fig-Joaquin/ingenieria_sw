@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';  
 import BackToHomeButton from './back';
+import { useNavigate } from 'react-router-dom';
 import {
   ChakraProvider,
   Box,
@@ -16,6 +17,7 @@ import {
 
 
 export const CrearPatenteComercial = () => {
+  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     nombreComercio: '',
     rubro: '',
@@ -44,8 +46,7 @@ export const CrearPatenteComercial = () => {
     try {
       const response = await axios.post('http://localhost:443/patcom/crear', formulario);
       console.log(response.data.mensaje);
-
-      // Añadir redirección.
+      navigate('/DatosTransferencia');
     } catch (error) {
       console.error(error);
     }
@@ -121,8 +122,8 @@ export const CrearPatenteComercial = () => {
                     />
                   </FormControl>
                   <Spacer />
-                  <Button type="submit" mt={8} colorScheme="purple" width="43%">
-                    Continuar
+                  <Button width="43%" mt={4} colorScheme="purple" type="submit">
+                  Continuar
                   </Button>
                 </VStack>
               </form>

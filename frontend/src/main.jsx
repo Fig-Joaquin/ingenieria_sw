@@ -1,13 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { ChakraProvider, Box } from '@chakra-ui/react';
 import Form from './routes/FormRoutes.jsx';
+import DatosForm from './routes/TransferenciaRoutes.jsx';
 
-//
-ReactDOM.createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')).render(
   <ChakraProvider>
-      <React.StrictMode>
+    <React.StrictMode>
       <Form />
-      </React.StrictMode>
+      <DatosForm />
+    </React.StrictMode>
   </ChakraProvider>,
 );

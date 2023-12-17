@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import BackToHomeButton from './back';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Heading,
@@ -8,9 +10,10 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
-import BackToHomeButton from './back';
+
 
 const CrearPagoBasura = () => {
+  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     nombreResidente: '',
     rutResidente: '',
@@ -31,12 +34,7 @@ const CrearPagoBasura = () => {
 
     try {
       const response = await axios.post('http://localhost:443/aseo/crear', formulario);
-      console.log(response.data.mensaje);
-      if (response.status === 200) {
-        console.log('¡Registro exitoso!', 'El usuario ha sido registrado correctamente.', 'success');
-      } else if (response.status === 400) {
-        console.log('No se ha registrado el usuario', 'Error', '!');
-      }
+      console.log(response.data.mensaje && navigate('/DatosTransferencia'));
     } catch (error) {
       console.error(error);
     }
@@ -55,7 +53,7 @@ const CrearPagoBasura = () => {
             name="nombreResidente"
             value={formulario.nombreResidente}
             onChange={handleChange}
-            placeholder="Ejemplo: Juan Miguel Pérez González"
+            placeholder="Ejemplo: Juan Miguel Perez Gonzalez"
           />
         </FormControl>
         <FormControl mt={4}>
@@ -98,7 +96,7 @@ const CrearPagoBasura = () => {
             placeholder="Ejemplo: juan@gmail.com"
           />
         </FormControl>
-        <Button type="submit" mt={8} colorScheme="purple" width="54%">
+        <Button width="54%" mt={4} colorScheme="purple" type="submit">
           Continuar
         </Button>
       </form>
