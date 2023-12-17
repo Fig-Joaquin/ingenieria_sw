@@ -125,3 +125,5 @@ export const CrearPatenteComercial = () => {
     </ChakraProvider>
   );
 };
+
+export default CrearPatenteComercial;

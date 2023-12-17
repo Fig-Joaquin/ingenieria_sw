@@ -8,6 +8,7 @@ import {
   Input,
   Button,
 } from '@chakra-ui/react';
+import BackToHomeButton from './back';
 
 const CrearPagoBasura = () => {
   const [formulario, setFormulario] = useState({
@@ -102,6 +103,7 @@ const CrearPagoBasura = () => {
           Continuar
         </Button>
       </form>
+      <BackToHomeButton /> {/* Agrega el botón de volver aquí */}
     </Box>
   );
 };
