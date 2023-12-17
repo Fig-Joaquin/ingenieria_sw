@@ -21,7 +21,8 @@ export const CrearPermisoCirculacion = () => {
       const response = await axios.post('/permiso/crear', formulario);
       console.log(response.data.mensaje);
 
-      // Aquí podrías redirigir al usuario a la página de subir comprobante, por ejemplo.
+      // Añadir redirección
+      
     } catch (error) {
       console.error(error);
     }
@@ -54,7 +55,7 @@ export const CrearPermisoCirculacion = () => {
           />
         </label>
         <p></p>
-        <button type="submit">Enviar solicitud de permiso de circulación</button>
+        <button type="submit">Enviar solicitud</button>
       </form>
     </div>
   );

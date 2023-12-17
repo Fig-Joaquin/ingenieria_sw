@@ -24,7 +24,8 @@ export const CrearPagoBasura = () => {
       const response = await axios.post('/aseo/crear', formulario);
       console.log(response.data.mensaje);
 
-      // Aquí podrías redirigir al usuario a la página de subir comprobante, por ejemplo.
+      // Añadir redirección pendiente.
+      
     } catch (error) {
       console.error(error);
     }
@@ -33,7 +34,7 @@ export const CrearPagoBasura = () => {
   return (
     <div>
       <h1>Servicio De Basura:</h1>
-      <p><h2>Ingrese los datos del residente:</h2></p>
+      <p><h2>Ingrese los datos a continuación:</h2></p>
       <form onSubmit={handleSubmit}>
         <label>
           NOMBRE: 
@@ -85,7 +86,7 @@ export const CrearPagoBasura = () => {
           />
         </label>
         <p></p>
-        <button type="submit">Enviar solicitud de pago</button>
+        <button type="submit">Continuar</button>
       </form>
     </div>
   );

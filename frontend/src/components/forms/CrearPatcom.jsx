@@ -31,7 +31,8 @@ export const CrearPatenteComercial = () => {
       const response = await axios.post('/patcom/crear', formulario);
       console.log(response.data.mensaje);
 
-      // Aquí podrías redirigir al usuario a la página de subir comprobante, por ejemplo.
+      // Añadir redirección. 
+      
     } catch (error) {
       console.error(error);
     }
@@ -104,7 +105,7 @@ export const CrearPatenteComercial = () => {
           />
         </label>
         <p></p>
-        <button type="submit">Enviar solicitud de patente comercial</button>
+        <button type="submit">Enviar solicitud</button>
       </form>
     </div>
   );
