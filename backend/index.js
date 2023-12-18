@@ -16,11 +16,20 @@ import PermisoEventosRoutes from './routes/formsRoutes/PermisoEventosRoutes.js';
 import datosTransferenciaRoutes from './routes/datosTransferenciaRoutes.js';
 import transaccionRoutes from './routes/transaccionRoutes.js';
 import cors from 'cors';
+import rutaArchivo from './routes/rutaArchivoRoutes.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 const app = express();
 app.use(express.json());
 dotenv.config();
 conectarDB();
+
+// Obtener el directorio actual usando import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 // Configuración CORS (antes de las definiciones de rutas)
 // Configura CORS para todas las rutas
@@ -30,6 +39,10 @@ app.use(cors({
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
+
+
+// Configurar el middleware para servir archivos estáticos desde la carpeta 'uploads'
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/adm-muni', adminRoutes, appealRoutes, fineRoutes);
 app.use('/permcirc', PermisoCirculacionRoutes);
@@ -44,6 +57,7 @@ app.use('/permevent', PermisoEventosRoutes);
 app.use('/datosmunicipalidad', datosTransferenciaRoutes);
 app.use('/multas-usuario', fineRoutes);
 app.use('/transaccion', transaccionRoutes);
+app.use('/boletas',rutaArchivo);
 
 const PORT = process.env.PORT || 443;
 app.listen(PORT, () => console.log(`Conexión con el puerto ${PORT}`));

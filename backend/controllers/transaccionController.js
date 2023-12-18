@@ -27,7 +27,7 @@ const crearTransaccion = async (req, res) => {
 
 const buscarPorRut = async (req, res) => {
   try {
-    const { rut } = req.params;
+    const { rut } = req.body;
     const transacciones = await Transaccion.find({ rut });
 
     res.status(200).json({ transacciones });
