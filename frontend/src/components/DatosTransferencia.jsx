@@ -20,6 +20,7 @@ import {
   useDisclosure,
   useToast,
   Center,
+  Link,
 } from '@chakra-ui/react';
 import { AttachmentIcon } from '@chakra-ui/icons';
 
@@ -82,7 +83,7 @@ const DatosTransferencia = () => {
     <ChakraProvider>
       <Box p={8} maxW="500px" mx="auto" borderWidth="1px" borderRadius="lg">
         <VStack spacing={4} align="stretch">
-          <Heading as="h1" size="xl" mb={4}>
+          <Heading as="h1" size="xl" mb={2}>
            <Center h="100hv">Datos de Transferencia </Center> 
           </Heading>
           <Box p={4} borderWidth="1px" borderRadius="lg">
@@ -114,21 +115,30 @@ const DatosTransferencia = () => {
               </VStack>
             )}
           </Box>
+          
           <Box p={4} borderWidth="1px" borderRadius="lg">
             <Heading as="h2" size="md" mb={2}>
-            <Center h="100hv"> Subir Comprobante de Transferencia</Center>
+            <Center h="100hv"> <AttachmentIcon boxSize={5} mb={5} /> Subir Comprobante de Transferencia</Center>
             </Heading>
-            <Text fontSize="sm" mb={2}>
+            <Text fontSize="sm" mb={5}>
             <Center h="100hv">Solo se admiten imagenes en formato png.</Center>
             </Text>
-            <Center h="100hv"><AttachmentIcon boxSize={8} mb={2} /></Center>
             <Input type="file" onChange={handleFileChange} mb={2} />
+            <Text fontSize="medium" mb={5}>
+             <Center h="100hv"> ¿No puedes subir imagenes?{' '}</Center>
+            <Link color='teal.500' href='#'>
+            <Center h="100hv"> Prueba enviar tu número de transacción{' '}</Center>
+            </Link>
+            </Text>
             <Center h="100hv"><Button colorScheme="purple" onClick={handleFileUpload}>
             Enviar Comprobante 
             </Button></Center>
+            
             <Center h="100hv"><BackToHomeButton /></Center>
           </Box>
+
         </VStack>
+
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>
