@@ -28,7 +28,7 @@ function App() {
           textTransform='uppercase'
           textAlign='center'
           fontSize='2xl'
-          fontWeight='Fantasía'
+          fontWeight='times new roman'
           textShadow="2px 2px 2px rgba(220, 250, 229, 0.5)" // Ajustado: sombra al texto
         >
           Pagos Generales <br /> de la Municipalidad de Concepción
