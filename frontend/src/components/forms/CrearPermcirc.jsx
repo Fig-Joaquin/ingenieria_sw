@@ -79,8 +79,8 @@ export const CrearPermisoCirculacion = () => {
                   </FormControl>
                   <Spacer />
                   <Button width="43%" mt={4} colorScheme="purple" type="submit">
-                   Continuar
-                   </Button>
+                  Continuar
+                  </Button>
                 </VStack>
               </form>
               <BackToHomeButton />

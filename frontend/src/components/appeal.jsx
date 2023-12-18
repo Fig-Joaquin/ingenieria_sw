@@ -11,7 +11,9 @@ import {
   Text,
   Alert,
   AlertIcon,
+  
 } from '@chakra-ui/react';
+import BackToHomeButton from './forms/back';
 import axios from 'axios';
 
 const AppealsForm = () => {
@@ -35,10 +37,8 @@ const AppealsForm = () => {
 
 
     try {
-      const response = await axios.post('http://localhost:443/admin-muni', formData);
-
+      const response = await axios.post('http://localhost:443/admin-muni/nueva-apelacion', formData);
       console.log('Appeal created:', response.data);
-
       setFormData({
         reason: '',
         rut: '',
@@ -54,7 +54,7 @@ const AppealsForm = () => {
 
   return (
     <Box p={8} maxW="500px" mx="auto" borderWidth="1px" borderRadius="lg">
-      <Heading as="h1" size="xl" mb={4}>
+      <Heading as="h1" size="xl" mb={4}> 
         Crear Apelación
       </Heading>
 
@@ -76,6 +76,9 @@ const AppealsForm = () => {
               onChange={handleChange}
               required
             />
+            <Text fontSize="sm" color="gray.500">
+            Escriba la razón de la apelación
+            </Text>
           </FormControl>
 
           <FormControl>
@@ -88,7 +91,7 @@ const AppealsForm = () => {
               required
             />
             <Text fontSize="sm" color="gray.500">
-              Formato: 12345678-9
+              Formato: 123456789
             </Text>
           </FormControl>
 
@@ -111,6 +114,7 @@ const AppealsForm = () => {
           </Button>
         </VStack>
       </form>
+      <BackToHomeButton />
     </Box>
   );
 };
