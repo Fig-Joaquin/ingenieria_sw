@@ -22,6 +22,8 @@ import {
   Center,
   Collapse,
   Link,
+  FormControl,
+  FormLabel,
 } from '@chakra-ui/react';
 import { AttachmentIcon } from '@chakra-ui/icons';
 
@@ -29,6 +31,7 @@ const DatosTransferencia = () => {
   const [datos, setDatos] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [rutUsuario, setRutUsuario] = useState('');
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -74,10 +77,27 @@ const DatosTransferencia = () => {
     setSelectedFile(file);
   };
 
+  const handleRutChange = (event) => {
+    setRutUsuario(event.target.value);
+  };
+
   const handleFileUpload = async () => {
     try {
+      if (!rutUsuario) {
+        toast({
+          title: 'Error',
+          description: 'Ingrese su RUT antes de subir el comprobante.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+        return;
+      }
+
       const formData = new FormData();
       formData.append('comprobante', selectedFile);
+      formData.append('rutUsuario', rutUsuario);
+
       const response = await axios.post('http://localhost:443/upload/subir-comprobante', formData);
 
       console.log('File uploaded:', response.data);
@@ -118,7 +138,7 @@ const DatosTransferencia = () => {
                   <strong>Titular:</strong> {datos?.titular}
                 </Text>
                 <Text>
-                  <strong>RUT Titular:</strong> {datos?.rutTitular}
+                  <strong>RUT Contribuidor:</strong> {datos?.rutTitular}
                 </Text>
                 <Text>
                   <strong>Tipo de Cuenta:</strong> {datos?.tipoCuenta}
@@ -163,15 +183,21 @@ const DatosTransferencia = () => {
                 <AttachmentIcon boxSize={5} mb={5} /> Subir Comprobante de Transferencia
               </Center>
             </Heading>
-            <Text fontSize="sm" mb={5}>
-              <Center h="100hv">Solo se admiten imágenes en formato png.</Center>
-            </Text>
             <Input type="file" onChange={handleFileChange} mb={2} />
             <Text fontSize="medium" mb={5}>
               <Center h="100hv"> ¿No puedes subir imágenes?{' '}</Center>
               <Link color='teal.500' href='/subirtransaccion'>
                 <Center h="100hv"> Prueba enviar tu número de transacción{' '}</Center>
               </Link>
+              <FormControl>
+              <FormLabel>RUT Contribuidor:</FormLabel>
+              <Input
+                type="text"
+                value={rutUsuario}
+                onChange={handleRutChange}
+                placeholder="Ingrese su RUT"
+              />
+            </FormControl>
             </Text>
             <Center h="100hv">
               <Button colorScheme="teal" onClick={handleFileUpload}>
@@ -182,7 +208,6 @@ const DatosTransferencia = () => {
               <BackToHomeButton />
             </Center>
           </Box>
-
         </VStack>
 
         <Modal isOpen={isOpen} onClose={onClose}>
