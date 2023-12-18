@@ -43,7 +43,6 @@ const corsOptions ={
 
 // Configurar el middleware para servir archivos estáticos desde la carpeta 'uploads'
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.use('/adm-muni', adminRoutes, appealRoutes, fineRoutes);
 app.use('/permcirc', PermisoCirculacionRoutes);
 app.use('/usuario', userRoutes);
