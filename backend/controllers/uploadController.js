@@ -44,9 +44,7 @@ const uploadComprobante = async (req, res) => {
         resized: resizedFilePath,
         rutUsuario: req.body.rutUsuario, // RUT que está en el cuerpo de la solicitud.
       });
-
       await rutaArchivo.save();
-
       res.json({ data: 'Comprobante subido con éxito', ruta: rutaArchivo });
     } catch (error) {
       console.error(error);
