@@ -42,21 +42,21 @@ const corsOptions ={
 
 
 // Configurar el middleware para servir archivos estáticos desde la carpeta 'uploads'
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/adm-muni', adminRoutes, appealRoutes, fineRoutes);
-app.use('/permcirc', PermisoCirculacionRoutes);
-app.use('/usuario', userRoutes);
-app.use('/nueva-apelacion', appealUserRoutes);
-app.use('/patcom', PatenteComercialRoutes);
-app.use('/upload', uploadRoutes);
-app.use('/aseo', DerechoDeAseoRoutes);
-app.use('/permconst', PermisoConstruccionRoutes);
-app.use('/permedif', PermisoEdificacionRoutes);
-app.use('/permevent', PermisoEventosRoutes);
+app.use('/uploads', cors(corsOptions), express.static(path.join(__dirname, 'uploads')));
+app.use('/adm-muni', cors(corsOptions), adminRoutes, appealRoutes, fineRoutes);
+app.use('/permcirc', cors(corsOptions), PermisoCirculacionRoutes);
+app.use('/usuario', cors(corsOptions), userRoutes);
+app.use('/nueva-apelacion', cors(corsOptions), appealUserRoutes);
+app.use('/patcom', cors(corsOptions), PatenteComercialRoutes);
+app.use('/upload', cors(corsOptions), uploadRoutes);
+app.use('/aseo', cors(corsOptions), DerechoDeAseoRoutes);
+app.use('/permconst', cors(corsOptions), PermisoConstruccionRoutes);
+app.use('/permedif', cors(corsOptions), PermisoEdificacionRoutes);
+app.use('/permevent', cors(corsOptions), PermisoEventosRoutes);
 app.use('/datosmunicipalidad', cors(corsOptions), datosTransferenciaRoutes);
-app.use('/multas-usuario', fineRoutes);
-app.use('/transaccion', transaccionRoutes);
-app.use('/boletas',rutaArchivo);
+app.use('/multas-usuario', cors(corsOptions), fineRoutes);
+app.use('/transaccion', cors(corsOptions), transaccionRoutes);
+app.use('/boletas', cors(corsOptions), rutaArchivo);
 
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => console.log(`Conexión con el puerto ${PORT}`));
