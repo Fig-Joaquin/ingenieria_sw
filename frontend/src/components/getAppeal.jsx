@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Input, VStack, Text, Box, Table, Thead, Tbody, Tr, Th, Td, Center, Select } from '@chakra-ui/react';
 import { format } from 'date-fns';
 
@@ -8,6 +8,7 @@ const AppealList = () => {
   const [selectedAppeal, setSelectedAppeal] = useState(null);
   const [newStatus, setNewStatus] = useState('');
   const [error, setError] = useState('');
+  const [updatePending, setUpdatePending] = useState(false);
 
   const handleSearch = async () => {
     try {
@@ -28,7 +29,6 @@ const AppealList = () => {
         return;
       }
 
-      // Verificar el tipo de contenido de la respuesta
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         const data = await response.json();
@@ -41,7 +41,7 @@ const AppealList = () => {
     } catch (error) {
       console.error('Error al buscar apelaciones:', error);
       setError('Hubo un error al buscar apelaciones. Por favor, inténtalo de nuevo más tarde.');
-      setAppeals([]);  // Puedes optar por limpiar las apelaciones en caso de error.
+      setAppeals([]);
     }
   };
   
@@ -68,7 +68,6 @@ const AppealList = () => {
         return;
       }
   
-      // Actualizar el estado de la apelación seleccionada
       const updatedAppeals = appeals.map((appeal) =>
         appeal._id === selectedAppeal._id ? { ...appeal, status: newStatus } : appeal
       );
@@ -80,9 +79,15 @@ const AppealList = () => {
     }
   };
 
+  useEffect(() => {
+    if (updatePending) {
+      handleUpdateStatus();
+      setUpdatePending(false);
+    }
+  }, [updatePending]);
+
   return (
     <VStack spacing={4} align="stretch">
-      {/* Lado izquierdo */}
       <Box p={8} maxWidth="500px" mx="auto">
         <Text>Buscar apelaciones por RUT:</Text>
         <Input
@@ -100,7 +105,6 @@ const AppealList = () => {
 
       {error && <Text color="red">{error}</Text>}
 
-      {/* Lado derecho (centrado) */}
       {appeals.length > 0 && (
         <Center>
           <Box>
@@ -109,7 +113,6 @@ const AppealList = () => {
                 Apelaciones del cliente:
               </Text>
             </Center>
-            {/* Utilizar la tabla de Chakra UI */}
             <Table variant="striped" size='lg'>
               <Thead>
                 <Tr>
@@ -117,7 +120,6 @@ const AppealList = () => {
                   <Th>Estado</Th>
                   <Th>Motivo</Th>
                   <Th>Acciones</Th>
-                  {/* Agrega más columnas según la estructura de tu objeto de apelación */}
                 </Tr>
               </Thead>
               <Tbody>
@@ -140,7 +142,7 @@ const AppealList = () => {
                         ml={2}
                         onClick={() => {
                           setSelectedAppeal(appeal);
-                          handleUpdateStatus();
+                          setUpdatePending(true);
                         }}
                       >
                         Actualizar Estado
