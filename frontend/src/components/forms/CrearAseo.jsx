@@ -9,6 +9,7 @@ import {
   FormLabel,
   Input,
   Button,
+  Center,
 } from '@chakra-ui/react';
 
 
@@ -96,11 +97,13 @@ const CrearPagoBasura = () => {
             placeholder="Ejemplo: juan@gmail.com"
           />
         </FormControl>
+        <Center h="100hv">
         <Button width="54%" mt={4} colorScheme="purple" type="submit">
           Continuar
         </Button>
+        </Center>
       </form>
-      <BackToHomeButton />
+      <Center h="100hv"><BackToHomeButton /></Center>
     </Box>
   );
 };

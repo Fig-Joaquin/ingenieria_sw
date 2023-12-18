@@ -12,7 +12,7 @@ import {
   Container,
   Heading,
   VStack,
-  Spacer,
+  Center,
 } from '@chakra-ui/react';
 
 export const CrearPermisoEventos = () => {
@@ -52,7 +52,7 @@ export const CrearPermisoEventos = () => {
       <Box p={8}>
         <Container maxW="xl">
           <VStack spacing={4} align="stretch">
-            <Heading>Permiso de Eventos y Espectáculos</Heading>
+            <Heading><Center h="100hv">Permiso de Eventos</Center></Heading>
             <Box>
               <form onSubmit={handleSubmit}>
                 <VStack spacing={4} align="stretch">
@@ -143,12 +143,16 @@ export const CrearPermisoEventos = () => {
                       placeholder="Ejemplo: ejemplo@correo.com"
                     />
                   </FormControl>
+                  <Center h="100hv">
                   <Button width="43%" mt={4} colorScheme="purple" type="submit">
                    Continuar
                   </Button>
+                  </Center>
                 </VStack>
               </form>
+              <Center h="100hv">
               <BackToHomeButton/>
+              </Center>
             </Box>
           </VStack>
         </Container>
