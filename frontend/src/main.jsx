@@ -4,7 +4,8 @@ import { ChakraProvider, Box } from '@chakra-ui/react';
 import Form from './routes/FormRoutes.jsx';
 
 createRoot(document.getElementById('root')).render(
-  <ChakraProvider>
+ 
+ <ChakraProvider>
     <React.StrictMode>
       <Form />
     </React.StrictMode>

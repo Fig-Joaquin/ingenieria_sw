@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate  } from 'react-router-dom';
 import {
   ChakraProvider,
   Drawer,
@@ -14,6 +14,7 @@ import {
   Box,
   Divider,
 } from '@chakra-ui/react';
+import App from '../app.jsx';
 import { HamburgerIcon } from '@chakra-ui/icons'
 import CrearPagoBasura from '../components/forms/CrearAseo';
 import CrearPermisoCirculacion from '../components/forms/CrearPermcirc';
@@ -23,12 +24,16 @@ import CrearPatenteComercial from '../components/forms/CrearPatcom';
 import CrearPermisoEventos from '../components/forms/CrearPermevent';
 import DatosTransferencia from '../components/DatosTransferencia';
 import AppealsForm from '../components/appeal';
-import Login from '../components/login';
 import NumeroTransaccionFormulario from '../components/NumeroTransaccion';
+import Login from '../components/login';
+import Profile from '../components/profile';
+import Fine from '../components/fine';
+import ProtectedRoute from '../components/ProtectedRoute.jsx';
+import AppealList from '../components/getAppeal.jsx';
 
-import App from '../app.jsx';
 const HomePage = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  
 
   const handleDrawerOpen = () => {
     setDrawerIsOpen(true);
@@ -78,6 +83,7 @@ const HomePage = () => {
               <Link to="/Apelacion" onClick={handleDrawerClose} color="white">
                 Crear Apelación
               </Link>
+              
             </VStack>
           </DrawerBody>
         </DrawerContent>
@@ -93,7 +99,7 @@ const Form = () => {
   return (
     <Router>
       <ChakraProvider>
-      <App />
+        <App />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/CrearPermisoCirculacion" element={<CrearPermisoCirculacion />} />
@@ -104,8 +110,11 @@ const Form = () => {
           <Route path="/crearPermisoEventos" element={<CrearPermisoEventos />} />
           <Route path="/DatosTransferencia" element={<DatosTransferencia />} />
           <Route path="/Apelacion" element={<AppealsForm />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/subirtransaccion" element={<NumeroTransaccionFormulario />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/fines" element={<Fine />} />
+          <Route path="/apelaciones-usuario" element={<AppealList />} />
         </Routes>
       </ChakraProvider>
     </Router>

@@ -42,7 +42,6 @@ const AppealsForm = () => {
       setFormData({
         reason: '',
         rut: '',
-        status: 'pendiente',
       });
 
       setErrorMessage('');
@@ -95,19 +94,6 @@ const AppealsForm = () => {
             </Text>
           </FormControl>
 
-          <FormControl>
-            <FormLabel>Estado</FormLabel>
-            <Select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              required
-            >
-              <option value="pendiente">Pendiente</option>
-              <option value="aprobada">Aprobada</option>
-              <option value="rechazada">Rechazada</option>
-            </Select>
-          </FormControl>
 
           <Button colorScheme="teal" type="submit">
             Crear Apelación
