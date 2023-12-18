@@ -39,7 +39,8 @@ const HomePage = () => {
 
   return (
     <VStack spacing={4} align="stretch" justify="space-between" height="100vh">
-      <Box mx="initial" maxWidth="300px" mt="25px">
+      <Divider />
+      <Box mx="initial" maxWidth="300px" mt="5px">
         <Button colorScheme="purple" variant='outline' size="md" borderRadius="md" onClick={handleDrawerOpen}>
           <HamburgerIcon /> Servicios De la Municipalidad
         </Button>
