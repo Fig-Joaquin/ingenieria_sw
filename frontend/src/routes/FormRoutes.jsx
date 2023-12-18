@@ -41,16 +41,14 @@ const HomePage = () => {
     <VStack spacing={4} align="stretch" justify="space-between" height="100vh">
       <Divider />
       <Box mx="initial" maxWidth="300px" mt="5px">
-        <Button colorScheme="purple" variant='outline' size="md" borderRadius="md" onClick={handleDrawerOpen}>
+        <Button colorScheme="teal" variant='outline' size="md" borderRadius="md" onClick={handleDrawerOpen}>
           <HamburgerIcon /> Servicios De la Municipalidad
         </Button>
       </Box>
 
-
-
       <Drawer isOpen={drawerIsOpen} onClose={handleDrawerClose} placement="left">
         <DrawerOverlay />
-        <DrawerContent bg="purple.500" p={4}>
+        <DrawerContent bgGradient='linear(to-l, #7fc6bd, #008d7a)' p={4}>
           <DrawerCloseButton />
           <DrawerHeader color="white"><HamburgerIcon />Servicios Disponibles:</DrawerHeader>
           <DrawerBody color="white">
