@@ -10,11 +10,13 @@ const profile = async (req, res) => {
 
 const authprofile= async (req, res) => {
     const {rut, password} = req.body;
+    console.log(rut, password);
     const searchAdmin = await Admin.findOne({rut});
     if(!searchAdmin) return res.status(400).json({msg: "El usuario no existe"});
 
     if (await searchAdmin.matchPassword(password)) { // Compara la contraseña ingresada con la contraseña en la base de datos
     res.json({token: generateJWT(searchAdmin.id, "admin")}); // Genera el token
+    console.log(generateJWT(searchAdmin.id, "admin"));
     } else {
         const error = new Error('Contraseña incorrecta');
         return res.status(400).json({msg: error.message});
@@ -43,6 +45,9 @@ const confirmAccount = async (req, res) => {
     res.json({msg: "El usuario ha sido confirmado"});
 };
 
+const statusAdm = async (req, res) => {
+  return res.status(200).json({msg: "El usuario ha sido activado"});
+};
 const extractUserIdFromToken = (req,res) => {
     console.log(req.admin.id);
 };
@@ -101,7 +106,7 @@ const changeUserStatus = async (req, res) => {
 
 
 
-export {profile,authprofile,register,changeUserStatus,confirmAccount,extractUserIdFromToken,getAllUser};
+export {profile,statusAdm,authprofile,register,changeUserStatus,confirmAccount,extractUserIdFromToken,getAllUser};
 
 // Por importar
 /*

@@ -7,7 +7,6 @@ const checkAuth = async (req, res, next) => {
         try {
             token = req.headers.authorization.split(' ')[1]; // Separa el token del Bearer
             const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verifica el token
-
             // Verificar si es un token de administrador
             if (decoded && decoded.rol === 'admin') {
                 req.admin = await Admin.findById(decoded.id).select('-password -token -confirmed'); // Selecciona todos los campos menos la contraseña
