@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import BackToHomeButton from './back';
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +10,13 @@ import {
   Input,
   Button,
   Center,
+  useToast, 
 } from '@chakra-ui/react';
-
 
 const CrearPagoBasura = () => {
   const navigate = useNavigate();
+  const toast = useToast(); 
+
   const [formulario, setFormulario] = useState({
     nombreResidente: '',
     rutResidente: '',
@@ -32,12 +34,18 @@ const CrearPagoBasura = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post('http://localhost:443/aseo/crear', formulario);
       console.log(response.data.mensaje && navigate('/DatosTransferencia'));
     } catch (error) {
       console.error(error);
+      toast({
+        title: 'Error',
+        description: error.response?.data.error || 'Error al enviar los datos.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 

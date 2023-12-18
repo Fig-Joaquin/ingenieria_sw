@@ -18,7 +18,7 @@ const crearTransaccion = async (req, res) => {
 
     await nuevaTransaccion.save();
 
-    res.status(201).json({ mensaje: 'Transacción guardada con éxito.', transaccion: nuevaTransaccion });
+    res.status(201).json({ mensaje: 'Transacción enviada con éxito.', transaccion: nuevaTransaccion });
   } catch (error) {
     console.error('Error al crear transacción:', error);
     res.status(500).json({ error: 'Error interno del servidor.' });

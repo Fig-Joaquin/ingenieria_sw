@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';  
+import axios from 'axios';
 import BackToHomeButton from './back';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -14,11 +14,13 @@ import {
   VStack,
   Spacer,
   Center,
+  useToast, 
 } from '@chakra-ui/react';
-
 
 export const CrearPatenteComercial = () => {
   const navigate = useNavigate();
+  const toast = useToast(); 
+
   const [formulario, setFormulario] = useState({
     nombreComercio: '',
     rubro: '',
@@ -50,6 +52,13 @@ export const CrearPatenteComercial = () => {
       navigate('/DatosTransferencia');
     } catch (error) {
       console.error(error);
+      toast({
+        title: 'Error',
+        description: error.response?.data.error || 'Ocurrió un error al procesar su solicitud, ingrese un RUT y Patente que no hayan solicitado permisos anteriormente.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 

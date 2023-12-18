@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import BackToHomeButton from './forms/back';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Heading,
@@ -12,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 const CrearTransaccion = () => {
+  const navigate = useNavigate();
   const toast = useToast();
   const [formulario, setFormulario] = useState({
     numeroTransaccion: '',
@@ -32,14 +35,14 @@ const CrearTransaccion = () => {
 
     try {
       const response = await axios.post('http://localhost:443/transaccion/enviar', formulario);
-
       toast({
-        title: 'Éxito',
+        title: 'Envío Exitoso',
         description: response.data.mensaje,
         status: 'success',
         duration: 5000,
         isClosable: true,
       });
+      navigate('/');
     } catch (error) {
       console.error(error);
 
@@ -56,7 +59,7 @@ const CrearTransaccion = () => {
   return (
     <Box p={8} maxWidth="500px" mx="auto">
       <Heading as="h1" mb={8} textAlign="center">
-        Crear Transacción
+        Enviar Número de Transacción
       </Heading>
       <form onSubmit={handleSubmit}>
         <FormControl>
@@ -80,13 +83,13 @@ const CrearTransaccion = () => {
           />
         </FormControl>
         <FormControl mt={4}>
-          <FormLabel>Monto de Transacción:</FormLabel>
+          <FormLabel>Monto de la Transacción:</FormLabel>
           <Input
             type="text"
             name="montoTransaccion"
             value={formulario.montoTransaccion}
             onChange={handleChange}
-            placeholder="Ingrese el monto de transacción"
+            placeholder="Ejemplo: 100000"
           />
         </FormControl>
         <FormControl mt={4}>
@@ -100,9 +103,12 @@ const CrearTransaccion = () => {
           />
         </FormControl>
         <Center>
-          <Button width="54%" mt={4} colorScheme="purple" type="submit">
-            Crear Transacción
+          <Button width="54%" mt={4} colorScheme="teal" type="submit">
+            Enviar
           </Button>
+        </Center>
+        <Center h="100hv">
+              <BackToHomeButton />
         </Center>
       </form>
     </Box>

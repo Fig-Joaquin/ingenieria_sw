@@ -45,7 +45,7 @@ export const CrearPermisoCirculacion = () => {
 
       toast({
         title: 'Error',
-        description: 'Ocurrió un error al procesar su solicitud, ingrese un RUT y Patente que no hayan solicitado permisos anteriormente.',
+        description: error.response?.data.error || 'Ocurrió un error al procesar su solicitud, ingrese un RUT y Patente que no hayan solicitado permisos anteriormente.',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -108,6 +108,7 @@ export const CrearPermisoCirculacion = () => {
           </VStack>
         </Container>
       </Box>
+      
     </ChakraProvider>
   );
 };

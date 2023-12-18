@@ -13,10 +13,13 @@ import {
   Heading,
   VStack,
   Center,
+  useToast, 
 } from '@chakra-ui/react';
 
 export const CrearPermisoEventos = () => {
   const navigate = useNavigate();
+  const toast = useToast(); 
+
   const [formulario, setFormulario] = useState({
     nombreSolicitante: '',
     rutSolicitante: '',
@@ -44,6 +47,14 @@ export const CrearPermisoEventos = () => {
       navigate('/DatosTransferencia');
     } catch (error) {
       console.error(error);
+
+      toast({
+        title: 'Error',
+        description: error.response?.data.error || 'Asegurese de haber rellenado bien los datos o de no haber hecho solicitud con los mismos datos antes.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
