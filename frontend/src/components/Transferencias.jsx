@@ -9,7 +9,7 @@ const UserProfilePage = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.post('http://localhost:443/boletas/ruta-archivo/usuario', {
+      const response = await axios.post('http://146.83.198.35:1704/boletas/ruta-archivo/usuario', {
         rut,
       }, {
         headers: { 'Content-Type': 'application/json' },
@@ -41,7 +41,7 @@ const UserProfilePage = () => {
       </Button>
 
       {imageUrl ? (
-        <Image src={`http://localhost:443/${imageUrl}`} alt="Imagen de usuario" boxSize="550px" />
+        <Image src={`http://146.83.198.35:1704/${imageUrl}`} alt="Imagen de usuario" boxSize="550px" />
       ) : (
         <Text>No se encontró una imagen para este usuario</Text>
       )}

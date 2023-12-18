@@ -28,7 +28,7 @@ const NewFineForm = () => {
 
     try {
       // Realiza la solicitud al backend para crear la multa
-      const response = await fetch('http://localhost:443/adm-muni/nueva-multa', {
+      const response = await fetch('http://146.83.198.35:1704/adm-muni/nueva-multa', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

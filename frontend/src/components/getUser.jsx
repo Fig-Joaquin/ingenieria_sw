@@ -10,7 +10,7 @@ const UserProfilePage = () => {
 
   useEffect(() => {
     // Realiza una solicitud al servidor para obtener la lista de usuarios
-    axios.get('http://localhost:443/usuario/perfil')
+    axios.get('http://146.83.198.35:1704/usuario/perfil')
       .then((response) => {
         setUsers(response.data); // Asumiendo que la respuesta del servidor es un array de usuarios
       })
@@ -21,9 +21,9 @@ const UserProfilePage = () => {
 
   const handleUpdateStatus = async (rut) => {
     try {
-      await axios.put('http://localhost:443/usuario/actualizar', { rut, newStatus });
+      await axios.put('http://146.83.198.35:1704/usuario/actualizar', { rut, newStatus });
       // Actualiza la lista de usuarios después de la actualización
-      const response = await axios.get('http://localhost:443/usuario/perfil');
+      const response = await axios.get('http://146.83.198.35:1704/usuario/perfil');
       setUsers(response.data);
       console.log('Estado del usuario actualizado exitosamente');
     } catch (error) {

@@ -35,7 +35,7 @@ const CrearPagoBasura = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:443/aseo/crear', formulario);
+      const response = await axios.post('http://146.83.198.35:1704/aseo/crear', formulario);
       console.log(response.data.mensaje && navigate('/DatosTransferencia'));
     } catch (error) {
       console.error(error);

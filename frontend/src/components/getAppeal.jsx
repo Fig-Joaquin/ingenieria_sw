@@ -14,7 +14,7 @@ const AppealList = () => {
   const handleSearch = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:443/adm-muni/apelaciones-cliente2`, {
+      const response = await fetch(`http://146.83.198.35:1704/adm-muni/apelaciones-cliente2`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,7 +54,7 @@ const AppealList = () => {
       }
   
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:443/adm-muni/decision-apelacion`, {
+      const response = await fetch(`http://146.83.198.35:1704/adm-muni/decision-apelacion`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

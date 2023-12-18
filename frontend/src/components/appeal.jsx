@@ -37,7 +37,7 @@ const AppealsForm = () => {
 
 
     try {
-      const response = await axios.post('http://localhost:443/admin-muni/nueva-apelacion', formData);
+      const response = await axios.post('http://146.83.198.35:1704/admin-muni/nueva-apelacion', formData);
       console.log('Appeal created:', response.data);
       setFormData({
         reason: '',

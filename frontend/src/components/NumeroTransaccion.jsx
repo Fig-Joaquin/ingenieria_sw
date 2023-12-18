@@ -34,7 +34,7 @@ const CrearTransaccion = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:443/transaccion/enviar', formulario);
+      const response = await axios.post('http://146.83.198.35:1704/transaccion/enviar', formulario);
       toast({
         title: 'Envío Exitoso',
         description: response.data.mensaje,

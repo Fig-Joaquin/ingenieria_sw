@@ -98,7 +98,7 @@ const DatosTransferencia = () => {
       formData.append('comprobante', selectedFile);
       formData.append('rutUsuario', rutUsuario);
 
-      const response = await axios.post('http://146.83.198.35:80/upload/subir-comprobante', formData);      
+      const response = await axios.post('http://146.83.198.35:1704/upload/subir-comprobante', formData);      
 
 
       console.log('File uploaded:', response.data);

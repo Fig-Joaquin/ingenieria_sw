@@ -17,7 +17,7 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
       }
 
       try {
-        const response = await fetch('http://localhost:443/adm-muni/check', {
+        const response = await fetch('http://146.83.198.35:1704/adm-muni/check', {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
@@ -29,7 +29,7 @@ const ProtectedRoute = ({ element: Component, ...rest }) => {
 
           // Verificar la ruta específica '/fine' en el servidor
           if (location.pathname === '/fines') {
-            const fineVerificationResponse = await fetch('http://localhost:443/adm-muni/check', {
+            const fineVerificationResponse = await fetch('http://146.83.198.35:1704/adm-muni/check', {
               method: 'GET',
               headers: {
                 Authorization: `Bearer ${token}`,
