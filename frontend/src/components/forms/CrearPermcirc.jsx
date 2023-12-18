@@ -13,11 +13,14 @@ import {
   Heading,
   VStack,
   Spacer,
+  useToast,
+  Center, 
 } from '@chakra-ui/react';
-
 
 export const CrearPermisoCirculacion = () => {
   const navigate = useNavigate();
+  const toast = useToast(); 
+
   const [formulario, setFormulario] = useState({
     rut: '',
     patente: '',
@@ -39,6 +42,14 @@ export const CrearPermisoCirculacion = () => {
       navigate('/DatosTransferencia');
     } catch (error) {
       console.error(error);
+
+      toast({
+        title: 'Error',
+        description: 'Ocurrió un error al procesar su solicitud, ingrese un RUT y Patente que no hayan solicitado permisos anteriormente.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -47,7 +58,7 @@ export const CrearPermisoCirculacion = () => {
       <Box p={8}>
         <Container maxW="xl">
           <VStack spacing={4} align="stretch">
-            <Heading>Permiso De Circulación</Heading>
+            <Heading><Center h="100hv">Permiso De Circulación</Center></Heading>
             <Box>
               <form onSubmit={handleSubmit}>
                 <VStack spacing={4} align="stretch">
@@ -68,7 +79,12 @@ export const CrearPermisoCirculacion = () => {
                     />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>Patente:</FormLabel>
+                    <FormLabel>Patente{' '}
+                    <Box as="span" fontStyle="italic">
+                        (solo mayusculas)
+                    </Box>
+                    :
+                    </FormLabel>
                     <Input
                       type="text"
                       name="patente"
@@ -78,12 +94,16 @@ export const CrearPermisoCirculacion = () => {
                     />
                   </FormControl>
                   <Spacer />
+                  <Center h="100hv">
                   <Button width="43%" mt={4} colorScheme="purple" type="submit">
-                  Continuar
+                    Continuar
                   </Button>
+                  </Center>
                 </VStack>
               </form>
+              <Center h="100hv">
               <BackToHomeButton />
+              </Center>
             </Box>
           </VStack>
         </Container>

@@ -13,6 +13,7 @@ import {
   Heading,
   VStack,
   Spacer,
+  Center,
 } from '@chakra-ui/react';
 
 
@@ -122,12 +123,16 @@ export const CrearPatenteComercial = () => {
                     />
                   </FormControl>
                   <Spacer />
+                  <Center h="100hv">
                   <Button width="43%" mt={4} colorScheme="purple" type="submit">
                   Continuar
                   </Button>
+                  </Center>
                 </VStack>
               </form>
+              <Center h="100hv">
               <BackToHomeButton />
+              </Center>
             </Box>
           </VStack>
         </Container>
