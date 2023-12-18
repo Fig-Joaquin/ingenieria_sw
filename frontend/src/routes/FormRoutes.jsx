@@ -24,6 +24,7 @@ import CrearPatenteComercial from '../components/forms/CrearPatcom';
 import CrearPermisoEventos from '../components/forms/CrearPermevent';
 import DatosTransferencia from '../components/DatosTransferencia';
 import AppealsForm from '../components/appeal';
+import Login from '../components/login';
 
 import App from '../app.jsx';
 const HomePage = () => {
@@ -53,6 +54,9 @@ const HomePage = () => {
           <DrawerHeader color="white"><HamburgerIcon />Servicios Disponibles:</DrawerHeader>
           <DrawerBody color="white">
             <VStack spacing={4} align="start">
+            <Link to="/login" onClick={handleDrawerClose} color="white">
+                Iniciar Sesión
+              </Link>
               <Link to="/CrearPermisoCirculacion" onClick={handleDrawerClose} color="white">
                 Permiso de Circulación 2024
               </Link>
@@ -100,6 +104,7 @@ const Form = () => {
           <Route path="/crearPermisoEventos" element={<CrearPermisoEventos />} />
           <Route path="/DatosTransferencia" element={<DatosTransferencia />} />
           <Route path="/Apelacion" element={<AppealsForm />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </ChakraProvider>
     </Router>
