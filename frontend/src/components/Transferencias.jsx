@@ -1,36 +1,52 @@
+// En tu componente de React
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Image, Text, VStack, Input, Button, FormControl, FormLabel } from '@chakra-ui/react';
 
-const MostrarImagenesPorUsuario = () => {
-  const [rutUsuario, setRutUsuario] = useState('');
-  const [archivos, setArchivos] = useState([]);
+const UserProfilePage = () => {
+  const [rut, setRut] = useState('');
+  const [imageUrl, setImageUrl] = useState('');
 
-  const handleBuscarArchivos = async () => {
+  const handleSearch = async () => {
     try {
-      const response = await axios.post('http://localhost:443/rutaarchivo/buscar', { rutUsuario });
-      setArchivos(response.data.archivos);
+      const response = await axios.post('http://localhost:443/boletas/ruta-archivo/usuario', {
+        rut,
+      }, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.data && response.data.imageUrl) {
+        setImageUrl(response.data.imageUrl);
+      } else {
+        console.error('No se encontró la URL de la imagen para este usuario');
+      }
     } catch (error) {
-      console.error('Error al buscar archivos por usuario:', error);
+      console.error('Error al obtener la URL de la imagen del usuario:', error);
     }
   };
 
   return (
-    <div>
-      <h2>Mostrar Imágenes por Usuario</h2>
-      <label>RUT del usuario: </label>
-      <input type="text" value={rutUsuario} onChange={(e) => setRutUsuario(e.target.value)} />
-      <button onClick={handleBuscarArchivos}>Buscar</button>
+    <VStack spacing={4} align="center">
+      <FormControl>
+        <FormLabel>RUT del Usuario</FormLabel>
+        <Input
+          type="text"
+          placeholder="Ingrese el RUT"
+          value={rut}
+          onChange={(e) => setRut(e.target.value)}
+        />
+      </FormControl>
+      <Button colorScheme="teal" onClick={handleSearch}>
+        Buscar Foto
+      </Button>
 
-      <h3>Imágenes asociadas al usuario:</h3>
-      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-        {archivos.map((archivo) => (
-          <div key={archivo._id} style={{ margin: '10px' }}>
-            <img src={archivo.resized} alt={`Imagen asociada a ${archivo.rutUsuario}`} style={{ maxWidth: '200px', maxHeight: '200px' }} />
-          </div>
-        ))}
-      </div>
-    </div>
+      {imageUrl ? (
+        <Image src={`http://localhost:443/${imageUrl}`} alt="Imagen de usuario" boxSize="550px" />
+      ) : (
+        <Text>No se encontró una imagen para este usuario</Text>
+      )}
+    </VStack>
   );
 };
 
-export default MostrarImagenesPorUsuario;
+export default UserProfilePage;
