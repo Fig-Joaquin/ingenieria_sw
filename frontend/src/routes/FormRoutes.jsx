@@ -26,8 +26,8 @@ import DatosTransferencia from '../components/DatosTransferencia';
 import AppealsForm from '../components/appeal';
 import NumeroTransaccionFormulario from '../components/NumeroTransaccion';
 import Login from '../components/login';
-import Profile from '../components/profile';
-import Fine from '../components/fine';
+import Profile from '../components/Profile.jsx';
+import Fine from '../components/Fine.jsx';
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import AppealList from '../components/getAppeal.jsx';
 

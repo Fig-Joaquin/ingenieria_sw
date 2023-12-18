@@ -44,7 +44,7 @@ const DatosTransferencia = () => {
     const fetchData = async () => {
       try {
         console.log('Fetching data...');
-        const response = await axios.get('http://localhost:443/datosmunicipalidad/obtener-datos-transferencia');
+        const response = await axios.get('http://146.83.198.35:1704/datosmunicipalidad/obtener-datos-transferencia');
         console.log('Data response:', response.data);
         setDatos(response.data);
       } catch (error) {
@@ -98,7 +98,8 @@ const DatosTransferencia = () => {
       formData.append('comprobante', selectedFile);
       formData.append('rutUsuario', rutUsuario);
 
-      const response = await axios.post('http://localhost:443/upload/subir-comprobante', formData);
+      const response = await axios.post('http://146.83.198.35:80/upload/subir-comprobante', formData);      
+
 
       console.log('File uploaded:', response.data);
       setUploadError(null);

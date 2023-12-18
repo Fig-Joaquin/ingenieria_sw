@@ -31,7 +31,8 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://localhost:443/adm-muni/login', {
+      const URL = 'http://localhost:80'
+      const response = await fetch(URL+'/adm-muni/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
