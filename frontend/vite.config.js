@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173, // PUERTO DE FRONTEND VITE VITE VITE VITE FUERTO PUERTO PUERTO 5173 ORIGINAL
+    port: 5173, // PUERTO DE FRONTEND VITE VITE VITE VITE FUERTO PUERTO PUERTO 5173 ORIGINAL 1177 -> 80
   },
 });

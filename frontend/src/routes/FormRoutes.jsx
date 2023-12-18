@@ -18,6 +18,7 @@ import CrearPermisoConstruccion from '../components/forms/CrearPermconst';
 import CrearPatenteComercial from '../components/forms/CrearPatcom';
 import CrearPermisoEventos from '../components/forms/CrearPermevent';
 import DatosTransferencia from '../components/DatosTransferencia';
+import AppealsForm from '../components/appeal';
 
 import App from '../app.jsx';
 const HomePage = () => {
@@ -47,20 +48,23 @@ const HomePage = () => {
               <Link to="/CrearPermisoCirculacion" onClick={handleDrawerClose} color="white">
                 Permiso de Circulación 2024
               </Link>
-              <Link to="/CrearPagoBasura" onClick={handleDrawerClose} color="white">
-                Servicio de Basura
+              <Link to="/CrearPermisoConstruccion" onClick={handleDrawerClose} color="white">
+                Permiso de Construcción
               </Link>
               <Link to="/CrearPermisoEdificacion" onClick={handleDrawerClose} color="white">
                 Permiso de Edificación
               </Link>
-              <Link to="/CrearPermisoConstruccion" onClick={handleDrawerClose} color="white">
-                Permiso de Construcción
+              <Link to="/crearPermisoEventos" onClick={handleDrawerClose} color="white">
+                Permiso Para Eventos
               </Link>
               <Link to="/CrearPatenteComercial" onClick={handleDrawerClose} color="white">
                 Patente Comercial
               </Link>
-              <Link to="/crearPermisoEventos" onClick={handleDrawerClose} color="white">
-                Permiso Para Eventos
+              <Link to="/CrearPagoBasura" onClick={handleDrawerClose} color="white">
+                Servicio de Basura
+              </Link>
+              <Link to="/Apelacion" onClick={handleDrawerClose} color="white">
+                Crear Apelación
               </Link>
             </VStack>
           </DrawerBody>
@@ -84,6 +88,7 @@ const Form = () => {
           <Route path="/CrearPatenteComercial" element={<CrearPatenteComercial />} />
           <Route path="/crearPermisoEventos" element={<CrearPermisoEventos />} />
           <Route path="/DatosTransferencia" element={<DatosTransferencia />} />
+          <Route path="/Apelacion" element={<AppealsForm />} />
         </Routes>
       </ChakraProvider>
     </Router>

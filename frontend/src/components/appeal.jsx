@@ -33,7 +33,6 @@ const AppealsForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //*VERIFICAR RUTA DE LA API EN BACKEND*
 
     try {
       const response = await axios.post('http://localhost:443/admin-muni', formData);
