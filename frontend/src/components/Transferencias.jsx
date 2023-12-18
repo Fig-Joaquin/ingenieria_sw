@@ -1,34 +1,36 @@
-// components/UpdateStatusForm.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const UpdateStatusForm = () => {
-  const [rut, setRut] = useState('');
-  const [newStatus, setNewStatus] = useState('');
+const MostrarImagenesPorUsuario = () => {
+  const [rutUsuario, setRutUsuario] = useState('');
+  const [archivos, setArchivos] = useState([]);
 
-  const handleUpdateStatus = async () => {
+  const handleBuscarArchivos = async () => {
     try {
-      await axios.put('http://localhost:443/usuario/usuarios/actualizar-status', { rut, newStatus });
-      console.log('Estado del usuario actualizado exitosamente');
-      // Puedes realizar acciones adicionales después de actualizar el estado
+      const response = await axios.post('http://localhost:443/rutaarchivo/buscar', { rutUsuario });
+      setArchivos(response.data.archivos);
     } catch (error) {
-      console.error('Error al actualizar el estado del usuario:', error);
+      console.error('Error al buscar archivos por usuario:', error);
     }
   };
 
   return (
     <div>
-      <h2>Actualizar Estado del Usuario</h2>
+      <h2>Mostrar Imágenes por Usuario</h2>
       <label>RUT del usuario: </label>
-      <input type="text" value={rut} onChange={(e) => setRut(e.target.value)} />
-      <br />
-      <label>Nuevo estado: </label>
-      <input type="text" value={newStatus} onChange={(e) => setNewStatus(e.target.value)} />
-      <br />
-      <button onClick={handleUpdateStatus}>Actualizar Estado</button>
+      <input type="text" value={rutUsuario} onChange={(e) => setRutUsuario(e.target.value)} />
+      <button onClick={handleBuscarArchivos}>Buscar</button>
+
+      <h3>Imágenes asociadas al usuario:</h3>
+      <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        {archivos.map((archivo) => (
+          <div key={archivo._id} style={{ margin: '10px' }}>
+            <img src={archivo.resized} alt={`Imagen asociada a ${archivo.rutUsuario}`} style={{ maxWidth: '200px', maxHeight: '200px' }} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
 
-export default UpdateStatusForm;
+export default MostrarImagenesPorUsuario;

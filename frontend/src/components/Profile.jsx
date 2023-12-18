@@ -44,7 +44,10 @@ const ProfilePage = () => {
     navigate('/usuariosmun');
     closeDrawer();
   };
-
+  const handleGoToTransaction = () => {
+    navigate('/transacciones');
+    closeDrawer();
+  };
   const closeDrawer = () => {
     setIsDrawerOpen(false);
   };
@@ -83,7 +86,10 @@ const ProfilePage = () => {
                 Buscar apelacion por usuario
               </Button>
               <Button colorScheme="teal" onClick={handleGoToUser}>
-                Ver usuarios
+                Ver usuarios 
+              </Button>
+              <Button colorScheme="teal" onClick={handleGoToTransaction}>
+                Transacciones
               </Button>
             </VStack>
           </DrawerBody>
