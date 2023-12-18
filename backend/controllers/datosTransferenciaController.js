@@ -14,6 +14,7 @@ const crearDatosTransferenciaFijos = async (req, res) => {
 };
 const obtenerDatosTransferencia = async (req, res) => {
     try {
+
         const datosTransferencia = await TransferenciaDatos.findOne();
         
         if (!datosTransferencia) {
