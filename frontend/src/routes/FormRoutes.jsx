@@ -10,7 +10,12 @@ import {
   DrawerOverlay,
   Button,
   VStack,
+  Image,
+  Box,
+  Divider,
 } from '@chakra-ui/react';
+
+import { HamburgerIcon } from '@chakra-ui/icons'
 import CrearPagoBasura from '../components/forms/CrearAseo';
 import CrearPermisoCirculacion from '../components/forms/CrearPermcirc';
 import CrearPermisoEdificacion from '../components/forms/CrearPermedif';
@@ -34,15 +39,19 @@ const HomePage = () => {
 
   return (
     <VStack spacing={4} align="stretch" justify="space-between" height="100vh">
-      <Button colorScheme="purple" size="md" borderRadius="md" onClick={handleDrawerOpen}>
-        Servicios De la Municipalidad
-      </Button>
+      <Box mx="initial" maxWidth="300px" mt="25px">
+        <Button colorScheme="purple" variant='outline' size="md" borderRadius="md" onClick={handleDrawerOpen}>
+          <HamburgerIcon /> Servicios De la Municipalidad
+        </Button>
+      </Box>
+
+
 
       <Drawer isOpen={drawerIsOpen} onClose={handleDrawerClose} placement="left">
         <DrawerOverlay />
         <DrawerContent bg="purple.500" p={4}>
           <DrawerCloseButton />
-          <DrawerHeader color="white">Servicios Disponibles:</DrawerHeader>
+          <DrawerHeader color="white"><HamburgerIcon />Servicios Disponibles:</DrawerHeader>
           <DrawerBody color="white">
             <VStack spacing={4} align="start">
               <Link to="/CrearPermisoCirculacion" onClick={handleDrawerClose} color="white">
@@ -70,6 +79,9 @@ const HomePage = () => {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
+
+      <Divider />
+      <Image src='https://i.ytimg.com/vi/P22Xwq00RyI/maxresdefault.jpg' alt='Concepcion' />
     </VStack>
   );
 };

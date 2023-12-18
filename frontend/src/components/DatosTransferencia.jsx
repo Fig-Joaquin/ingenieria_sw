@@ -21,6 +21,7 @@ import {
   useToast,
   Center,
 } from '@chakra-ui/react';
+import { AttachmentIcon } from '@chakra-ui/icons';
 
 const DatosTransferencia = () => {
   const [datos, setDatos] = useState(null);
@@ -115,14 +116,15 @@ const DatosTransferencia = () => {
           </Box>
           <Box p={4} borderWidth="1px" borderRadius="lg">
             <Heading as="h2" size="md" mb={2}>
-            <Center h="100hv">Subir Comprobante de Transferencia</Center>
+            <Center h="100hv"> Subir Comprobante de Transferencia</Center>
             </Heading>
             <Text fontSize="sm" mb={2}>
             <Center h="100hv">Solo se admiten imagenes en formato png.</Center>
             </Text>
+            <Center h="100hv"><AttachmentIcon boxSize={8} mb={2} /></Center>
             <Input type="file" onChange={handleFileChange} mb={2} />
             <Center h="100hv"><Button colorScheme="purple" onClick={handleFileUpload}>
-              Enviar Comprobante
+            Enviar Comprobante 
             </Button></Center>
             <Center h="100hv"><BackToHomeButton /></Center>
           </Box>
