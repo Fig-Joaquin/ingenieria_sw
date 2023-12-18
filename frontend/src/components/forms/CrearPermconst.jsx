@@ -14,10 +14,11 @@ import {
   VStack,
   Spacer,
   Center,
+  useToast,
 } from '@chakra-ui/react';
 
-
 export const CrearPermisoConstruccion = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     nombreSolicitante: '',
@@ -44,8 +45,24 @@ export const CrearPermisoConstruccion = () => {
       const response = await axios.post('http://localhost:443/permconst/crear', formulario);
       console.log(response.data.mensaje);
       navigate('/DatosTransferencia');
+
+      toast({
+        title: 'Éxito',
+        description: response.data.mensaje,
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (error) {
       console.error(error);
+
+      toast({
+        title: 'Error',
+        description: error.response?.data.error || 'Asegurese de haber rellenado bien los datos o de no haber hecho solicitud con los mismos datos antes.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
     }
   };
 
@@ -148,14 +165,14 @@ export const CrearPermisoConstruccion = () => {
                   </FormControl>
                   <Spacer />
                   <Center h="100hv">
-                  <Button width="43%" mt={4} colorScheme="purple" type="submit">
-                   Continuar
-                  </Button>
+                    <Button width="43%" mt={4} colorScheme="teal" type="submit">
+                      Continuar
+                    </Button>
                   </Center>
                 </VStack>
               </form>
               <Center h="100hv">
-              <BackToHomeButton />
+                <BackToHomeButton />
               </Center>
             </Box>
           </VStack>

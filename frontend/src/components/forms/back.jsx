@@ -5,7 +5,7 @@ import { Button } from '@chakra-ui/react';
 const BackToHomeButton = ({ to = '/' }) => {
   return (
     <Link to={to}>
-      <Button colorScheme="purple" mt={8} spacing={4} align="stretch">
+      <Button colorScheme="teal" mt={8} spacing={4} align="stretch">
         Volver a la página principal
       </Button>
     </Link>

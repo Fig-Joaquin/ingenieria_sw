@@ -6,6 +6,7 @@ import {
   Heading,
   Text,
   VStack,
+  Spacer,
   Spinner,
   ChakraProvider,
   Input,
@@ -20,6 +21,7 @@ import {
   useDisclosure,
   useToast,
   Center,
+  Collapse,
   Link,
 } from '@chakra-ui/react';
 import { AttachmentIcon } from '@chakra-ui/icons';
@@ -28,11 +30,13 @@ const DatosTransferencia = () => {
   const [datos, setDatos] = useState(null);
   const [loading, setLoading] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
-  const toast = useToast(); 
+  const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const [uploadError, setUploadError] = useState(null);
+  const [services, setServices] = useState([]);
+  const [isServicesOpen, setServicesOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -49,6 +53,21 @@ const DatosTransferencia = () => {
     };
 
     fetchData();
+
+    setServices([
+      { servicio: 'Permiso de Circulación Automovil', precio: '70.000' },
+      { servicio: 'Permiso de Circulación Moto', precio: '60.000' },
+      { servicio: 'Permiso de Circulación Camión', precio: '90.000' },
+      { servicio: 'Permiso de Construcción Menor Magnitud', precio: '250.000' },
+      { servicio: 'Permiso de Construcción Mayor Magnitud', precio: '500.000' },
+      { servicio: 'Permiso de Edificación', precio: '300.000' },
+      { servicio: 'Permiso para Eventos para <100.000 personas', precio: '250.000' },
+      { servicio: 'Permiso para Eventos para >100.000 personas', precio: '400.000' },
+      { servicio: 'Patente Comercial Pyme', precio: '100.000' },
+      { servicio: 'Patente Comercial Medianas Empresas', precio: '350.000' },
+      { servicio: 'Patente Comercial Grandes Empresas', precio: '700.000' },
+      { servicio: 'Servicio de Basura', precio: '15.000' },
+    ]);
   }, []);
 
   const handleFileChange = (event) => {
@@ -60,7 +79,6 @@ const DatosTransferencia = () => {
     try {
       const formData = new FormData();
       formData.append('comprobante', selectedFile);
-
       const response = await axios.post('http://localhost:443/upload/subir-comprobante', formData);
 
       console.log('File uploaded:', response.data);
@@ -71,7 +89,7 @@ const DatosTransferencia = () => {
 
       toast({
         title: 'Error',
-        description: 'Ocurrió un error al subir su comprobante, asegurese de subir archivos en formato .png.',
+        description: 'Ocurrió un error al subir su comprobante, asegúrese de subir archivos en formato .png.',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -84,14 +102,14 @@ const DatosTransferencia = () => {
       <Box p={8} maxW="500px" mx="auto" borderWidth="1px" borderRadius="lg">
         <VStack spacing={4} align="stretch">
           <Heading as="h1" size="xl" mb={2}>
-           <Center h="100hv">Datos de Transferencia </Center> 
+            <Center h="100hv">Datos de Transferencia </Center>
           </Heading>
           <Box p={4} borderWidth="1px" borderRadius="lg">
             {loading ? (
               <Spinner size="xl" />
             ) : (
               <VStack spacing={2} align="start">
-                 <Text>
+                <Text>
                   <strong>Banco:</strong> {datos?.banco}
                 </Text>
                 <Text>
@@ -115,26 +133,55 @@ const DatosTransferencia = () => {
               </VStack>
             )}
           </Box>
-          
+
+          <Center h="100hv">
+            <Button
+              colorScheme="teal"
+              variant='outline'
+              onClick={() => setServicesOpen(!isServicesOpen)}
+              mt={2}
+            >
+              Ver Servicios y Precios
+            </Button>
+          </Center>
+
+          <Collapse in={isServicesOpen}>
+            <VStack align="start">
+              <Heading as="h3" size="sm" mt={3}>
+                Servicios y Precios:
+              </Heading>
+              {services.map((service) => (
+                <Text key={service.servicio}>
+                  {service.servicio}: ${service.precio}
+                </Text>
+              ))}
+            </VStack>
+          </Collapse>
+
           <Box p={4} borderWidth="1px" borderRadius="lg">
             <Heading as="h2" size="md" mb={2}>
-            <Center h="100hv"> <AttachmentIcon boxSize={5} mb={5} /> Subir Comprobante de Transferencia</Center>
+              <Center h="100hv">
+                <AttachmentIcon boxSize={5} mb={5} /> Subir Comprobante de Transferencia
+              </Center>
             </Heading>
             <Text fontSize="sm" mb={5}>
-            <Center h="100hv">Solo se admiten imagenes en formato png.</Center>
+              <Center h="100hv">Solo se admiten imágenes en formato png.</Center>
             </Text>
             <Input type="file" onChange={handleFileChange} mb={2} />
             <Text fontSize="medium" mb={5}>
-             <Center h="100hv"> ¿No puedes subir imagenes?{' '}</Center>
-            <Link color='teal.500' href='/subirtransaccion'>
-            <Center h="100hv"> Prueba enviar tu número de transacción{' '}</Center>
-            </Link>
+              <Center h="100hv"> ¿No puedes subir imágenes?{' '}</Center>
+              <Link color='teal.500' href='/subirtransaccion'>
+                <Center h="100hv"> Prueba enviar tu número de transacción{' '}</Center>
+              </Link>
             </Text>
-            <Center h="100hv"><Button colorScheme="purple" onClick={handleFileUpload}>
-            Enviar Comprobante 
-            </Button></Center>
-            
-            <Center h="100hv"><BackToHomeButton /></Center>
+            <Center h="100hv">
+              <Button colorScheme="teal" onClick={handleFileUpload}>
+                Enviar Comprobante
+              </Button>
+            </Center>
+            <Center h="100hv">
+              <BackToHomeButton />
+            </Center>
           </Box>
 
         </VStack>

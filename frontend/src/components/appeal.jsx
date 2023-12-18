@@ -109,7 +109,7 @@ const AppealsForm = () => {
             </Select>
           </FormControl>
 
-          <Button colorScheme="purple" type="submit">
+          <Button colorScheme="teal" type="submit">
             Crear Apelación
           </Button>
         </VStack>

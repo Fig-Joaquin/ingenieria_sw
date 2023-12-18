@@ -98,7 +98,7 @@ const CrearPagoBasura = () => {
           />
         </FormControl>
         <Center h="100hv">
-        <Button width="54%" mt={4} colorScheme="purple" type="submit">
+        <Button width="54%" mt={4} colorScheme="teal" type="submit">
           Continuar
         </Button>
         </Center>

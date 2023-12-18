@@ -144,7 +144,7 @@ export const CrearPermisoEventos = () => {
                     />
                   </FormControl>
                   <Center h="100hv">
-                  <Button width="43%" mt={4} colorScheme="purple" type="submit">
+                  <Button width="43%" mt={4} colorScheme="teal" type="submit">
                    Continuar
                   </Button>
                   </Center>
