@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Input, VStack, Text, Box, Table, Thead, Tbody, Tr, Th, Td, Center, Select } from '@chakra-ui/react';
 import { format } from 'date-fns';
+import BackProfile from './backProfile';
 
 const AppealList = () => {
   const [rut, setRut] = useState('');
@@ -100,7 +101,11 @@ const AppealList = () => {
           <Button onClick={handleSearch} colorScheme="teal" mt={8} spacing='10'>
             Buscar
           </Button>
+          <BackProfile/>
+
+          
         </Center>
+        
       </Box>
 
       {error && <Text color="red">{error}</Text>}

@@ -46,10 +46,8 @@ const LoginForm = () => {
         console.log('Token:', data.token);
         localStorage.setItem('token', token);
         
-            // Nuevo código para indicar que el usuario ha iniciado sesión
         setIsLoggedIn(true);
-        // Redirigir a la página de perfil después del inicio de sesión
-        navigate('/profile');
+        navigate('/profile', { state: { rut } }); // Pasar el RUT como parte del estado de la ruta
       } else {
         const errorData = await response.json();
         setError(errorData.msg || 'Error inesperado');

@@ -30,7 +30,8 @@ import Profile from '../components/Profile.jsx';
 import Fine from '../components/Fine.jsx';
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import AppealList from '../components/getAppeal.jsx';
-
+import UserProfilePage from '../components/getUser.jsx';
+import UpdateStatusForm from '../components/Transferencias.jsx';
 const HomePage = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   
@@ -84,6 +85,7 @@ const HomePage = () => {
                 Crear Apelación
               </Link>
               
+              
             </VStack>
           </DrawerBody>
         </DrawerContent>
@@ -115,6 +117,8 @@ const Form = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/fines" element={<Fine />} />
           <Route path="/apelaciones-usuario" element={<AppealList />} />
+          <Route path="/usuariosmun" element={<UserProfilePage />} />\
+          <Route path="/transacciones" element={<UpdateStatusForm />} />
         </Routes>
       </ChakraProvider>
     </Router>

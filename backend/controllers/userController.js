@@ -29,46 +29,36 @@ const login = async (req, res) => {
 
 
 const getUser = async (req, res) => {
-    const {rut} = req.query;
-
-    const user = await User.findOne({rut});
-    if(!user) return res.status(400).json({msg: "Usuario no encontrado"});
-
-    res.json({user});
+  try {
+    const users = await User.find();  // Esto obtiene todos los documentos en la colección 'usuarios'
+    
+    res.json(users);  // Devuelve la lista de usuarios como respuesta JSON
+  } catch (error) {
+    console.error('Error al obtener usuarios:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 };
 
 
 
 
 const updateUser = async (req, res) => {
-  const { rut } = req.body; // Suponemos que la ruta incluye el rut del usuario a actualizar
-  const userDataToUpdate = req.body; // Los datos que deseas actualizar
+  const { rut, newStatus } = req.body;
 
   try {
-    // Busca el usuario por su rut
     const user = await User.findOne({ rut });
 
     if (!user) {
-      return res.status(400).json({ msg: "Usuario no encontrado" });
+      return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
-    // Actualiza los campos que desees
-    // Aquí asumimos que los campos a actualizar están en userDataToUpdate
-    // Por ejemplo, si deseas actualizar el nombre y el apellido:
-    user.name = userDataToUpdate.name || user.name;
-    user.lastName = userDataToUpdate.lastName || user.lastName;
-    user.email = userDataToUpdate.email || user.email;
-    user.password = userDataToUpdate.password || user.password;
-    user.address = userDataToUpdate.address || user.address;
-    user.phoneNumber = userDataToUpdate.phoneNumber ||  user.phoneNumber;
-
-    // Guarda los cambios
+    user.statusUser = newStatus;
     await user.save();
 
-    res.json({ msg: "Usuario actualizado exitosamente" });
+    res.json({ msg: 'Estado del usuario actualizado exitosamente' });
   } catch (error) {
-    console.error(error);
-    res.status(400).json({ msg: "Error interno del servidor" });
+    console.error('Error al actualizar el estado del usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
 
