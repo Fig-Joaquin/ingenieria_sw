@@ -126,7 +126,7 @@ const DatosTransferencia = () => {
             <Input type="file" onChange={handleFileChange} mb={2} />
             <Text fontSize="medium" mb={5}>
              <Center h="100hv"> ¿No puedes subir imagenes?{' '}</Center>
-            <Link color='teal.500' href='#'>
+            <Link color='teal.500' href='/subirtransaccion'>
             <Center h="100hv"> Prueba enviar tu número de transacción{' '}</Center>
             </Link>
             </Text>

@@ -14,6 +14,7 @@ import PermisoConstruccionRoutes from './routes/formsRoutes/PermisoConstruccionR
 import PermisoEdificacionRoutes from './routes/formsRoutes/PermisoEdificacionRoutes.js' // ..
 import PermisoEventosRoutes from './routes/formsRoutes/PermisoEventosRoutes.js' // ..
 import datosTransferenciaRoutes from './routes/datosTransferenciaRoutes.js' // ..
+import transaccionRoutes from './routes/transaccionRoutes.js' // ..
 import cors from 'cors'; // Importa cors
 
 const app = express();	// Llamado a la función de express
@@ -36,6 +37,7 @@ app.use('/permedif', PermisoEdificacionRoutes); //Ruta permiso de edificacion
 app.use('/permevent', PermisoEventosRoutes); //Ruta permiso de eventos
 app.use('/datosmunicipalidad', datosTransferenciaRoutes); //Ruta para obtener datos de municipalidad, opcional de usar manualmente.
 app.use('/multas-usuario', fineRoutes);
+app.use('/transaccion', transaccionRoutes);
 const PORT = process.env.PORT || 443; //443;	// Puerto de conexión
 
 app.listen(PORT, () => console.log('Conexión con el puerto 443 - 1705'));    // Inicializa el servidor en el puerto 4000

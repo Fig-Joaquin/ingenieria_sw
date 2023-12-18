@@ -14,7 +14,6 @@ import {
   Box,
   Divider,
 } from '@chakra-ui/react';
-
 import { HamburgerIcon } from '@chakra-ui/icons'
 import CrearPagoBasura from '../components/forms/CrearAseo';
 import CrearPermisoCirculacion from '../components/forms/CrearPermcirc';
@@ -25,6 +24,7 @@ import CrearPermisoEventos from '../components/forms/CrearPermevent';
 import DatosTransferencia from '../components/DatosTransferencia';
 import AppealsForm from '../components/appeal';
 import Login from '../components/login';
+import NumeroTransaccionFormulario from '../components/NumeroTransaccion';
 
 import App from '../app.jsx';
 const HomePage = () => {
@@ -105,6 +105,7 @@ const Form = () => {
           <Route path="/DatosTransferencia" element={<DatosTransferencia />} />
           <Route path="/Apelacion" element={<AppealsForm />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/subirtransaccion" element={<NumeroTransaccionFormulario />} />
         </Routes>
       </ChakraProvider>
     </Router>
