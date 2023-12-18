@@ -54,39 +54,24 @@ const createAppealForClient = async (req, res) => {
 };
 
 const decisionAppeal = async (req, res) => {
-  const { status, rut } = req.body;
-  
-  // Validar el formato del RUT
-  if (!isValidRut(rut)) {
-    return res.status(400).json({ error: 'RUT no válido' });
-  }
-
-  const client = await User.findOne({ rut });
-  if (!client) {
-    return res.status(400).json({ error: 'Usuario no encontrado' });
-  }
-
-  // Validar el formato del status
-  const allowedStatus = ["pendiente", "aprobada", "rechazada"];
-  if (!allowedStatus.includes(status.toLowerCase())) {
-    return res.status(400).json({ error: 'Estado no válido. Debe ser "pendiente", "aprobada" o "rechazada"' });
-  }
+  const { status, _id } = req.body;
 
   try {
-    const latestAppeal = await Appeal.findOne({ user: client._id })
-      .sort({ dateSubmitted: -1 })
-      .exec();
+    // Encuentra la apelación por su _id y actualiza el estado
+    const updatedAppeal = await Appeal.findByIdAndUpdate(
+      _id,
+      { $set: { status } },
+      { new: true }
+    );
 
-    if (!latestAppeal) {
-      return res.status(400).json({ error: 'No se encontró la última apelación para este usuario' });
+    if (!updatedAppeal) {
+      return res.status(404).json({ error: 'Apelación no encontrada' });
     }
 
-    latestAppeal.status = status;
-    await latestAppeal.save();
-
-    res.json({ message: 'Estado de la última apelación actualizado' });
+    res.json({ message: 'Estado de apelación actualizado', updatedAppeal });
   } catch (error) {
-    res.status(400).json({ error: 'Error al actualizar la última apelación' });
+    console.error('Error al actualizar el estado de la apelación:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
 
@@ -160,3 +145,44 @@ const getUserAppeals = async (req, res) => {
 
 
 export {createAppealForClient,decisionAppeal,findAppealsByClientRut,getUserAppeals,getAllAppeals};
+
+{/*
+
+const decisionAppeal = async (req, res) => {
+  const { status, rut } = req.body;
+  
+  // Validar el formato del RUT 
+  if (!isValidRut(rut)) {
+    return res.status(400).json({ error: 'RUT no válido' });
+  }
+
+  const client = await User.findOne({ rut });
+  if (!client) {
+    return res.status(400).json({ error: 'Usuario no encontrado' });
+  }
+
+  // Validar el formato del status
+  const allowedStatus = ["pendiente", "aprobada", "rechazada"];
+  if (!allowedStatus.includes(status.toLowerCase())) {
+    return res.status(400).json({ error: 'Estado no válido. Debe ser "pendiente", "aprobada" o "rechazada"' });
+  }
+
+  try {
+    const latestAppeal = await Appeal.findOne({ user: client._id })
+      .sort({ dateSubmitted: -1 })
+      .exec();
+
+    if (!latestAppeal) {
+      return res.status(400).json({ error: 'No se encontró la última apelación para este usuario' });
+    }
+
+    latestAppeal.status = status;
+    await latestAppeal.save();
+
+    res.json({ message: 'Estado de la última apelación actualizado' });
+  } catch (error) {
+    res.status(400).json({ error: 'Error al actualizar la última apelación' });
+  }
+};
+
+*/}

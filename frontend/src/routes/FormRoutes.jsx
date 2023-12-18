@@ -30,7 +30,7 @@ import Profile from '../components/profile';
 import Fine from '../components/fine';
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import AppealList from '../components/getAppeal.jsx';
-
+import UserProfilePage from '../components/getUser.jsx';
 const HomePage = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   
@@ -115,6 +115,7 @@ const Form = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/fines" element={<Fine />} />
           <Route path="/apelaciones-usuario" element={<AppealList />} />
+          <Route path="/usuariosmun" element={<UserProfilePage />} />
         </Routes>
       </ChakraProvider>
     </Router>
