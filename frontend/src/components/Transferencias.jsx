@@ -1,13 +1,20 @@
-// En tu componente de React
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Image, Text, VStack, Input, Button, FormControl, FormLabel } from '@chakra-ui/react';
+import { Image, Text, VStack, Input, Button, FormControl, FormLabel, Box, SimpleGrid, IconButton } from '@chakra-ui/react';
+import { ViewIcon } from '@chakra-ui/icons'; // Importa el ícono de "View"
 
 const UserProfilePage = () => {
   const [rut, setRut] = useState('');
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrls, setImageUrls] = useState([]);
 
-  const handleSearch = async () => {
+  useEffect(() => {
+    // Cargar la lista de imágenes cuando se cambia el RUT
+    if (rut) {
+      loadImages();
+    }
+  }, [rut]);
+
+  const loadImages = async () => {
     try {
       const response = await axios.post('http://localhost:443/boletas/ruta-archivo/usuario', {
         rut,
@@ -15,37 +22,60 @@ const UserProfilePage = () => {
         headers: { 'Content-Type': 'application/json' },
       });
 
-      if (response.data && response.data.imageUrl) {
-        setImageUrl(response.data.imageUrl);
+      if (response.data && response.data.imageUrls) {
+        setImageUrls(response.data.imageUrls);
       } else {
-        console.error('No se encontró la URL de la imagen para este usuario');
+        console.error('No se encontraron imágenes para este usuario');
       }
     } catch (error) {
-      console.error('Error al obtener la URL de la imagen del usuario:', error);
+      console.error('Error al obtener las imágenes del usuario:', error);
     }
   };
 
-  return (
-    <VStack spacing={4} align="center">
-      <FormControl>
-        <FormLabel>RUT del Usuario</FormLabel>
-        <Input
-          type="text"
-          placeholder="Ingrese el RUT"
-          value={rut}
-          onChange={(e) => setRut(e.target.value)}
-        />
-      </FormControl>
-      <Button colorScheme="teal" onClick={handleSearch}>
-        Buscar Foto
-      </Button>
+  const handleSearch = () => {
+    // Cargar la lista de imágenes al hacer clic en el botón de búsqueda
+    loadImages();
+  };
 
-      {imageUrl ? (
-        <Image src={`http://localhost:443/${imageUrl}`} alt="Imagen de usuario" boxSize="550px" />
-      ) : (
-        <Text>No se encontró una imagen para este usuario</Text>
-      )}
-    </VStack>
+  const handleOpenImage = (imageUrl) => {
+    // Lógica para abrir la imagen, por ejemplo, podrías mostrarla en un modal
+    console.log(`Abrir imagen: ${imageUrl}`);
+  };
+
+  return (
+    <Box width="500px" mx="auto">
+      <VStack spacing={4} align="center">
+        <FormControl>
+          <FormLabel>RUT del Usuario</FormLabel>
+          <Input
+            type="text"
+            placeholder="Ingrese el RUT"
+            value={rut}
+            onChange={(e) => setRut(e.target.value)}
+          />
+        </FormControl>
+        <Button colorScheme="teal" onClick={handleSearch}>
+          Buscar Fotos
+        </Button>
+
+        {imageUrls.length > 0 ? (
+          <SimpleGrid columns={2} spacing={4}>
+            {imageUrls.map((url, index) => (
+              <Box key={index}>
+                <Image src={`http://localhost:443/${url}`} alt={`Imagen ${index + 1}`} boxSize="150px" />
+                <IconButton
+                  icon={<ViewIcon />}
+                  aria-label={`Abrir imagen ${index + 1}`}
+                  onClick={() => handleOpenImage(url)}
+                />
+              </Box>
+            ))}
+          </SimpleGrid>
+        ) : (
+          <Text>No se encontraron imágenes para este usuario</Text>
+        )}
+      </VStack>
+    </Box>
   );
 };
 

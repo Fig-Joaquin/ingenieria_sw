@@ -8,10 +8,13 @@ import {
   Alert,
   AlertIcon,
   Center,
+  Select,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
-import BackProfile from './backProfile';
-import ProtectedRoute from '../components/ProtectedRoute.jsx';
+import { CalendarIcon } from '@chakra-ui/icons';  // Asegúrate de importar CalendarIcon
 
+import BackProfile from './backProfile';
 
 const NewFineForm = () => {
   const [rut, setRut] = useState('');
@@ -21,17 +24,64 @@ const NewFineForm = () => {
   const [violationDate, setViolationDate] = useState('');
   const [location, setLocation] = useState('');
   const [status, setStatus] = useState('pendiente');
+  const [errors, setErrors] = useState({});
   const [error, setError] = useState(null);
+
+  const violationTypes = ['falta gravisima', 'falta grave', 'falta menos grave', 'falta leve'];
+
+  const validateForm = () => {
+    const errors = {};
+
+    // Validar el RUT
+    if (!rut) {
+      errors.rut = 'El RUT es obligatorio';
+    }
+
+    // Validar el Tipo de infracción
+    if (!violationType) {
+      errors.violationType = 'El tipo de infracción es obligatorio';
+    }
+
+    // Validar la Descripción
+    if (!description) {
+      errors.description = 'La descripción es obligatoria';
+    }
+
+    // Validar el Monto
+    if (!amount || isNaN(amount)) {
+      errors.amount = 'Ingrese un monto válido';
+    }
+
+    // Validar la Fecha de infracción
+    if (!violationDate) {
+      errors.violationDate = 'La fecha de infracción es obligatoria';
+    }
+
+    // Validar la Ubicación
+    if (!location) {
+      errors.location = 'La ubicación es obligatoria';
+    }
+
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem('token');
+
+    if (!validateForm()) {
+      // Si hay errores de validación, no enviar la solicitud al backend
+      return;
+    }
 
     try {
-      // Realiza la solicitud al backend para crear la multa
+      // Realizar la solicitud al backend para crear la multa
       const response = await fetch('http://localhost:443/adm-muni/nueva-multa', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           rut,
@@ -71,17 +121,24 @@ const NewFineForm = () => {
             size="md"
           />
         </FormControl>
+        {errors.rut && <div style={{ color: 'red' }}>{errors.rut}</div>}
 
         <FormControl isRequired>
           <FormLabel>Tipo de infracción</FormLabel>
-          <Input
-            type="text"
+          <Select
             value={violationType}
             onChange={(e) => setViolationType(e.target.value)}
-            placeholder="Ingrese el tipo de infracción"
+            placeholder="Seleccione el tipo de infracción"
             size="md"
-          />
+          >
+            {violationTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </Select>
         </FormControl>
+        {errors.violationType && <div style={{ color: 'red' }}>{errors.violationType}</div>}
 
         <FormControl isRequired>
           <FormLabel>Descripción</FormLabel>
@@ -93,6 +150,7 @@ const NewFineForm = () => {
             size="md"
           />
         </FormControl>
+        {errors.description && <div style={{ color: 'red' }}>{errors.description}</div>}
 
         <FormControl isRequired>
           <FormLabel>Monto</FormLabel>
@@ -104,6 +162,7 @@ const NewFineForm = () => {
             size="md"
           />
         </FormControl>
+        {errors.amount && <div style={{ color: 'red' }}>{errors.amount}</div>}
 
         <FormControl isRequired>
           <FormLabel>Fecha de infracción</FormLabel>
@@ -115,6 +174,7 @@ const NewFineForm = () => {
             size="md"
           />
         </FormControl>
+        {errors.violationDate && <div style={{ color: 'red' }}>{errors.violationDate}</div>}
 
         <FormControl isRequired>
           <FormLabel>Ubicación</FormLabel>
@@ -126,13 +186,14 @@ const NewFineForm = () => {
             size="md"
           />
         </FormControl>
+        {errors.location && <div style={{ color: 'red' }}>{errors.location}</div>}
 
         <Button colorScheme="teal" mt={6} type="submit" w="100%">
           Crear Multa
         </Button>
         <Center h="100hv">
-      <BackProfile />
-      </Center>
+          <BackProfile />
+        </Center>
       </form>
 
       {error && (
