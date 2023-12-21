@@ -24,6 +24,7 @@ import {
   Link,
   FormControl,
   FormLabel,
+  Select,
 } from '@chakra-ui/react';
 import { AttachmentIcon } from '@chakra-ui/icons';
 
@@ -32,6 +33,7 @@ const DatosTransferencia = () => {
   const [loading, setLoading] = useState(true);
   const [selectedFile, setSelectedFile] = useState(null);
   const [rutUsuario, setRutUsuario] = useState('');
+  const [categoria, setCategoria] = useState('');
   const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -43,9 +45,7 @@ const DatosTransferencia = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log('Fetching data...');
         const response = await axios.get('http://146.83.198.35:1704/datosmunicipalidad/obtener-datos-transferencia');
-        console.log('Data response:', response.data);
         setDatos(response.data);
       } catch (error) {
         console.error('Error al obtener los datos de transferencia:', error);
@@ -81,12 +81,18 @@ const DatosTransferencia = () => {
     setRutUsuario(event.target.value);
   };
 
+  const handleCategoriaChange = (event) => {
+    const newCategoria = event.target.value;
+    setCategoria(newCategoria);
+  };
+
   const handleFileUpload = async () => {
     try {
-      if (!rutUsuario) {
+      // Verificar si el archivo y los campos requeridos están presentes
+      if (!rutUsuario || !categoria || !selectedFile) {
         toast({
           title: 'Error',
-          description: 'Ingrese su RUT antes de subir el comprobante.',
+          description: 'Complete todos los campos antes de subir el comprobante.',
           status: 'error',
           duration: 5000,
           isClosable: true,
@@ -94,22 +100,54 @@ const DatosTransferencia = () => {
         return;
       }
 
-      const formData = new FormData();
-      formData.append('comprobante', selectedFile);
-      formData.append('rutUsuario', rutUsuario);
+      // Obtener el formularioId antes de subir el comprobante
+      const validarComprobante = await axios.post('http://146.83.198.35:1704/validar/comprobante', {
+        rutUsuario,
+        categoria,
+      });
 
-      const response = await axios.post('http://146.83.198.35:1704/upload/subir-comprobante', formData);      
+      let formData;
 
+      if (validarComprobante.data.existe && validarComprobante.data.idFormulario) {
+        // Agregar el idFormulario al formData antes de enviarlo
+        formData = new FormData();
+        formData.append('comprobante', selectedFile);
+        formData.append('rutUsuario', rutUsuario);
+        formData.append('categoria', categoria);
+        formData.append('formularioId', validarComprobante.data.idFormulario);
 
-      console.log('File uploaded:', response.data);
-      setUploadError(null);
-      onOpen();
+        // Subir el comprobante
+        const response = await axios.post('http://146.83.198.35:1704/upload/subir-comprobante', formData);
+
+        toast({
+          title: 'Éxito',
+          description: `Se encontró un formulario asociado a su RUT correctamente.`,
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+
+        // Si se encuentra el formulario, mostrar el modal de éxito
+        setUploadError(null);
+        onOpen();
+      } else {
+        // Si no se encuentra el formulario, mostrar un mensaje de error
+        console.error('Comprobante no asociado a algún formulario.');
+        toast({
+          title: 'Error',
+          description: 'El comprobante no está asociado a ningún formulario inscrito, verifique el RUT y la categoría.',
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     } catch (error) {
-      console.error('Error al subir la imagen.', error);
+      // Manejar errores al subir o validar el comprobante
+      console.error('Error al subir o validar el comprobante.', error);
 
       toast({
         title: 'Error',
-        description: 'Ocurrió un error al subir su comprobante, asegúrese de subir archivos en formato .png.',
+        description: 'Ocurrió un error al subir o validar su comprobante.',
         status: 'error',
         duration: 5000,
         isClosable: true,
@@ -191,15 +229,30 @@ const DatosTransferencia = () => {
                 <Center h="100hv"> Prueba enviar tu número de transacción{' '}</Center>
               </Link>
               <FormControl>
-              <FormLabel>RUT Contribuidor:</FormLabel>
-              <Input
-                type="text"
-                value={rutUsuario}
-                onChange={handleRutChange}
-                placeholder="Ingrese su RUT"
-              />
-            </FormControl>
+                <FormLabel>RUT Contribuidor:</FormLabel>
+                <Input
+                  type="text"
+                  value={rutUsuario}
+                  onChange={handleRutChange}
+                  placeholder="Ingrese su RUT"
+                />
+              </FormControl>
             </Text>
+            <FormControl>
+              <FormLabel>Categoría:</FormLabel>
+              <Select
+                placeholder="Seleccione una categoría"
+                value={categoria}
+                onChange={handleCategoriaChange}
+              >
+                <option value="Circulacion">Permiso de Circulación 2024</option>
+                <option value="Construccion">Permiso de Construccion</option>
+                <option value="Edificacion">Permiso de Edificacion</option>
+                <option value="Eventos">Permiso para Eventos</option>
+                <option value="Comercial">Patente Comercial</option>
+                <option value="Basura">Servicio de Basura</option>
+              </Select>
+            </FormControl>
             <Center h="100hv">
               <Button colorScheme="teal" onClick={handleFileUpload}>
                 Enviar Comprobante

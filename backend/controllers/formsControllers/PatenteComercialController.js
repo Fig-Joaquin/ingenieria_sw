@@ -99,7 +99,6 @@ const eliminarFormulario = async (req, res) => {
 };
 
 // Marcar un formulario de Patentes Comerciales como pagado por RUT
-// -IMPORTANTE: VALIDAR RANGO ADMIN PARA HACER PUT AQUÍ-
 const marcarComoPagado = async (req, res) => {
     try {
         const { rutTitular } = req.params;

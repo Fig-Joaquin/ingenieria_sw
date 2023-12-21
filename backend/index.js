@@ -15,6 +15,7 @@ import PermisoEdificacionRoutes from './routes/formsRoutes/PermisoEdificacionRou
 import PermisoEventosRoutes from './routes/formsRoutes/PermisoEventosRoutes.js';
 import datosTransferenciaRoutes from './routes/datosTransferenciaRoutes.js';
 import transaccionRoutes from './routes/transaccionRoutes.js';
+import validarComprobante from './routes/validarComprobante.js';
 import cors from 'cors';
 import rutaArchivo from './routes/rutaArchivoRoutes.js';
 import path from 'path';
@@ -30,7 +31,6 @@ conectarDB();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-
 // Configuración CORS (antes de las definiciones de rutas)
 // Configura CORS para todas las rutas
 // Puedes ajustar el valor de origin según tus necesidades
@@ -39,7 +39,6 @@ const corsOptions ={
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 };
-
 
 // Configurar el middleware para servir archivos estáticos desde la carpeta 'uploads'
 app.use('/uploads', cors(corsOptions), express.static(path.join(__dirname, 'uploads')));
@@ -57,6 +56,7 @@ app.use('/datosmunicipalidad', cors(corsOptions), datosTransferenciaRoutes);
 app.use('/multas-usuario', cors(corsOptions), fineRoutes);
 app.use('/transaccion', cors(corsOptions), transaccionRoutes);
 app.use('/boletas', cors(corsOptions), rutaArchivo);
+app.use('/validar', cors(corsOptions), validarComprobante);
 
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => console.log(`Conexión con el puerto ${PORT}`));

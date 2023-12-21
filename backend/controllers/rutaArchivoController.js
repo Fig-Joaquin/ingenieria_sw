@@ -1,18 +1,26 @@
-// controllers/RutaArchivoController.js
 import RutaArchivo from '../models/rutaArchivo.js';
 
 const buscarRutaPorRutUsuario = async (req, res) => {
-  const { rut } = req.body;
+  const { rutUsuario, idFormulario, categoria } = req.body;
 
   try {
-    // Buscar la ruta de archivo por el RUT de usuario
-    const rutaArchivo = await RutaArchivo.findOne({ rutUsuario: rut });
+    const filtroBusqueda = { rutUsuario };
+
+    if (idFormulario) {
+      filtroBusqueda.idFormulario = idFormulario;
+    }
+
+    if (categoria) {
+      filtroBusqueda.categoria = categoria;
+    }
+
+    const rutaArchivo = await RutaArchivo.findOne(filtroBusqueda);
 
     if (!rutaArchivo || !rutaArchivo.original) {
       return res.status(404).json({ error: 'Ruta de archivo no encontrada para este usuario' });
     }
 
-    // Enviar la URL de la imagen al cliente
+    // Enviar la ruta de la imagen al cliente
     const imageUrl = rutaArchivo.original;
     res.json({ imageUrl });
   } catch (error) {

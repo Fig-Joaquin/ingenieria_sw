@@ -38,13 +38,17 @@ const uploadComprobante = async (req, res) => {
 
       await helperImg(filePath, resizedFileName, 300);
 
-      // Guarda la ruta del archivo y el RUT del usuario en la base de datos
+      // Guarda la ruta del archivo, el RUT del usuario, el idFormulario y la categoría en la base de datos
       const rutaArchivo = new RutaArchivo({
         original: filePath,
         resized: resizedFilePath,
-        rutUsuario: req.body.rutUsuario, // RUT que está en el cuerpo de la solicitud.
+        rutUsuario: req.body.rutUsuario,
+        idFormulario: req.body.formularioId,
+        categoria: req.body.categoria,
       });
+
       await rutaArchivo.save();
+
       res.json({ data: 'Comprobante subido con éxito', ruta: rutaArchivo });
     } catch (error) {
       console.error(error);
