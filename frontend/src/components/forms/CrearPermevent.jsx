@@ -100,7 +100,7 @@ export const CrearPermisoEventos = () => {
                       name="tipoEvento"
                       value={formulario.tipoEvento}
                       onChange={handleChange}
-                      placeholder="Ejemplo: Concierto, Boda, Conferencia, etc."
+                      placeholder="Ejemplo: Concierto, Conferencia, etc."
                     />
                   </FormControl>
                   <FormControl>

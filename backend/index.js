@@ -15,6 +15,7 @@ import PermisoEdificacionRoutes from './routes/formsRoutes/PermisoEdificacionRou
 import PermisoEventosRoutes from './routes/formsRoutes/PermisoEventosRoutes.js';
 import datosTransferenciaRoutes from './routes/datosTransferenciaRoutes.js';
 import transaccionRoutes from './routes/transaccionRoutes.js';
+import validarComprobante from './routes/validarComprobante.js';
 import cors from 'cors';
 import rutaArchivo from './routes/rutaArchivoRoutes.js';
 import path from 'path';
@@ -74,6 +75,7 @@ app.use((err, req, res, next) => {
     next(err);
   }
 });
+app.use('/validar', cors(corsOptions), validarComprobante);
 
 const PORT = process.env.PORT || 80;
 app.listen(PORT, () => console.log(`Conexión con el puerto ${PORT}`));
