@@ -9,7 +9,7 @@ router.post('/registro',checkAuth, register)
 router.get('/confirmar/:token',checkAuth, confirmAccount);
 router.post('/login', authprofile);
 router.get('/authcheck', checkAuth, extractUserIdFromToken);
-router.get('/usuarios',checkAuth, getAllUser);
+router.get('/profile',checkAuth, getAllUser);
 router.put('/estado-usuario',checkAuth, changeUserStatus);
 router.get('/check', checkAdm,statusAdm);
 

@@ -10,11 +10,13 @@ const AppealList = () => {
   const [newStatus, setNewStatus] = useState('');
   const [error, setError] = useState('');
   const [updatePending, setUpdatePending] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Add this line
 
   const handleSearch = async () => {
     try {
+      setIsLoading(true); // Add isLoading state
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:443/adm-muni/apelaciones-cliente2`, {
+      const response = await fetch(`http://146.83.198.35:1704/adm-muni/apelaciones-cliente2`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,18 +24,18 @@ const AppealList = () => {
         },
         body: JSON.stringify({ rut }),
       });
-
+  
       if (!response.ok) {
         const { error } = await response.json();
-        setError('Hubo un error al buscar apelaciones. Por favor, inténtalo de nuevo más tarde.');
+        setError(`Hubo un error al buscar apelaciones: ${error}`);
         setAppeals([]);
         return;
       }
-
+  
       const contentType = response.headers.get('content-type');
       if (contentType && contentType.includes('application/json')) {
         const data = await response.json();
-        setAppeals(data);
+        setAppeals(data.appeals); // Assuming the response has a property named 'appeals'
         setError('');
       } else {
         setError('La respuesta no es un JSON válido');
@@ -43,6 +45,8 @@ const AppealList = () => {
       console.error('Error al buscar apelaciones:', error);
       setError('Hubo un error al buscar apelaciones. Por favor, inténtalo de nuevo más tarde.');
       setAppeals([]);
+    } finally {
+      setIsLoading(false); // Set loading state to false, regardless of success or failure
     }
   };
   
@@ -54,7 +58,7 @@ const AppealList = () => {
       }
   
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:443/adm-muni/decision-apelacion`, {
+      const response = await fetch(`http://146.83.198.35:1704/adm-muni/decision-apelacion`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -27,11 +27,12 @@ const LoginForm = () => {
   const [error, setError] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Nuevo estado
   const navigate = useNavigate();
-  
+
 
   const handleLogin = async () => {
     try {
-      const response = await fetch('http://localhost:443/adm-muni/login', {
+      const URL = 'http://146.83.198.35:1704'
+      const response = await fetch(URL+'/adm-muni/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -118,14 +119,12 @@ const LoginForm = () => {
         </Button>
       </Box>
       <Center h="100hv">
-      <BackToHomeButton />
+          <BackToHomeButton />
+      
       </Center>
 
       <Text fontSize="sm" color="gray.600" textAlign="center">
-        ¿Aún no tienes cuenta?{' '}
-        <Link color="teal.500" href="#">
-          Regístrate
-        </Link>
+        Inicio de sesión solo para administrador{' '}
       </Text>
     </VStack>
   );

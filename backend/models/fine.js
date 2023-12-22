@@ -22,16 +22,16 @@ const fineSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
-  location: { // Lugar de la infracción
+  location: {
     type: String,
-    required: [true, 'Lugar de la fraccion es obligatoria.'],
+    required: [true, 'Lugar de la fracción es obligatoria.'],
     minlength: 5,
     maxlength: 100,
     validate: {
-        validator: function (value) {
-            return /^([A-Za-z0-9]+(\s?)[A-Za-z0-9]+)+$/.test(value) || /^([A-Za-z0-9]+(\s?)[A-Za-z0-9]+)+(\s?)[#](\s?)[0-9]+$/.test(value);
-        },
-        message: 'El formato de la dirección no es válido. Debe ser "Calle 1234" o "Calle #1234.',
+      validator: function (value) {
+        return /^[A-Za-z0-9\sáéíóúÁÉÍÓÚüÜñÑ]*$/.test(value);
+      },
+      message: 'El formato de la dirección no es válido. Puede contener letras, números, espacios y tildes.',
     }
   },
   status: { // Estado

@@ -1,43 +1,89 @@
 import User from '../models/user.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
-const register = async (req, res) => {   
-    const {rut} = req.body;
-
-    const UserExists = await User.findOne({rut});
-    if(UserExists) return res.status(400).json({msg: "El usuario ya existe"});
-
-    try{
-        const user = new User(req.body);
-        const savedUser = await user.save();
-        res.json({msg: "Se ha guardado el usuario "}); 
-    }catch(e){
-        console.log(e);
-    }
+const generateToken = (userId) => {
+  return jwt.sign({ userId }, 'secreto', { expiresIn: '5h' });
 };
-
 
 const login = async (req, res) => {
-    const {rut, password} = req.body;
+  const { rut, password } = req.body;
 
-    const user = await User.findOne({rut});
-    if(!user) return res.status(400).json({msg: "El usuario no existe"});
-
-    if(user.password !== password) return res.status(400).json({msg: "Contraseña incorrecta"});
-
-    res.json({msg: "Inicio de sesión exitoso"});
-};
-
-
-const getUser = async (req, res) => {
   try {
-    const users = await User.find();  // Esto obtiene todos los documentos en la colección 'usuarios'
-    
-    res.json(users);  // Devuelve la lista de usuarios como respuesta JSON
+    const user = await User.findOne({ rut });
+    if (!user) return res.status(400).json({ msg: 'El usuario no existe' });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) return res.status(400).json({ msg: 'Contraseña incorrecta' });
+
+    // Generar un token JWT
+    const token = jwt.sign({ userId: user._id, role: 'user' }, 'secreto', { expiresIn: '1h' });
+
+    // Enviar el token al cliente
+    res.json({ msg: 'Inicio de sesión exitoso', token });
   } catch (error) {
-    console.error('Error al obtener usuarios:', error);
+    console.error('Error al iniciar sesión:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
+const loginUser = async (req, res) => {
+  const { rut, password } = req.body;
+
+  try {
+    const user = await User.findOne({ rut });
+    if (!user) return res.status(400).json({ msg: 'El usuario no existe' });
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) return res.status(400).json({ msg: 'Contraseña incorrecta' });
+
+    // Generar y enviar el token al cliente
+    const token = generateToken(user._id);
+    res.json({ msg: 'Inicio de sesión exitoso', token });
+  } catch (error) {
+    console.error('Error al iniciar sesión:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+const register = async (req, res) => {
+  const { rut, password, name, lastName, statusUser, email, address, phoneNumber } = req.body;
+
+  try {
+    // Verificar si el usuario ya existe
+    const userExists = await User.findOne({ rut });
+    if (userExists) {
+      return res.status(400).json({ msg: 'El usuario ya existe' });
+    }
+
+    // Hashear la contraseña antes de almacenarla en la base de datos
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // Crear un nuevo usuario con la contraseña hasheada y otros campos
+    const newUser = new User({
+      rut,
+      password: hashedPassword,
+      name,
+      lastName,
+      statusUser,
+      email,
+      address,
+      phoneNumber,
+      // Otros campos del usuario que puedas recibir del req.body
+    });
+
+    // Guardar el usuario en la base de datos
+    const savedUser = await newUser.save();
+
+    // Generar un token JWT y enviarlo al cliente
+    const token = generateToken(savedUser._id);
+    res.json({ msg: 'Registro exitoso', token });
+  } catch (error) {
+    console.error('Error al registrar el usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
 
 
 
@@ -65,7 +111,7 @@ const updateUser = async (req, res) => {
 
 
   
-  export { register, login, getUser , updateUser };
+  export { register ,loginUser, updateUser, login};
 
 
 

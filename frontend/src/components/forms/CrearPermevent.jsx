@@ -42,7 +42,7 @@ export const CrearPermisoEventos = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:443/permevent/crear', formulario);
+      const response = await axios.post('http://146.83.198.35:1704/permevent/crear', formulario);
       console.log(response.data.mensaje);
       navigate('/DatosTransferencia');
     } catch (error) {

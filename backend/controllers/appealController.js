@@ -1,24 +1,31 @@
+import { fromUnixTime } from 'date-fns'
 import Appeal from '../models/appeal.js'
-import User from '../models/user.js'
+import Fine from '../models/fine.js'
 
 // Funcion para crear una apelación asignada a un usuario específico
+
+
 const createAppealForClient = async (req, res) => {
   try {
-    const { reason, rut, status } = req.body;
-    
+    const {reason, rut, status } = req.body;
+    const objID = req.params.objID;
     // Validar el formato del RUT
+    console.log(rut);
     if (!isValidRut(rut)) {
+      console.log(rut);
       return res.status(400).json({ error: 'RUT no válido' });
     }
-
-    const client = await User.findOne({ rut });
+    console.log(objID);
+    const client = await Fine.findOne({ _id: objID });
+    console.log(client);
     if (!client) {
       return res.status(400).json({ error: 'Usuario no encontrado' });
     }
 
     // Crea una nueva apelación asignada al usuario con el ID proporcionado
     const newAppeal = new Appeal({
-      user: client._id,
+      user: rut,
+      fine: objID,
       reason,
       status: status || 'pendiente',
     });
@@ -27,31 +34,12 @@ const createAppealForClient = async (req, res) => {
     await newAppeal.save();
     res.status(200).json(newAppeal);
   } catch (error) {
-    console.log(error);
-    res.status(400).json({ error: 'Error al crear la apelación' });
+    console.error(error);
+    res.status(500).json({ error: 'Error interno del servidor', details: error.message });
   }
 };
 
 
-  const createAppealUser = async (req, res) => {
-    try {
-        const { user, appealOriginal, reason } = req.body;
-
-        // Crear una nueva apelación
-        const newAppeal = new Appeal({
-            user,
-            appealOriginal,
-            reason,
-        });
-
-        // Guardar la apelación en la base de datos
-        const savedAppeal = await newAppeal.save();
-
-        res.status(200).json(savedAppeal); // Devolver la apelación creada como respuesta
-    } catch (error) {
-        res.status(400).json({ message: 'Hubo un error al crear la apelación', error: error.message });
-    }
-};
 
 const decisionAppeal = async (req, res) => {
   const { status, _id } = req.body;
@@ -116,21 +104,16 @@ const isValidRut = (rut) => {
 };
 
 const getUserAppeals = async (req, res) => {
-  const { rut } = req.body;
   try {
-    if (!isValidRut(rut)) {
-      return res.status(400).json({ error: 'RUT no válido' });
-    }
+    const { rut } = req.body;
 
-    const client = await User.findOne({ rut });
-    if (!client) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
-    }
+    // Realiza la búsqueda de apelaciones por el campo 'user' (que representa el rut)
+    const appeals = await Appeal.find({ user: rut });
 
-    const appeals = await Appeal.find({ user: client._id });
-    res.json(appeals);
+    res.status(200).json({ appeals });
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener las apelaciones del usuario' });
+    console.error(error);
+    res.status(500).json({ error: 'Error al obtener las apelaciones.' });
   }
 };
 

@@ -42,7 +42,7 @@ export const CrearPermisoEdificacion = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:443/permedif/crear', formulario);
+      const response = await axios.post('http://146.83.198.35:1704/permedif/crear', formulario);
       console.log(response.data.mensaje);
       navigate('/DatosTransferencia');
     } catch (error) {

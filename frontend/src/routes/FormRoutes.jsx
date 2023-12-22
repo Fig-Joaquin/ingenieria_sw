@@ -26,12 +26,14 @@ import DatosTransferencia from '../components/DatosTransferencia';
 import AppealsForm from '../components/appeal';
 import NumeroTransaccionFormulario from '../components/NumeroTransaccion';
 import Login from '../components/login';
-import Profile from '../components/profile';
-import Fine from '../components/fine';
-import ProtectedRoute from '../components/ProtectedRoute.jsx';
+import Profile from '../components/Profile.jsx';
+import Fine from '../components/Fine.jsx';
 import AppealList from '../components/getAppeal.jsx';
 import UserProfilePage from '../components/getUser.jsx';
 import UpdateStatusForm from '../components/Transferencias.jsx';
+import LoginUser from '../components/LoginUser.jsx';
+import ProfileUser from '../components/ProfileUser.jsx';
+
 const HomePage = () => {
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
   
@@ -60,7 +62,7 @@ const HomePage = () => {
           <DrawerHeader color="white"><HamburgerIcon />Servicios Disponibles:</DrawerHeader>
           <DrawerBody color="white">
             <VStack spacing={4} align="start">
-            <Link to="/login" onClick={handleDrawerClose} color="white">
+              <Link to="/usuario" onClick={handleDrawerClose} color="white">
                 Iniciar Sesión
               </Link>
               <Link to="/CrearPermisoCirculacion" onClick={handleDrawerClose} color="white">
@@ -81,11 +83,7 @@ const HomePage = () => {
               <Link to="/CrearPagoBasura" onClick={handleDrawerClose} color="white">
                 Servicio de Basura
               </Link>
-              <Link to="/Apelacion" onClick={handleDrawerClose} color="white">
-                Crear Apelación
-              </Link>
-              
-              
+
             </VStack>
           </DrawerBody>
         </DrawerContent>
@@ -111,14 +109,16 @@ const Form = () => {
           <Route path="/CrearPatenteComercial" element={<CrearPatenteComercial />} />
           <Route path="/crearPermisoEventos" element={<CrearPermisoEventos />} />
           <Route path="/DatosTransferencia" element={<DatosTransferencia />} />
-          <Route path="/Apelacion" element={<AppealsForm />} />
+          <Route path="/Apelacion/:objectId" element={<AppealsForm />} />
           <Route path="/subirtransaccion" element={<NumeroTransaccionFormulario />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/fines" element={<Fine />} />
           <Route path="/apelaciones-usuario" element={<AppealList />} />
-          <Route path="/usuariosmun" element={<UserProfilePage />} />\
+          <Route path="/usuariosmun" element={<UserProfilePage />} />
           <Route path="/transacciones" element={<UpdateStatusForm />} />
+          <Route path="/usuario" element={<LoginUser />} />
+          <Route path="/miperfil" element={<ProfileUser />} />
         </Routes>
       </ChakraProvider>
     </Router>

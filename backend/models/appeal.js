@@ -2,9 +2,13 @@ import mongoose from 'mongoose'
 
 const appealSchema = new mongoose.Schema({
   user: { // El usuario que presenta la apelación
-    type: mongoose.Schema.Types.ObjectId, 
-    ref: 'usuario', 
+    type: String, 
     required: true 
+  },
+  fine: { // La multa a la que se refiere la apelación
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Multa', // Reemplazar 'Multa' con el nombre de tu modelo de multa si es diferente
+    required: true
   },
   reason: {  // Motivo de la apelación
     type: String, 

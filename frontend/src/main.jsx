@@ -7,6 +7,7 @@ createRoot(document.getElementById('root')).render(
  
  <ChakraProvider>
     <React.StrictMode>
+    
       <Form />
     </React.StrictMode>
   </ChakraProvider>,

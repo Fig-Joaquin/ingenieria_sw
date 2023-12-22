@@ -30,34 +30,50 @@ conectarDB();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-
 // Configuración CORS (antes de las definiciones de rutas)
 // Configura CORS para todas las rutas
 // Puedes ajustar el valor de origin según tus necesidades
-app.use(cors({
-  origin: 'http://localhost:5173', // Reemplaza con la URL de tu aplicación React
+const corsOptions = {
+  origin: '*', // Permitir solicitudes desde cualquier origen (para pruebas)
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
-}));
-
+  allowedHeaders: 'Content-Type, Authorization',
+};
 
 // Configurar el middleware para servir archivos estáticos desde la carpeta 'uploads'
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', cors(corsOptions), express.static(path.join(__dirname, 'uploads')));
 
-app.use('/adm-muni', adminRoutes, appealRoutes, fineRoutes);
-app.use('/permcirc', PermisoCirculacionRoutes);
-app.use('/usuario', userRoutes);
-app.use('/nueva-apelacion', appealUserRoutes);
-app.use('/patcom', PatenteComercialRoutes);
-app.use('/upload', uploadRoutes);
-app.use('/aseo', DerechoDeAseoRoutes);
-app.use('/permconst', PermisoConstruccionRoutes);
-app.use('/permedif', PermisoEdificacionRoutes);
-app.use('/permevent', PermisoEventosRoutes);
-app.use('/datosmunicipalidad', datosTransferenciaRoutes);
-app.use('/multas-usuario', fineRoutes);
-app.use('/transaccion', transaccionRoutes);
-app.use('/boletas',rutaArchivo);
+// Middleware para manejar las solicitudes OPTIONS de manera explícita
+app.options('*', cors(corsOptions));
 
-const PORT = process.env.PORT || 443;
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+app.use('/adm-muni', cors(corsOptions), adminRoutes, appealRoutes, fineRoutes);
+app.use('/permcirc', cors(corsOptions), PermisoCirculacionRoutes);
+app.use('/usuario', cors(corsOptions), userRoutes, adminRoutes);
+app.use('/nueva-apelacion', cors(corsOptions), appealUserRoutes);
+app.use('/patcom', cors(corsOptions), PatenteComercialRoutes);
+app.use('/upload', cors(corsOptions), uploadRoutes);
+app.use('/aseo', cors(corsOptions), DerechoDeAseoRoutes);
+app.use('/permconst', cors(corsOptions), PermisoConstruccionRoutes);
+app.use('/permedif', cors(corsOptions), PermisoEdificacionRoutes);
+app.use('/permevent', cors(corsOptions), PermisoEventosRoutes);
+app.use('/datosmunicipalidad', cors(corsOptions), datosTransferenciaRoutes);
+app.use('/multas-usuario', cors(corsOptions), fineRoutes);
+app.use('/transaccion', cors(corsOptions), transaccionRoutes);
+app.use('/boletas', cors(corsOptions), rutaArchivo);
+app.use((err, req, res, next) => {
+  if (err.name === 'CorsError') {
+    res.status(500).json({ error: 'Error de CORS' });
+  } else {
+    next(err);
+  }
+});
+
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => console.log(`Conexión con el puerto ${PORT}`));

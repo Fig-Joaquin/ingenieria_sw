@@ -6,7 +6,7 @@ import {createFine,getAllFines,getFinesByRut,updateFineStatus,getFinesByRutUser}
 
 router.post('/nueva-multa', checkAuth, createFine); // Ruta para crear una apelación
 router.get('/multas',checkAuth, getAllFines); // Ruta para obtener todas las multas
-router.get('/persona-multa',checkAuth, getFinesByRut); // Ruta para obtener las multas por rut
+router.get('/persona-multa', getFinesByRut); // Ruta para obtener las multas por rut
 router.put('/estado-multa',checkAuth, updateFineStatus); // Ruta para actualizar el estado de una apelacion 
 router.get('/persona-multa/:rut', getFinesByRutUser);
 

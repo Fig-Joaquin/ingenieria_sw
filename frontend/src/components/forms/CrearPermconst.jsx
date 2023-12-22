@@ -42,7 +42,7 @@ export const CrearPermisoConstruccion = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:443/permconst/crear', formulario);
+      const response = await axios.post('http://146.83.198.35:1704/permconst/crear', formulario);
       console.log(response.data.mensaje);
       navigate('/DatosTransferencia');
 

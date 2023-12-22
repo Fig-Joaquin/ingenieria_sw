@@ -74,17 +74,23 @@ const isValidRut = (rut) => {
 
 // buscar multas por rut
 const getFinesByRut = async (req, res) => {
-  const { rut } = req.body; // Obtén el valor del parámetro rut de la URL
-  if (!isValidRut(rut)) {
-    return res.status(400).json({ error: 'RUT no válido' });
-  }
-    try {
-      const fines = await Fine.find({ rut }); // Encuentra todas las multas con el rut proporcionado
-      res.status(200).json(fines); // Devuelve las multas encontradas como respuesta
-    } catch (error) {
-    console.error(error);
-    res.status(400).json({ error: 'Error al obtener las multas por rut' });
+
+  try {
+    const { rut } = req.params;
+
+    // Validate the format of the "rut" parameter if needed
+
+    const fines = await Fine.find({ rut });
+
+    if (!fines || fines.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron multas para este rut' });
     }
+
+    res.json(fines);
+  } catch (error) {
+    console.error('Error al buscar multas por rut:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 };
 
 const updateFineStatus = async (req, res) => {
@@ -120,20 +126,21 @@ const updateFineStatus = async (req, res) => {
 
 
 const getFinesByRutUser = async (req, res) => {
-  const { rut } = req.params; // Obtén el RUT del parámetro de la solicitud
-
   try {
-      // Busca las multas asociadas al RUT proporcionado
-      const fines = await Fine.findOne({ rut });
+    const { rut } = req.params;
 
-      if (!fines || fines.length === 0) {
-          return res.status(400).json({ error: 'No se encontraron multas para este RUT' });
-      }
+    // Validate the format of the "rut" parameter if needed
 
-      res.json(fines); // Devuelve las multas encontradas para el RUT especificado
+    const fines = await Fine.find({ rut });
+
+    if (!fines || fines.length === 0) {
+      return res.status(404).json({ error: 'No se encontraron multas para este rut' });
+    }
+
+    res.json(fines);
   } catch (error) {
-      console.error(error);
-      res.status(400).json({ error: 'Error al buscar las multas por RUT' });
+    console.error('Error al buscar multas por rut:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
 
